@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     EditText txtAccountID, txtPass;
+
     //FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +25,13 @@ public class MainActivity extends AppCompatActivity {
     //    db = FirebaseFirestore.getInstance();
         txtAccountID = (EditText)findViewById(R.id.txtAccountID);
         txtPass = (EditText)findViewById(R.id.txtPass);
-        String AccountID = txtAccountID.toString();
-        String pass = txtPass.toString();
-
     }
 
     public void onClickLogin(View view) {
         Intent next = new Intent(MainActivity.this,MainActivity2.class);
         Bundle b = new Bundle();
-        b.putString("AccountID", ((EditText)findViewById(R.id.txtAccountID)).toString());
-        b.putString("Pass", txtPass.toString());
+        b.putString("AccountID", txtAccountID.getText().toString());
+//        b.putString("Pass", txtPass.getText().toString());
         next.putExtras(b);
         startActivity(next);
     }
