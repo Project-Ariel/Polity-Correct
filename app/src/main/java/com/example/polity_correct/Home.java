@@ -16,6 +16,7 @@ public class Home extends AppCompatActivity {
     private Button settings;
     private Button propositions;
     private Button results;
+    private TextView connectUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,15 @@ public class Home extends AppCompatActivity {
                 openResultsPage();
             }
         });
+
+        // connectUs listener
+        connectUs = (TextView) findViewById(R.id.connectUs);
+        connectUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail();
+            }
+        });
     }
 
     public void openLoginPage() {
@@ -83,5 +93,25 @@ public class Home extends AppCompatActivity {
     public void openResultsPage() {
         Intent intent = new Intent(this, Results.class);
         startActivity(intent);
+    }
+
+    public void sendMail() {
+
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("plain/text");
+
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
+                new String[] { "Politycorrect@gmail.com" });
+
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                "Not from accountID=" + accountID.getText().toString());
+
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                "Email Body..");
+
+        startActivity(Intent.createChooser(
+                emailIntent, "Send mail..."));
+
+
     }
 }
