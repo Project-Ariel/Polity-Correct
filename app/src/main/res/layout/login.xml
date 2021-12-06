@@ -7,59 +7,59 @@
      android:background="#F3E7C3"
      tools:context=".Login">
 
-     <TextView
-         android:id="@+id/Pass"
-         android:layout_width="158dp"
-         android:layout_height="50dp"
-         android:fontFamily="sans-serif-condensed"
-         android:text="@string/password"
-         android:textSize="34sp"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.063"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.456" />
+    <TextView
+        android:id="@+id/Pass"
+        android:layout_width="158dp"
+        android:layout_height="50dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/password"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.869"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.468" />
 
-     <TextView
-         android:id="@+id/AccountID"
-         android:layout_width="158dp"
-         android:layout_height="50dp"
-         android:fontFamily="sans-serif-condensed"
-         android:text="@string/account_id"
-         android:textSize="34sp"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.063"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.37" />
+    <TextView
+        android:id="@+id/AccountMail"
+        android:layout_width="158dp"
+        android:layout_height="50dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/account_mail"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.869"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.377" />
 
     <EditText
-         android:id="@+id/txtPass"
-         android:layout_width="204dp"
-         android:layout_height="48dp"
-         android:ems="10"
-         android:inputType="textPassword"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.84"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.455" />
+        android:id="@+id/txtPass"
+        android:layout_width="204dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.467" />
 
-     <EditText
-         android:id="@+id/txtAccountID"
-         android:layout_width="202dp"
-         android:layout_height="49dp"
-         android:ems="10"
-         android:inputType="number"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.842"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.369" />
+    <EditText
+        android:id="@+id/txtAccountMail"
+        android:layout_width="202dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.378" />
 
     <Button
         android:id="@+id/login"
@@ -73,7 +73,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.556" />
+        app:layout_constraintVertical_bias="0.556"
+        tools:ignore="OnClick" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -85,5 +86,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.126"
         app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5E00BCD4"
+        android:onClick="updateDBOnClick"
+        android:text="Add deatls to db"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
