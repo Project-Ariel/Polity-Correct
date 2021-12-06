@@ -14,6 +14,8 @@ public class Home extends AppCompatActivity {
     private ImageView logOut;
     private TextView accountID;
     private Button settings;
+    private Button propositions;
+    private Button results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,24 @@ public class Home extends AppCompatActivity {
                 openSettingsPage();
             }
         });
+
+        // propositions page listener
+        propositions = (Button) findViewById(R.id.vote_button);
+        propositions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPropositionsPage();
+            }
+        });
+
+        // results page listener
+        results= (Button) findViewById(R.id.results);
+        results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openResultsPage();
+            }
+        });
     }
 
     public void openLoginPage() {
@@ -52,6 +72,16 @@ public class Home extends AppCompatActivity {
 
     public void openSettingsPage() {
         Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
+
+    public void openPropositionsPage() {
+        Intent intent = new Intent(this, Propositions.class);
+        startActivity(intent);
+    }
+
+    public void openResultsPage() {
+        Intent intent = new Intent(this, Results.class);
         startActivity(intent);
     }
 }
