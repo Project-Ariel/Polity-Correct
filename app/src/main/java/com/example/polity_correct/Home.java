@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class Home extends AppCompatActivity {
 
     private ImageView logOut;
-    private TextView accountID;
+    private TextView accountMail;
     private Button settings;
     private Button propositions;
     private Button results;
@@ -23,10 +23,10 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        accountID = (TextView) findViewById(R.id.userName);
+        accountMail = (TextView) findViewById(R.id.userName);
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            accountID.setText(b.getString("AccountID"));
+            accountMail.setText(b.getString("AccountMail"));
         }
 
         //logout listener
@@ -103,8 +103,9 @@ public class Home extends AppCompatActivity {
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
                 new String[] { "Politycorrect@gmail.com" });
 
+
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                "Not from accountID=" + accountID.getText().toString());
+                "Note from mail :" + accountMail.getText().toString());
 
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                 "Email Body..");
