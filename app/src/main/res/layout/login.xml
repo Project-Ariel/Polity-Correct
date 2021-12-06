@@ -5,7 +5,7 @@
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:background="#F3E7C3"
-     tools:context=".MainActivity">
+     tools:context=".Login">
 
      <TextView
          android:id="@+id/Pass"
@@ -62,7 +62,7 @@
          app:layout_constraintVertical_bias="0.369" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#5E00BCD4"
