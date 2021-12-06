@@ -8,7 +8,7 @@
     tools:context=".Home">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logo"
         android:layout_width="216dp"
         android:layout_height="190dp"
         app:layout_constraintBottom_toBottomOf="parent"

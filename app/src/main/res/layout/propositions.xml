@@ -4,13 +4,306 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3E7C3"
     tools:context=".Propositions">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="propositions"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="205dp" />
+        android:id="@+id/hello"
+        android:layout_width="137dp"
+        android:layout_height="46dp"
+        android:fontFamily="@font/alef"
+        android:text="מה חדש?"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textDirection="rtl"
+        android:textSize="34sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.857"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/logo" />
+
+    <ScrollView
+        android:layout_width="360dp"
+        android:layout_height="507dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.608">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition1"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition2"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition3"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition4"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition5"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition6"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition7"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition8"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition9"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition10"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout11"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition11"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/voteBtn12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textDirection="rtl"
+                    android:text="הצבע"></Button>
+
+                <TextView
+                    android:id="@+id/proposition12"
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content"
+                    android:text="חוק"
+                    android:textDirection="rtl"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
