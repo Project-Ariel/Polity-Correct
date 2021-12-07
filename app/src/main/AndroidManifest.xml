@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PolityCorrect">
         <activity
+            android:name=".Signin"
+            android:exported="false" />
+        <activity
             android:name=".Vote"
             android:exported="false" />
         <activity

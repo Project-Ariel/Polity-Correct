@@ -66,7 +66,7 @@ public class Home extends AppCompatActivity {
         });
 
         // connectUs listener
-        connectUs = (TextView) findViewById(R.id.connectUs);
+        connectUs = (TextView) findViewById(R.id.connectUs0);
         connectUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

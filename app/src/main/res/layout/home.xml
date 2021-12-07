@@ -133,32 +133,30 @@
         app:layout_constraintVertical_bias="0.93" />
 
     <TextView
-        android:id="@+id/connectUs"
+        android:id="@+id/connectUs0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alef"
-        android:text="Politycorrect@gmail.com"
+        android:text="צור קשר"
         android:textSize="16sp"
         android:textStyle="normal|bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
+        app:layout_constraintVertical_bias="0.98" />
 
-    <TextView
-        android:id="@+id/about2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="מייל לפניות:"
-        android:textSize="16sp"
-        android:fontFamily="@font/alef"
+    <ImageView
+        android:id="@+id/connectUs"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.952" />
+        app:layout_constraintVertical_bias="0.984"
+        app:srcCompat="@drawable/mail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

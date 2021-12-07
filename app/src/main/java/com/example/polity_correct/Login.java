@@ -22,6 +22,7 @@ public class Login extends AppCompatActivity {
 
     EditText txtAccountMail, txtPass;
     Button login;
+    Button register;
 
     FirebaseFirestore db;
     @Override
@@ -41,6 +42,15 @@ public class Login extends AppCompatActivity {
                 onClickLogin();
             }
         });
+
+        //register listener
+        register = (Button) findViewById(R.id.signin);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRegister();
+            }
+        });
     }
 
     //open Home page
@@ -52,6 +62,12 @@ public class Login extends AppCompatActivity {
         next.putExtras(b);
         startActivity(next);
     }
+
+    public void onClickRegister() {
+        Intent intent = new Intent(this, Signin.class);
+        startActivity(intent);
+    }
+
 
     public void updateDBOnClick(View view) {
 
