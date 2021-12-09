@@ -17,7 +17,7 @@ public class Vote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vote);
 
-        voteId = (TextView) findViewById(R.id.voteID);
+        voteId = (TextView) findViewById(R.id.voteId);
         Bundle b = getIntent().getExtras();
         if (b != null) {
             voteId.setText("Vote ID:" + (b.getString("voteID")));

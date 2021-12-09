@@ -15,7 +15,8 @@ import android.widget.Toast;
 public class UserDetails extends AppCompatActivity {
     AutoCompleteTextView  autoCompleteText;
     ArrayAdapter <String> adapter_items;
-    String[] items={"ימינה","כחול לבן","העבודה","ישראל ביתנו","תקווה חדשה","מרצ","הציונות הדתית","הרשימה המשותפת","רעמ","יהדות התורה","שס","יש עתיד","הליכוד"};
+    // We need to get this list from the DB
+    String[] politicalGroups={"ימינה","כחול לבן","העבודה","ישראל ביתנו","תקווה חדשה","מרצ","הציונות הדתית","הרשימה המשותפת","רעמ","יהדות התורה","שס","יש עתיד","הליכוד"};
     String name;
 
     @Override
@@ -25,7 +26,7 @@ public class UserDetails extends AppCompatActivity {
         name=((TextView) findViewById(R.id.User_full_name)).getText().toString();
         autoCompleteText=findViewById(R.id.autoCompleteTextView);
         //String PG[]= getResources().getStringArray(R.array.מפלגות);
-        adapter_items = new ArrayAdapter<String>(this, R.layout.drop_down_item_political_groop, items);
+        adapter_items = new ArrayAdapter<String>(this, R.layout.drop_down_item_political_group, politicalGroups);
         autoCompleteText.setAdapter(adapter_items);
         autoCompleteText.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
