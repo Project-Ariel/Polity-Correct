@@ -32,7 +32,7 @@ public class Signin extends AppCompatActivity {
         b.putString("Pass", pass);
         if(mail.contains("@KNESSET.GOV.IL")||mail.contains("@knesset.gov.il")){
            //if user is parliament member
-            next = new Intent(Signin.this,Home.class);
+            next = new Intent(Signin.this, HomeParliament.class);
         }
         else{
             //else- user is citizen

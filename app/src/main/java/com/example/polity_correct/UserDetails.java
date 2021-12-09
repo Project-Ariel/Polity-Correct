@@ -56,7 +56,7 @@ public class UserDetails extends AppCompatActivity {
         Intent next;
         Bundle b = new Bundle();
         b.putString("User name",name);
-        next = new Intent(UserDetails.this,Home.class);
+        next = new Intent(UserDetails.this, HomeCitizen.class);
         next.putExtras(b);
         startActivity(next);
     }

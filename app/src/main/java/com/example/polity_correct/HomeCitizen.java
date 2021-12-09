@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Home extends AppCompatActivity {
+public class HomeCitizen extends AppCompatActivity {
 
     private ImageView logOut;
     private TextView accountMail;
@@ -21,7 +21,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.home_citizen);
 
         accountMail = (TextView) findViewById(R.id.userName);
         Bundle b = getIntent().getExtras();

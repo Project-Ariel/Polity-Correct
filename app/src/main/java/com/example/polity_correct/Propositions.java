@@ -44,7 +44,7 @@ public class Propositions extends AppCompatActivity {
     }
 
     public void openHomePage() {
-        Intent intent = new Intent(this, Home.class);
+        Intent intent = new Intent(this, HomeCitizen.class);
         startActivity(intent);
     }
 

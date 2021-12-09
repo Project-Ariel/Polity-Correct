@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
 
     //open Home page
     public void onClickLogin() {
-        Intent next = new Intent(Login.this,Home.class);
+        Intent next = new Intent(Login.this, HomeCitizen.class);
         Bundle b = new Bundle();
         b.putString("AccountMail", txtAccountMail.getText().toString());
         b.putString("Pass", txtPass.getText().toString());
