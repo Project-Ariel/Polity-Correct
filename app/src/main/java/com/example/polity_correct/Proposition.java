@@ -5,25 +5,24 @@ import java.util.HashMap;
 public class Proposition {
     private String key;
     private String title;
+    private int status;
     private String description;
     private Category category;
-    private HashMap<String,StatusVote> curr_votes= new HashMap<>();
-    private HashMap<Integer, StatusVote> mp_results= new HashMap<>();
+    private HashMap<Integer,StatusVote> curr_votes;
+    private HashMap<String, StatusVote> mp_results;
 
-    public Proposition(String key, String title, String description, Category category){
-        this.key=key;
-        this.title=title;
-        this.description=description;
-        this.category=category;
+    public Proposition(String key, String title, int status, String description, Category category,
+                       HashMap<Integer, StatusVote> curr_votes, HashMap<String, StatusVote> mp_results) {
+        this.key = key;
+        this.title = title;
+        this.status = status;
+        this.description = description;
+        this.category = category;
+        this.curr_votes = curr_votes;
+        this.mp_results = mp_results;
     }
 
-    public void update_citizen_votes(int citizen_id, StatusVote sv){
-        mp_results.put(citizen_id, sv);
-    }
-
-    public void updateMPResult(int mp_id, StatusVote sv){
-        mp_results.put(mp_id, sv);
-    }
+    public void update_status(int status){ this.status= status;}
 
     public String getKey() {
         return key;
@@ -37,7 +36,7 @@ public class Proposition {
         return description;
     }
 
-    public HashMap<Integer, StatusVote> getMp_results() {
+    public HashMap<String, StatusVote> getMp_results() {
         return mp_results;
     }
 
