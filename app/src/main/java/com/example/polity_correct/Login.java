@@ -31,8 +31,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
 
         db = FirebaseFirestore.getInstance();
-        txtAccountMail = (EditText)findViewById(R.id.txtAccountMail);
-        txtPass = (EditText)findViewById(R.id.txtPass);
+        txtAccountMail = (EditText)findViewById(R.id.textUsermail_login);
+        txtPass = (EditText)findViewById(R.id.password_login);
 
         //home page listener
         login = (Button) findViewById(R.id.login);

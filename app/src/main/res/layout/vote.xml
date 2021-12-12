@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E7C3"
     tools:context=".Vote">
+
+    <include layout="@layout/layout_standard_page" />
 
     <RatingBar
         android:id="@+id/ratingBar"
