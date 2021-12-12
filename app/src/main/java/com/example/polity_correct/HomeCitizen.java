@@ -1,5 +1,7 @@
 package com.example.polity_correct;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,23 +10,40 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeCitizen extends AppCompatActivity {
 
-    private TextView accountMail;
+    private TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_citizen);
 
-        accountMail = (TextView) findViewById(R.id.userName);
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            accountMail.setText(b.getString("AccountMail"));
-        }
+        userName = (TextView) findViewById(R.id.userName);
+        FirebaseDatabase database=FirebaseDatabase.getInstance("https://polity-correct-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef=database.getReference("users/"+FirebaseAuth.getInstance().getUid()+"/userName");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name= snapshot.getValue(String.class);
+                userName.setText(name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void openLoginPage(View view) {
@@ -53,10 +72,10 @@ public class HomeCitizen extends AppCompatActivity {
         emailIntent.setType("plain/text");
 
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
-                new String[] { "Politycorrect@gmail.com" });
+                new String[]{"Politycorrect@gmail.com"});
 
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                "Note from mail :" + accountMail.getText().toString());
+                "Note from mail :" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                 "Email Body..");
