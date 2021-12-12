@@ -21,10 +21,8 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     EditText txtAccountMail, txtPass;
-    Button login;
-    Button register;
-
     FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,28 +31,10 @@ public class Login extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         txtAccountMail = (EditText)findViewById(R.id.textUsermail_login);
         txtPass = (EditText)findViewById(R.id.textPassword_login);
-
-        //home page listener
-        login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLogin();
-            }
-        });
-
-        //register listener
-        register = (Button) findViewById(R.id.signup);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickRegister();
-            }
-        });
     }
 
     //open Home page
-    public void onClickLogin() {
+    public void onClickLogin(View view) {
         Intent next = new Intent(Login.this, HomeCitizen.class);
         Bundle b = new Bundle();
         b.putString("AccountMail", txtAccountMail.getText().toString());
@@ -63,7 +43,7 @@ public class Login extends AppCompatActivity {
         startActivity(next);
     }
 
-    public void onClickRegister() {
+    public void onClickRegister(View view) {
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
@@ -101,6 +81,5 @@ public class Login extends AppCompatActivity {
                         Log.w((String) TAG, "Error adding document", e);
                     }
                 });
-
     }
 }
