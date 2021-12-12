@@ -10,9 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Signup extends AppCompatActivity {
-    Button register;
     String mail, pass;
-    EditText txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +19,6 @@ public class Signup extends AppCompatActivity {
 
         mail= ((TextView) findViewById(R.id.textUsermail)).getText().toString();
         pass= ((TextView) findViewById(R.id.new_password)).getText().toString();
-        register = (Button) findViewById(R.id.OK);
 
     }
 
