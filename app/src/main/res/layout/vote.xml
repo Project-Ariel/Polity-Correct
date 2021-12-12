@@ -38,7 +38,7 @@
 
         <RadioButton
             android:id="@+id/agreement"
-            android:layout_width="110dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
             android:text="בעד"
@@ -46,7 +46,7 @@
 
         <RadioButton
             android:id="@+id/impossible"
-            android:layout_width="123dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
             android:text="נמנע"
@@ -54,7 +54,7 @@
 
         <RadioButton
             android:id="@+id/against"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
             android:text="נגד"
@@ -64,7 +64,7 @@
 
     <TextView
         android:id="@+id/voteId"
-        android:layout_width="137dp"
+        android:layout_width="260dp"
         android:layout_height="46dp"
         android:background="@drawable/back"
         android:fontFamily="@font/alef"
@@ -75,18 +75,17 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128" />
 
     <TextView
         android:id="@+id/voteDetails"
-        android:layout_width="258dp"
+        android:layout_width="260dp"
         android:layout_height="98dp"
         android:background="@drawable/back"
         android:fontFamily="@font/alef"
-        android:singleLine="false"
         android:text="תיאור ופירוט"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -95,7 +94,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.238" />
