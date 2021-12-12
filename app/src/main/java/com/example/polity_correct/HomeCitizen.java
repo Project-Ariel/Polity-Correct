@@ -11,12 +11,7 @@ import android.widget.TextView;
 
 public class HomeCitizen extends AppCompatActivity {
 
-    private ImageView logOut;
     private TextView accountMail;
-    private Button settings;
-    private Button propositions;
-    private Button results;
-    private TextView connectUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,81 +23,34 @@ public class HomeCitizen extends AppCompatActivity {
         if (b != null) {
             accountMail.setText(b.getString("AccountMail"));
         }
-
-        //logout listener
-        logOut = (ImageView) findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLoginPage();
-            }
-        });
-
-        //settings page listener
-        settings = (Button) findViewById(R.id.settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSettingsPage();
-            }
-        });
-
-        // propositions page listener
-        propositions = (Button) findViewById(R.id.vote_button);
-        propositions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPropositionsPage();
-            }
-        });
-
-        // results page listener
-        results= (Button) findViewById(R.id.results);
-        results.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openResultsPage();
-            }
-        });
-
-        // connectUs listener
-        connectUs = (TextView) findViewById(R.id.connectUs0);
-        connectUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMail();
-            }
-        });
     }
 
-    public void openLoginPage() {
+    public void openLoginPage(View view) {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 
-    public void openSettingsPage() {
+    public void openSettingsPage(View view) {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
-    public void openPropositionsPage() {
+    public void openPropositionsPage(View view) {
         Intent intent = new Intent(this, Propositions.class);
         startActivity(intent);
     }
 
-    public void openResultsPage() {
+    public void openResultsPage(View view) {
         Intent intent = new Intent(this, Results.class);
         startActivity(intent);
     }
 
-    public void sendMail() {
-
+    public void sendMail(View view) {
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.setType("plain/text");
 
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
                 new String[] { "Politycorrect@gmail.com" });
-
 
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
                 "Note from mail :" + accountMail.getText().toString());
@@ -112,7 +60,5 @@ public class HomeCitizen extends AppCompatActivity {
 
         startActivity(Intent.createChooser(
                 emailIntent, "Send mail..."));
-
-
     }
 }

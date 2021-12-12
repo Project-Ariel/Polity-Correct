@@ -11,12 +11,7 @@ import android.widget.TextView;
 
 public class HomeParliament extends AppCompatActivity {
 
-    private ImageView logOut;
     private TextView accountMail;
-    private Button changePass;
-    private Button propositions;
-    private Button statistics;
-    private TextView connectUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,75 +23,24 @@ public class HomeParliament extends AppCompatActivity {
         if (b != null) {
             accountMail.setText(b.getString("AccountMail"));
         }
-
-        //logout listener
-        logOut = (ImageView) findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLoginPage();
-            }
-        });
-
-        //changePass page listener
-        changePass = (Button) findViewById(R.id.changePass);
-        changePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSettingsPage();
-            }
-        });
-
-        // propositions page listener
-        propositions = (Button) findViewById(R.id.propositions);
-        propositions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPropositionsPage();
-            }
-        });
-
-        // statistic page listener
-        statistics = (Button) findViewById(R.id.statistics);
-        statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openStatisticsPage();
-            }
-        });
-
-        // connectUs listener
-        connectUs = (TextView) findViewById(R.id.connectUs0);
-        connectUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMail();
-            }
-        });
     }
 
-    public void openLoginPage() {
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-    }
-
-    public void openSettingsPage() {
+    public void openSettingsPage(View view) {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
-    public void openPropositionsPage() {
+    public void openPropositionsPage(View view) {
         Intent intent = new Intent(this, Propositions.class);
         startActivity(intent);
     }
 
-    public void openStatisticsPage() {
+    public void openStatisticsPage(View view) {
         Intent intent = new Intent(this, Statistics.class);
         startActivity(intent);
     }
 
-    public void sendMail() {
-
+    public void sendMail(View view) {
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.setType("plain/text");
 
@@ -112,5 +56,10 @@ public class HomeParliament extends AppCompatActivity {
 
         startActivity(Intent.createChooser(
                 emailIntent, "Send mail..."));
+    }
+
+    public void openLoginPage(View view) {
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
     }
 }
