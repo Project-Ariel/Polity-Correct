@@ -66,6 +66,15 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             Intent next = new Intent(Login.this, HomeCitizen.class);
+
+                            if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")) {
+                                //if user is parliament member
+                                next = new Intent(Login.this, HomeParliament.class);
+                            } else {
+                                //else- user is citizen
+                                next = new Intent(Login.this, HomeCitizen.class);
+                            }
+
                             Bundle b = new Bundle();
                             b.putString("AccountMail", txtAccountMail.getText().toString());
                             b.putString("Pass", txtPass.getText().toString());
