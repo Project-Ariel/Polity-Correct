@@ -48,17 +48,14 @@ public class Login extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        txtAccountMail = (EditText)findViewById(R.id.textUsermail_login);
-        txtPass = (EditText)findViewById(R.id.textPassword_login);
-
-        mail= txtAccountMail.getText().toString();
-        pass= txtPass.getText().toString();
+        txtAccountMail = (EditText) findViewById(R.id.textUsermail_login);
+        txtPass = (EditText) findViewById(R.id.textPassword_login);
     }
 
     //open Home page
     public void onClickLogin(View view) {
-        mail= txtAccountMail.getText().toString();
-        pass= txtPass.getText().toString();
+        mail = txtAccountMail.getText().toString();
+        pass = txtPass.getText().toString();
 
         mAuth.signInWithEmailAndPassword(mail, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -77,7 +74,7 @@ public class Login extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(Login.this, "Authentication failed.",
+                            Toast.makeText(Login.this, "ההתחברות נכשלה",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

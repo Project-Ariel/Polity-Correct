@@ -9,7 +9,7 @@ public class Citizen extends User{
 
     private String id;
 
-    public Citizen(String id, String userName, String password, String mail, Date yearOfBirth, UserType userType, PoliticalGroup pg) {
+    public Citizen(String id, String userName, String password, String mail, int yearOfBirth, UserType userType, int pg) {
         super(userName, password, mail, yearOfBirth, userType, pg);
         this.id=id;
 
