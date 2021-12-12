@@ -22,29 +22,45 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <Button
-        android:id="@+id/impossible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="נמנע"
+    <RadioGroup
+        android:layout_width="339dp"
+        android:layout_height="56dp"
+        android:layout_gravity="start"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintVertical_bias="0.4">
 
-    <Button
-        android:id="@+id/agreement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בעד"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.848"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        <RadioButton
+            android:id="@+id/agreement"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alef"
+            android:text="בעד"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/impossible"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alef"
+            android:text="נמנע"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/against"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alef"
+            android:text="נגד"
+            android:textSize="20sp" />
+    </RadioGroup>
+
 
     <TextView
         android:id="@+id/voteId"
@@ -63,18 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128" />
-
-    <Button
-        android:id="@+id/against"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="נגד"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
 
     <TextView
         android:id="@+id/voteDetails"
