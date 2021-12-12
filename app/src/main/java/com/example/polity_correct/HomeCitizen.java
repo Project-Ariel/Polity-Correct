@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeCitizen extends AppCompatActivity {
 
     private TextView accountMail;
@@ -26,6 +28,7 @@ public class HomeCitizen extends AppCompatActivity {
     }
 
     public void openLoginPage(View view) {
+        FirebaseAuth.getInstance().signOut(); // sign out a user
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
