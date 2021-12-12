@@ -1,20 +1,40 @@
 package com.example.polity_correct;
 
 import java.util.Date;
+import java.util.Set;
 
 public class PoliticalGroup {
     private String group_key;
     private String group_name;
     private String abbreviation;
-    private int number_of_PM;
     private String group_website;
+    private Set<String> citizens;
+    private Set<String> parliament;
 
-    public PoliticalGroup(String group_key, String group_name, String abbreviation, int number_of_PM, String group_website) {
+    public PoliticalGroup(String group_key, String group_name, String abbreviation,
+                                String group_website, Set<String> citizens, Set<String> parliament) {
         this.group_key = group_key;
         this.group_name = group_name;
         this.abbreviation = abbreviation;
-        this.number_of_PM = number_of_PM;
         this.group_website = group_website;
+        this.citizens = citizens;
+        this.parliament = parliament;
+    }
+
+    public Set<String> getCitizens() {
+        return citizens;
+    }
+
+    public void setCitizens(Set<String> citizens) {
+        this.citizens = citizens;
+    }
+
+    public Set<String> getParliament() {
+        return parliament;
+    }
+
+    public void setParliament(Set<String> parliament) {
+        this.parliament = parliament;
     }
 
     public String getGroup_key() {
@@ -39,14 +59,6 @@ public class PoliticalGroup {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
-    }
-
-    public int getNumber_of_PM() {
-        return number_of_PM;
-    }
-
-    public void setNumber_of_PM(int number_of_PM) {
-        this.number_of_PM = number_of_PM;
     }
 
     public String getGroup_website() {
