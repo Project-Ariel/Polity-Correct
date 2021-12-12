@@ -3,7 +3,6 @@ package com.example.polity_correct;
 import java.util.Date;
 
 public class User {
-//    private String id;
     private String userName;
     private String password;
     private String mail;
@@ -52,17 +51,8 @@ public class User {
         this.pg = pg;
     }
 
-    public boolean Vote(int proposition_key, int grade, StatusVote status){
-        //update DB
-        return true;
-    }
 }
 
-enum PoliticalGroup {
-    Yemina,
-    CaholLavan,
-    Merech
-}
 
 enum UserType{
     citizen,
