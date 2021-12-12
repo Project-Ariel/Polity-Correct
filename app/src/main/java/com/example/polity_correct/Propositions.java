@@ -10,22 +10,12 @@ import android.widget.ImageView;
 
 public class Propositions extends AppCompatActivity {
 
-    private ImageView logo;
     private Button[] votesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.propositions);
-
-        // logo listener
-        logo = (ImageView) findViewById(R.id.logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openHomePage();
-            }
-        });
 
         //vote listener
         int[] ids = new int[]{R.id.voteBtn0, R.id.voteBtn1, R.id.voteBtn2, R.id.voteBtn3, R.id.voteBtn4, R.id.voteBtn5, R.id.voteBtn6,
@@ -43,7 +33,7 @@ public class Propositions extends AppCompatActivity {
         }
     }
 
-    public void openHomePage() {
+    public void openHomePage(View view) {
         Intent intent = new Intent(this, HomeCitizen.class);
         startActivity(intent);
     }
