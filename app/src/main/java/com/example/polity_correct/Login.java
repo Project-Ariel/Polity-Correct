@@ -64,7 +64,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void onClickRegister() {
-        Intent intent = new Intent(this, Signin.class);
+        Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
 

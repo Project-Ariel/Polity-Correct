@@ -19,7 +19,7 @@
             android:name=".UserDetails"
             android:exported="false" />
         <activity
-            android:name=".Signin"
+            android:name=".Signup"
             android:exported="false" />
         <activity
             android:name=".Vote"

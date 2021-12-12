@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Signin extends AppCompatActivity {
+public class Signup extends AppCompatActivity {
     Button register;
     String mail, pass;
     EditText txt;
@@ -17,7 +17,7 @@ public class Signin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signin);
+        setContentView(R.layout.signup);
 
         mail= ((TextView) findViewById(R.id.textUsermail)).getText().toString();
         pass= ((TextView) findViewById(R.id.new_password)).getText().toString();
@@ -32,11 +32,11 @@ public class Signin extends AppCompatActivity {
         b.putString("Pass", pass);
         if(mail.contains("@KNESSET.GOV.IL")||mail.contains("@knesset.gov.il")){
            //if user is parliament member
-            next = new Intent(Signin.this, HomeParliament.class);
+            next = new Intent(Signup.this, HomeParliament.class);
         }
         else{
             //else- user is citizen
-            next = new Intent(Signin.this,UserDetails.class);
+            next = new Intent(Signup.this,UserDetails.class);
         }
         next.putExtras(b);
         startActivity(next);
