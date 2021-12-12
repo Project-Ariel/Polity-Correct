@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         txtAccountMail = (EditText)findViewById(R.id.textUsermail_login);
-        txtPass = (EditText)findViewById(R.id.password_login);
+        txtPass = (EditText)findViewById(R.id.textPassword_login);
 
         //home page listener
         login = (Button) findViewById(R.id.login);
@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
         });
 
         //register listener
-        register = (Button) findViewById(R.id.signin);
+        register = (Button) findViewById(R.id.signup);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
