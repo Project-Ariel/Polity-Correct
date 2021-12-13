@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeParliament">
 
-    <include layout="@layout/layout_home_page"/>
+    <include layout="@layout/layout_home_page" />
 
     <Button
         android:id="@+id/changePass"
@@ -15,6 +15,7 @@
         android:background="@drawable/round_button"
         android:fontFamily="@font/alef"
         android:gravity="center_vertical|center_horizontal"
+        android:layoutDirection="rtl"
         android:onClick="openSettingsPage"
         android:text="החלף סיסמא"
         android:textColor="#fff"
@@ -22,7 +23,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.528" />
@@ -34,15 +35,16 @@
         android:background="@drawable/round_button"
         android:fontFamily="@font/alef"
         android:gravity="center_vertical|center_horizontal"
-        android:shadowColor="#000000"
+        android:layoutDirection="rtl"
         android:onClick="openPropositionsPage"
+        android:shadowColor="#000000"
         android:text="צפה בחוקים"
         android:textColor="#fff"
         android:textSize="50px"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintHorizontal_bias="0.406"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.701" />
@@ -54,6 +56,7 @@
         android:background="@drawable/round_button"
         android:fontFamily="@font/alef"
         android:gravity="center_vertical|center_horizontal"
+        android:layoutDirection="rtl"
         android:onClick="openStatisticsPage"
         android:text="צפה בסטטיסטיקות"
         android:textColor="#fff"
@@ -61,7 +64,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.401" />

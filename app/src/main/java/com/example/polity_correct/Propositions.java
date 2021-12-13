@@ -1,47 +1,75 @@
 package com.example.polity_correct;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
 
 public class Propositions extends AppCompatActivity {
 
-    private Button[] votesButton;
+    private ListView listView;
+
+
+    // array objects
+    String list[] = {"רעות", "חוק", "Database", "Python",
+            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
+            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
+            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
+            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
+            "Java", "Operating System", "Compiler Design", "Android Development", "reut"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.propositions);
 
-        //vote listener
-        int[] ids = new int[]{R.id.voteBtn0, R.id.voteBtn1, R.id.voteBtn2, R.id.voteBtn3, R.id.voteBtn4, R.id.voteBtn5, R.id.voteBtn6,
-                R.id.voteBtn7, R.id.voteBtn8, R.id.voteBtn9, R.id.voteBtn10, R.id.voteBtn11};
-        votesButton = new Button[ids.length];
-        for (int i = 0; i < votesButton.length; i++) {
-            votesButton[i] = (Button) findViewById(ids[i]);
-            int finalI = i;
-            votesButton[i].setOnClickListener(new View.OnClickListener() {
+        listView = (ListView) findViewById(R.id.listView);
+
+        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view, R.id.itemTextView, list);
+        listView.setAdapter(arrayAdapter);
+
+
+    }
+
+
+    class listAdapter extends ArrayAdapter<String> {
+        public listAdapter(@NonNull Context context, int item_view, int itemTextView, String[] list) {
+            super(context, item_view, itemTextView, list);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            final View view = super.getView(position, convertView, parent);
+            final Button btn = (Button) view.findViewById(R.id.button_vote);
+            btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickVote(finalI);
+                    openVotePage(v,position);
                 }
             });
+            return view;
         }
     }
+    public void openVotePage(View view,int pos) {
+//        simpleListView.getAdapter().getView(R.id.button_vote, );
 
-    public void openHomePage(View view) {
-        Intent intent = new Intent(this, HomeCitizen.class);
-        startActivity(intent);
-    }
-
-    public void onClickVote(int id) {
         Intent next = new Intent(this, Vote.class);
         Bundle b = new Bundle();
-        b.putString("voteID", String.valueOf(id));
+        b.putString("proposition_key", ""+pos);
         next.putExtras(b);
         startActivity(next);
     }
