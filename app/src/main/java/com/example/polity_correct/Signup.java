@@ -18,10 +18,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
+
 
 public class Signup extends AppCompatActivity {
 
     String mail, pass, pass_valid;
+    Intent next;
+    User new_user;
 
     FirebaseFirestore db;
     static private FirebaseAuth mAuth;
@@ -52,30 +56,26 @@ public class Signup extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Intent next;
-                                Bundle b = new Bundle();
-                                b.putString("AccountMail", mail);
-                                b.putString("Pass", pass);
-
-                                if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")) {
-                                    //if user is parliament member
+                                if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")){
+                                    new_user= new ParliamentMember("",pass,mail,0000,-1,UserType.parliament,"default");
                                     next = new Intent(Signup.this, HomeParliament.class);
-                                } else {
-                                    //else- user is citizen
+                                    db.collection("users").document().set(new_user);
+                                }
+                                else{
+                                    new_user= new Citizen("00000000","",pass,mail,0000,-1,UserType.citizen,"default");
                                     next = new Intent(Signup.this, UserDetails.class);
                                 }
-                                next.putExtras(b);
+                                next.putExtra("user_obj",new_user);
                                 startActivity(next);
 
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(Signup.this, "Signup failed.",
                                         Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     });
+
         }
     }
 

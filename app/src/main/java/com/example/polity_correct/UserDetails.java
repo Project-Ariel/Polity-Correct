@@ -15,28 +15,36 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 public class UserDetails extends AppCompatActivity {
     AutoCompleteTextView autoCompleteText;
     ArrayAdapter<String> adapter_items;
+    FirebaseFirestore db;
     // We need to get this list from the DB
     String[] politicalGroups = {"ימינה", "כחול לבן", "העבודה", "ישראל ביתנו", "תקווה חדשה", "מרצ", "הציונות הדתית", "הרשימה המשותפת", "רעמ", "יהדות התורה", "שס", "יש עתיד", "הליכוד"};
     TextView name;
     TextView id;
     TextView date;
+    User user;
+    Intent next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_details);
+
+        db = FirebaseFirestore.getInstance();
+
+        user = getIntent().getExtras().getParcelable("user_obj");
+
         name = ((TextView) findViewById(R.id.User_full_name));
         id = ((TextView) findViewById(R.id.User_ID));
         date = ((TextView) findViewById(R.id.User_year_of_birth));
 
         autoCompleteText = findViewById(R.id.autoCompleteTextView);
-        //String PG[]= getResources().getStringArray(R.array.מפלגות);
         adapter_items = new ArrayAdapter<String>(this, R.layout.drop_down_item_political_group, politicalGroups);
         autoCompleteText.setAdapter(adapter_items);
         autoCompleteText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -44,6 +52,7 @@ public class UserDetails extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Item: " + items, Toast.LENGTH_SHORT).show();
+                user.setKey_pg(items);
             }
         });
     }
@@ -55,30 +64,30 @@ public class UserDetails extends AppCompatActivity {
         // Check which radio button was clicked
         switch (view.getId()) {
             case R.id.male:
-                if (checked)
-                    // Pirates are the best
+                if (checked) {
+                    user.setGander(1);
                     break;
+                }
             case R.id.female:
-                if (checked)
-                    // Ninjas rule
+                if (checked) {
+                    user.setGander(0);
                     break;
+                }
         }
     }
 
     public void onClickOK(View view) {
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users/"+FirebaseAuth.getInstance().getUid());
-        User user = new Citizen(
-                id.getText().toString(), name.getText().toString(), "pass", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail(),Integer.getInteger(date.getText().toString()), UserType.citizen, 0);
-        myRef.setValue(user);
+        user.setUserName(name.getText().toString());
+        user.setYearOfBirth(Integer.valueOf(date.getText().toString()));
+        user.setUserType(UserType.citizen);
+        //user.setId(id.toString());
 
-        Intent next;
-        Bundle b = new Bundle();
-        b.putString("User name", name.getText().toString());
+        db.collection("users").document().set(user);
+
         next = new Intent(UserDetails.this, HomeCitizen.class);
-        next.putExtras(b);
+        next.putExtra("curr_user",user);
         startActivity(next);
+
     }
 }
