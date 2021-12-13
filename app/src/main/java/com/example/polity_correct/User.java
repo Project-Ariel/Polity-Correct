@@ -1,21 +1,49 @@
 package com.example.polity_correct;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
     private String userName;
     private String password;
     private String mail;
     private int yearOfBirth;
+    private int gander;
     private UserType userType;
-    private int key_pg;
+    private String key_pg;
 
-    public User(String userName, String password, String mail, int yearOfBirth, UserType userType, int pg){
+    public User(){}
+
+    public User(String userName, String password, String mail, int yearOfBirth, int gander, UserType userType, String pg){
         this.userName=userName;
         this.password=password;
         this.mail=mail;
         this.yearOfBirth=yearOfBirth;
+        this.gander=gander;
         this.userType=userType;
         this.key_pg=pg;
     }
+
+    protected User(Parcel in) {
+        userName = in.readString();
+        password = in.readString();
+        mail = in.readString();
+        yearOfBirth = in.readInt();
+        gander= in.readInt();
+        key_pg = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getUserName() {
         return userName;
@@ -37,23 +65,75 @@ public class User {
         return userType;
     }
 
-    public int getPg() {
-        return key_pg;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setPg(int pg) {
-        this.key_pg = pg;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public String getKey_pg() {
+        return key_pg;
+    }
+
+    public void setKey_pg(String key_pg) {
+        this.key_pg = key_pg;
+    }
+
+    public int getGander() {
+        return gander;
+    }
+
+    public void setGander(int gander) {
+        this.gander = gander;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(mail);
+        dest.writeInt(yearOfBirth);
+        dest.writeString(key_pg);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", mail='" + mail + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                ", gander=" + gander +
+                ", userType=" + userType +
+                ", key_pg=" + key_pg +
+                '}';
+    }
 }
+
+
 
 enum UserType{
     citizen,
-    parliament
+    parliament,
 }
 
 enum StatusVote{
