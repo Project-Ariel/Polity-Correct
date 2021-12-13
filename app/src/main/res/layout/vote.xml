@@ -23,6 +23,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <RadioGroup
+        android:id="@+id/radiobtns"
         android:layout_width="339dp"
         android:layout_height="56dp"
         android:layout_gravity="start"
@@ -34,7 +35,8 @@
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4">
+        app:layout_constraintVertical_bias="0.4"
+        android:checkedButton="@+id/impossible">
 
         <RadioButton
             android:id="@+id/agreement"
@@ -49,7 +51,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
-            android:text="@string/Noun"
+            android:text="@string/impossible"
             android:textSize="20sp" />
 
         <RadioButton
@@ -121,13 +123,15 @@
         android:id="@+id/sendVote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickSend"
         android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
+        app:layout_constraintVertical_bias="0.688"
+        tools:ignore="OnClick" />
 
     <ImageView
         android:id="@+id/logo"
