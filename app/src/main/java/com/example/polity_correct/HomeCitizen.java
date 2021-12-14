@@ -8,16 +8,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeCitizen extends AppCompatActivity {
 
     private TextView userName;
+    public static ArrayList<Proposition> propositions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +29,7 @@ public class HomeCitizen extends AppCompatActivity {
         setContentView(R.layout.home_citizen);
 
         userName = (TextView) findViewById(R.id.userName);
-        FirebaseDatabase database=FirebaseDatabase.getInstance("https://polity-correct-default-rtdb.firebaseio.com/");
-        DatabaseReference myRef=database.getReference("users/"+FirebaseAuth.getInstance().getUid()+"/userName");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name= snapshot.getValue(String.class);
-                userName.setText(name);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        //we need to do :: userName.setText(name);
     }
 
     public void openLoginPage(View view) {
@@ -54,8 +44,25 @@ public class HomeCitizen extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
+
         Intent intent = new Intent(this, Propositions.class);
-        startActivity(intent);
+        FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), new HashMap<>(), new HashMap<>());
+                                propositions.add(p);
+                            }
+                            intent.putExtra("propositions", propositions);
+                            startActivity(intent);
+
+                        } else {
+                        }
+                    }
+                });
     }
 
     public void openResultsPage(View view) {

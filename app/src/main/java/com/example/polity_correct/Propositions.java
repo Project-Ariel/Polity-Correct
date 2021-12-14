@@ -5,48 +5,41 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-
 public class Propositions extends AppCompatActivity {
 
     private ListView listView;
-
-
-    // array objects
-    String list[] = {"רעות", "חוק", "Database", "Python",
-            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
-            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
-            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
-            "Java", "Operating System", "Compiler Design", "Android Development", "C-Programming", "Data Structure", "Database", "Python",
-            "Java", "Operating System", "Compiler Design", "Android Development", "reut"};
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<Proposition> propositions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.propositions);
+        Intent in = getIntent();
+        propositions= (ArrayList<Proposition>) in.getSerializableExtra("propositions");
+        for (Proposition i : propositions) {
+            titles.add(i.getTitle());
+        }
 
         listView = (ListView) findViewById(R.id.listView);
 
-        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view, R.id.itemTextView, list);
+        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view, R.id.itemTextView, titles);
         listView.setAdapter(arrayAdapter);
-
-
     }
 
 
     class listAdapter extends ArrayAdapter<String> {
-        public listAdapter(@NonNull Context context, int item_view, int itemTextView, String[] list) {
+        public listAdapter(@NonNull Context context, int item_view, int itemTextView, ArrayList<String> list) {
             super(context, item_view, itemTextView, list);
         }
 
@@ -58,19 +51,16 @@ public class Propositions extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openVotePage(v,position);
+                    openVotePage(v, position);
                 }
             });
             return view;
         }
     }
-    public void openVotePage(View view,int pos) {
-//        simpleListView.getAdapter().getView(R.id.button_vote, );
 
+    public void openVotePage(View view, int pos) {
         Intent next = new Intent(this, Vote.class);
-        Bundle b = new Bundle();
-        b.putString("proposition_key", ""+pos);
-        next.putExtras(b);
+        next.putExtra("current proposition", propositions.get(pos));
         startActivity(next);
     }
 }

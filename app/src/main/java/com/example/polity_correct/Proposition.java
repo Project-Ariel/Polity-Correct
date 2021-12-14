@@ -1,17 +1,19 @@
 package com.example.polity_correct;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Proposition {
+public class Proposition implements Serializable {
     private String key;
     private String title;
-    private int status;
+    private String status;
     private String description;
-    private Category category;
+//    private Category category;
+    private String category;
     private HashMap<Integer,StatusVote> curr_votes;
     private HashMap<String, StatusVote> mp_results;
 
-    public Proposition(String key, String title, int status, String description, Category category,
+    public Proposition(String key, String title, String status, String description, String category,
                        HashMap<Integer, StatusVote> curr_votes, HashMap<String, StatusVote> mp_results) {
         this.key = key;
         this.title = title;
@@ -22,7 +24,7 @@ public class Proposition {
         this.mp_results = mp_results;
     }
 
-    public void update_status(int status){ this.status= status;}
+    public void update_status(String status){ this.status= status;}
 
     public String getKey() {
         return key;
@@ -40,12 +42,7 @@ public class Proposition {
         return mp_results;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
-}
-
-enum Category{
-    Social,
-    Economy
 }

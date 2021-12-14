@@ -64,9 +64,9 @@
 
 
     <TextView
-        android:id="@+id/voteId"
-        android:layout_width="260dp"
-        android:layout_height="46dp"
+        android:id="@+id/propositionTitle"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
         android:background="@drawable/back"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -75,32 +75,30 @@
         android:textDirection="rtl"
         android:textSize="20sp"
         android:textStyle="bold|italic"
+        android:minHeight="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128" />
 
     <TextView
-        android:id="@+id/voteDetails"
-        android:layout_width="260dp"
-        android:layout_height="98dp"
+        android:id="@+id/propositionDetails"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:background="@drawable/back"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="@string/details"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textDirection="rtl"
-        android:textSize="50px"
+        android:textSize="30px"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/grading"

@@ -3,7 +3,6 @@ package com.example.polity_correct;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +31,7 @@ public class Vote extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
-    private TextView txt_proposition_key;
+    private TextView txt_proposition_title, getTxt_proposition_description;
     private String user_id, proposition_key;
     private int user_choice;
     private double vote_grade;
@@ -43,11 +42,6 @@ public class Vote extends AppCompatActivity {
     private RatingBar ratingbar;
     private Button btnSend;
 
-//    Long tsLong = System.currentTimeMillis()/1000;
-//    String ts = tsLong.toString();
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,18 +51,20 @@ public class Vote extends AppCompatActivity {
 
         addListenerOnButton();
 
-        txt_proposition_key = (TextView) findViewById(R.id.voteId);
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            proposition_key = b.getString("proposition_key");
-            txt_proposition_key.setText("Proposition key:" + proposition_key);
+        txt_proposition_title = (TextView) findViewById(R.id.propositionTitle);
+        getTxt_proposition_description = (TextView) findViewById(R.id.propositionDetails);
+        Intent i = getIntent();
+        if (i != null) {
+            Proposition p = (Proposition) i.getSerializableExtra("current proposition");
+            txt_proposition_title.setText(p.getTitle());
+            getTxt_proposition_description.setText(p.getDescription());
         }
     }
 
     //Extract user choice & Extract vote grade
     private void addListenerOnButton() {
 
-        ratingbar=(RatingBar)findViewById(R.id.ratingBar);
+        ratingbar = (RatingBar) findViewById(R.id.ratingBar);
         radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
         btnSend = (Button) findViewById(R.id.sendVote);
 
@@ -77,7 +73,7 @@ public class Vote extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String rating=String.valueOf(ratingbar.getRating());
+                String rating = String.valueOf(ratingbar.getRating());
                 vote_grade = Double.parseDouble(rating);
 
                 // get selected radio button from radioGroup
@@ -86,7 +82,7 @@ public class Vote extends AppCompatActivity {
                 // find the radiobutton by returned id
                 radioBtn = (RadioButton) findViewById(selectedId);
 
-                String  vote_string = (String) radioBtn.getText();
+                String vote_string = (String) radioBtn.getText();
                 switch (vote_string) {
                     case "נגד":
                         System.out.println("נגד");
@@ -122,14 +118,10 @@ public class Vote extends AppCompatActivity {
         });
     }
 
-
     public void onClickSend(View view) {
-
-
-
     }
 
-    public void updateDB(){
+    public void updateDB() {
         // Create a new user with a first and last name
         Map<String, Object> vote = new HashMap<>();
         vote.put("user_id", user_id);
