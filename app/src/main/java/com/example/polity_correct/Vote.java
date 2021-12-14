@@ -56,6 +56,7 @@ public class Vote extends AppCompatActivity {
         Intent i = getIntent();
         if (i != null) {
             Proposition p = (Proposition) i.getSerializableExtra("current proposition");
+            proposition_key = p.getKey();
             txt_proposition_title.setText(p.getTitle());
             getTxt_proposition_description.setText(p.getDescription());
         }
@@ -63,6 +64,7 @@ public class Vote extends AppCompatActivity {
 
     //Extract user choice & Extract vote grade
     private void addListenerOnButton() {
+        Intent intent = new Intent(this, Propositions.class);
 
         ratingbar = (RatingBar) findViewById(R.id.ratingBar);
         radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
@@ -113,7 +115,8 @@ public class Vote extends AppCompatActivity {
                 vote_date = new Timestamp(currentTime);
 
                 updateDB();
-                System.out.println("su");
+
+                startActivity(intent);
             }
         });
     }
