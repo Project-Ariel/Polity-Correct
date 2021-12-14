@@ -95,41 +95,6 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    public void updateDBOnClick(View view) {
-
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("fullName", "my name");
-        user.put("gender", "male");
-        user.put("mail", txtAccountMail.getText().toString());
-        user.put("password", txtPass.getText().toString());
-        user.put("politicalGroupKey", "LoveMe");
-        user.put("userType", 1);
-        user.put("yearOfBirth", 1234);
-
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    private static final String TAG = " ";
-
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    private final Object TAG = " ";
-
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w((String) TAG, "Error adding document", e);
-                    }
-                });
-    }
-
     @Override
     public void onBackPressed() {
 
