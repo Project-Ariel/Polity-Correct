@@ -83,7 +83,7 @@ public class UserDetails extends AppCompatActivity {
         user.setUserType(UserType.citizen);
 
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        db.collection("users").document(userId).set(user);
+        db.collection("Users").document(userId).set(user);
 
         next = new Intent(UserDetails.this, HomeCitizen.class);
         next.putExtra("curr_user",user);

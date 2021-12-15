@@ -59,7 +59,7 @@ public class Signup extends AppCompatActivity {
                                 if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")){
                                     new_user= new ParliamentMember("",pass,mail,0000,-1,UserType.parliament,"default");
                                     next = new Intent(Signup.this, HomeParliament.class);
-                                    db.collection("users").document().set(new_user);
+                                    db.collection("Users").document().set(new_user);
                                 }
                                 else{
                                     new_user= new Citizen("00000000","",pass,mail,0000,-1,UserType.citizen,"default");
