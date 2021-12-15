@@ -64,7 +64,7 @@ public class Vote extends AppCompatActivity {
 
     //Extract user choice & Extract vote grade
     private void addListenerOnButton() {
-        Intent intent = new Intent(this, Propositions.class);
+        Intent intent = new Intent(this, HomeCitizen.class);
 
         ratingbar = (RatingBar) findViewById(R.id.ratingBar);
         radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
