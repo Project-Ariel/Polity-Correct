@@ -53,8 +53,10 @@ public class HomeCitizen extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), new HashMap<>(), new HashMap<>());
-                                propositions.add(p);
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                                if (!p.wasVoted()) {
+                                    propositions.add(p);
+                                }
                             }
                             intent.putExtra("propositions", propositions);
                             startActivity(intent);
