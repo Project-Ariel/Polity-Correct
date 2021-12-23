@@ -8,20 +8,19 @@ public class Proposition implements Serializable {
     private String title;
     private String status;
     private String description;
-//    private Category category;
+    //    private Category category;
     private String category;
-    private HashMap<Integer,StatusVote> curr_votes;
-    private HashMap<String, StatusVote> mp_results;
+    private boolean voted;
+
 
     public Proposition(String key, String title, String status, String description, String category,
-                       HashMap<Integer, StatusVote> curr_votes, HashMap<String, StatusVote> mp_results) {
+                       boolean voted) {
         this.key = key;
         this.title = title;
         this.status = status;
         this.description = description;
         this.category = category;
-        this.curr_votes = curr_votes;
-        this.mp_results = mp_results;
+        this.voted = voted;
     }
 
     public void update_status(String status){ this.status= status;}
@@ -38,11 +37,11 @@ public class Proposition implements Serializable {
         return description;
     }
 
-    public HashMap<String, StatusVote> getMp_results() {
-        return mp_results;
-    }
-
     public String getCategory() {
         return category;
+    }
+
+    public boolean wasVoted() {
+        return voted;
     }
 }
