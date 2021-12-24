@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class HomeCitizen extends AppCompatActivity {
 
     private TextView userName;
-    public static ArrayList<Proposition> propositions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +29,6 @@ public class HomeCitizen extends AppCompatActivity {
         userName = (TextView) findViewById(R.id.userName);
         //***************we need to do :: userName.setText(name);
 
-
-        //get propositions from DB
-        FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
     }
 
     public void openLoginPage(View view) {
@@ -59,17 +43,47 @@ public class HomeCitizen extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
-
         Intent intent = new Intent(this, Propositions.class);
-        intent.putExtra("propositions", propositions);
-        startActivity(intent);
-
+        ArrayList<Proposition> propositions = new ArrayList<>();
+        FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                                if (!p.wasVoted()) {
+                                    propositions.add(p);
+                                }
+                            }
+                            intent.putExtra("propositions", propositions);
+                            startActivity(intent);
+                        }
+                    }
+                });
     }
 
     public void openResultsPage(View view) {
         Intent intent = new Intent(this, Results.class);
-        intent.putExtra("propositions", propositions);
-        startActivity(intent);
+        ArrayList<Proposition> propositions = new ArrayList<>();
+        FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                                if (p.wasVoted()) {
+                                    propositions.add(p);
+                                }
+                            }
+                            intent.putExtra("propositions", propositions);
+                            startActivity(intent);
+                        }
+                    }
+                });
     }
 
     public void sendMail(View view) {

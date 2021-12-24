@@ -17,6 +17,9 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
 
     private Spinner dropdown;
     private CardView result;
+    private TextView proposion_title;
+    private ArrayList<Proposition> propositions;
+    private Proposition curr_proposition;
 
     ArrayList<String> titles = new ArrayList<>();
 
@@ -33,11 +36,13 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
 
         Intent i = getIntent();
         if (i != null) {
-            ArrayList<Proposition> propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
+            System.out.println("in intent Result ");
+            propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
             for (Proposition p : propositions) {
                 if (p.wasVoted())
                     titles.add(p.getTitle());
             }
+            System.out.println(titles.toString());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
@@ -47,7 +52,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        System.out.println(parent.getItemAtPosition(position).toString());
+        curr_proposition=propositions.get(position);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -57,5 +62,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     public void openResultsView(View view) {
         result = (CardView) findViewById(R.id.result_view);
         result.setVisibility(View.VISIBLE);
+        proposion_title= (TextView) findViewById(R.id.proposion_title);
+        proposion_title.setText(curr_proposition.getTitle());
     }
 }

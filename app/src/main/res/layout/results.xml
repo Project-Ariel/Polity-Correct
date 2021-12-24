@@ -69,9 +69,9 @@
         app:layout_constraintVertical_bias="0.65">
 
         <TextView
+            android:id="@+id/proposion_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="תוצאות חוקים"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
