@@ -18,7 +18,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     private Spinner dropdown;
     private CardView result;
 
-    ArrayList<String> titles= new ArrayList<>();
+    ArrayList<String> titles = new ArrayList<>();
 
 
     @Override
@@ -35,7 +35,8 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
         if (i != null) {
             ArrayList<Proposition> propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
             for (Proposition p : propositions) {
-                titles.add(p.getTitle());
+                if (p.wasVoted())
+                    titles.add(p.getTitle());
             }
         }
 

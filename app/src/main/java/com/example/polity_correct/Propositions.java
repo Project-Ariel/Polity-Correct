@@ -31,9 +31,10 @@ public class Propositions extends AppCompatActivity {
         title.setText("מה חדש?");
 
         Intent in = getIntent();
-        propositions= (ArrayList<Proposition>) in.getSerializableExtra("propositions");
+        propositions = (ArrayList<Proposition>) in.getSerializableExtra("propositions");
         for (Proposition i : propositions) {
-            titles.add(i.getTitle());
+            if (!i.wasVoted())
+                titles.add(i.getTitle());
         }
 
         listView = (ListView) findViewById(R.id.listView);
