@@ -1,6 +1,7 @@
 package com.example.polity_correct;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class PoliticalGroup {
@@ -8,33 +9,31 @@ public class PoliticalGroup {
     private String group_name;
     private String abbreviation;
     private String group_website;
-    private Set<String> citizens;
-    private Set<String> parliament;
+    private Set<String> citizens= new HashSet<>();
+    private Set<String> parliaments= new HashSet<>();;
 
     public PoliticalGroup(String group_key, String group_name, String abbreviation,
-                                String group_website, Set<String> citizens, Set<String> parliament) {
+                                String group_website) {
         this.group_key = group_key;
         this.group_name = group_name;
         this.abbreviation = abbreviation;
         this.group_website = group_website;
-        this.citizens = citizens;
-        this.parliament = parliament;
     }
 
     public Set<String> getCitizens() {
         return citizens;
     }
 
-    public void setCitizens(Set<String> citizens) {
-        this.citizens = citizens;
+    public void addCitizens(String citizen) {
+        this.citizens.add(citizen);
     }
 
     public Set<String> getParliament() {
-        return parliament;
+        return parliaments;
     }
 
-    public void setParliament(Set<String> parliament) {
-        this.parliament = parliament;
+    public void addParliament(String parliament) {
+        this.parliaments.add(parliament);
     }
 
     public String getGroup_key() {
