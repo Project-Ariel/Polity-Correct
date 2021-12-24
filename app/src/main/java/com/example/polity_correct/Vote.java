@@ -42,12 +42,16 @@ public class Vote extends AppCompatActivity {
     private RatingBar ratingbar;
     private Button btnSend;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vote);
 
         db = FirebaseFirestore.getInstance();
+
+        TextView title = (TextView) findViewById(R.id.title_page);
+        title.setText("הצבעה");
 
         addListenerOnButton();
 

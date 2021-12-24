@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,10 @@ public class Propositions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.propositions);
+
+        TextView title = (TextView) findViewById(R.id.title_page);
+        title.setText("מה חדש?");
+
         Intent in = getIntent();
         propositions= (ArrayList<Proposition>) in.getSerializableExtra("propositions");
         for (Proposition i : propositions) {
