@@ -16,7 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeCitizen extends AppCompatActivity {
 
@@ -29,7 +28,23 @@ public class HomeCitizen extends AppCompatActivity {
         setContentView(R.layout.home_citizen);
 
         userName = (TextView) findViewById(R.id.userName);
-        //we need to do :: userName.setText(name);
+        //***************we need to do :: userName.setText(name);
+
+
+        //get propositions from DB
+        FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), false);
+                                propositions.add(p);
+                            }
+                        }
+                    }
+                });
     }
 
     public void openLoginPage(View view) {
@@ -46,29 +61,14 @@ public class HomeCitizen extends AppCompatActivity {
     public void openPropositionsPage(View view) {
 
         Intent intent = new Intent(this, Propositions.class);
-        FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                                if (!p.wasVoted()) {
-                                    propositions.add(p);
-                                }
-                            }
-                            intent.putExtra("propositions", propositions);
-                            startActivity(intent);
+        intent.putExtra("propositions", propositions);
+        startActivity(intent);
 
-                        } else {
-                        }
-                    }
-                });
     }
 
     public void openResultsPage(View view) {
         Intent intent = new Intent(this, Results.class);
+        intent.putExtra("propositions", propositions);
         startActivity(intent);
     }
 

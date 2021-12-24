@@ -1,5 +1,6 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,11 +8,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeParliament extends AppCompatActivity {
 
     private TextView accountMail;
+    public static ArrayList<Proposition> propositions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +33,23 @@ public class HomeParliament extends AppCompatActivity {
         if (b != null) {
             accountMail.setText(b.getString("AccountMail"));
         }
+
+
+
+        //get propositions from DB
+        FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), false);
+                                propositions.add(p);
+                            }
+                        }
+                    }
+                });
     }
 
     public void openSettingsPage(View view) {
@@ -36,7 +63,8 @@ public class HomeParliament extends AppCompatActivity {
     }
 
     public void openStatisticsPage(View view) {
-        Intent intent = new Intent(this, Statistics.class);
+        Intent intent = new Intent(this, ChooseResultUsers.class);
+        intent.putExtra("propositions", propositions);
         startActivity(intent);
     }
 
