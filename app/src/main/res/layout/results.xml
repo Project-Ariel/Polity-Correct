@@ -6,15 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".Results">
 
-    <include layout="@layout/layout_standard_page" />
+    <include layout="@layout/layout_standard_page"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/title_page"
+        android:layout_width="81dp"
+        android:layout_height="36dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="בחר חוק"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <Spinner
+        android:id="@+id/spinnerProp"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:layoutDirection="rtl"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <Button
+        android:id="@+id/login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Results"
+        android:layout_height="49dp"
+        android:backgroundTint="#5E00BCD4"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="צפה"
+        android:onClick="openResultsView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/result_view"
+        android:layoutDirection="rtl"
+        android:layout_width="350dp"
+        android:layout_height="430dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#5E00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="תוצאות חוקים"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
