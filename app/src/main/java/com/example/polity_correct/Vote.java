@@ -36,7 +36,7 @@ public class Vote extends AppCompatActivity {
     private int user_choice;
     private double vote_grade;
     private Timestamp vote_date;
-
+    Map<String, Object> vote;
     private RadioGroup radioGroup;
     private RadioButton radioBtn;
     private RatingBar ratingbar;
@@ -117,28 +117,26 @@ public class Vote extends AppCompatActivity {
                 //Extract vote date
                 Date currentTime = Calendar.getInstance().getTime();
                 vote_date = new Timestamp(currentTime);
-
                 updateDB();
-
                 startActivity(intent);
             }
         });
     }
 
     public void onClickSend(View view) {
+        //Login.user.Vote(proposition_key,vote_grade,user_choice,vote_date);
     }
 
     public void updateDB() {
+        // Add a new document with a generated ID
         // Create a new user with a first and last name
-        Map<String, Object> vote = new HashMap<>();
+        vote = new HashMap<>();
         vote.put("user_id", user_id);
         vote.put("proposition_key", proposition_key);
         vote.put("user_choice", user_choice);
         vote.put("vote_grade", vote_grade);
         vote.put("vote_date", vote_date);
 
-
-        // Add a new document with a generated ID
         db.collection("Votes")
                 .add(vote)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
