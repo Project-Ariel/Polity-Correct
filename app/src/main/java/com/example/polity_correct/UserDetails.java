@@ -13,11 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Objects;
 
 public class UserDetails extends AppCompatActivity {
     AutoCompleteTextView autoCompleteText;
@@ -28,7 +24,7 @@ public class UserDetails extends AppCompatActivity {
     TextView name;
     TextView id;
     TextView date;
-    User user;
+    User curr_user;
     Intent next;
 
     @Override
@@ -38,7 +34,7 @@ public class UserDetails extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        user = getIntent().getExtras().getParcelable("user_obj");
+        curr_user = getIntent().getExtras().getParcelable("user_obj");
 
         name = ((TextView) findViewById(R.id.User_full_name));
         id = ((TextView) findViewById(R.id.User_ID));
@@ -52,7 +48,7 @@ public class UserDetails extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Item: " + items, Toast.LENGTH_SHORT).show();
-                user.setKey_pg(items);
+                curr_user.setKey_pg(items);
             }
         });
     }
@@ -65,12 +61,12 @@ public class UserDetails extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.male:
                 if (checked) {
-                    user.setGander(1);
+                    curr_user.setGander(1);
                     break;
                 }
             case R.id.female:
                 if (checked) {
-                    user.setGander(0);
+                    curr_user.setGander(0);
                     break;
                 }
         }
@@ -78,15 +74,16 @@ public class UserDetails extends AppCompatActivity {
 
     public void onClickOK(View view) {
 
-        user.setUserName(name.getText().toString());
-        user.setYearOfBirth(Integer.valueOf(date.getText().toString()));
-        user.setUserType(UserType.citizen);
+        curr_user.setUserName(name.getText().toString());
+        curr_user.setYearOfBirth(Integer.valueOf(date.getText().toString()));
+        curr_user.setUserType(UserType.citizen);
 
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        db.collection("Users").document(userId).set(user);
+        db.collection("Users").document(userId).set(curr_user);
+        Login.user= curr_user;
 
         next = new Intent(UserDetails.this, HomeCitizen.class);
-        next.putExtra("curr_user",user);
+        next.putExtra("curr_user", curr_user);
         startActivity(next);
 
     }

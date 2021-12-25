@@ -25,7 +25,7 @@ public class Signup extends AppCompatActivity {
 
     String mail, pass, pass_valid;
     Intent next;
-    User new_user;
+    static User new_user;
 
     FirebaseFirestore db;
     static private FirebaseAuth mAuth;
@@ -60,6 +60,7 @@ public class Signup extends AppCompatActivity {
                                     new_user= new ParliamentMember("",pass,mail,0000,-1,UserType.parliament,"default");
                                     next = new Intent(Signup.this, HomeParliament.class);
                                     db.collection("Users").document().set(new_user);
+                                    Login.user=new_user;
                                 }
                                 else{
                                     new_user= new Citizen("00000000","",pass,mail,0000,-1,UserType.citizen,"default");
