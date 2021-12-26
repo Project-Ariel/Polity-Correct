@@ -1,6 +1,8 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private HashMap<Long, Integer> res;
     private Spinner dropdown;
-    ArrayList<String> titles= new ArrayList<>();
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<Proposition> propositions;
+    private Proposition curr_proposition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +40,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
         Intent i = getIntent();
         if (i != null) {
-            ArrayList<Proposition> propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
+            propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
             for (Proposition p : propositions) {
                 titles.add(p.getTitle());
             }
@@ -42,6 +54,8 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         System.out.println(parent.getItemAtPosition(position).toString());
+        curr_proposition = propositions.get(position);
+
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -49,8 +63,35 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
+        res = new HashMap<>();
+        res.put(0L, 0); // Against
+        res.put(1L, 0); // Impossible
+        res.put(2L, 0); // Pro
+
+
         Intent intent = new Intent(this, Statistics.class);
-        startActivity(intent);
+        FirebaseFirestore.getInstance().collection("Votes")
+                .whereEqualTo("proposition_key", curr_proposition.getKey())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                long userChoice = (long) document.get("user_choice");
+                                res.put(userChoice, res.get(userChoice) + 1);
+
+                            }
+
+                            intent.putExtra("result", res);
+
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+
     }
 
     public void onClickSpecificPoliticalGroup(View view) {

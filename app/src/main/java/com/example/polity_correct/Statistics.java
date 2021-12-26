@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class Statistics extends AppCompatActivity {
 
     @Override
@@ -14,5 +16,11 @@ public class Statistics extends AppCompatActivity {
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("סטטיסטיקות");
+
+
+        HashMap<Integer, Integer> res = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("result");
+        System.out.println(res);
+
+
     }
 }
