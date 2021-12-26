@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private HashMap<Long, Integer> res;
+
     private Spinner dropdown;
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<Proposition> propositions;
@@ -63,11 +63,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
-        res = new HashMap<>();
-        res.put(0L, 0); // Against
-        res.put(1L, 0); // Impossible
-        res.put(2L, 0); // Pro
-
+        int [] res = {0,0,0}; // [Against, Impossible, Pro]
 
         Intent intent = new Intent(this, Statistics.class);
         FirebaseFirestore.getInstance().collection("Votes")
@@ -80,7 +76,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 long userChoice = (long) document.get("user_choice");
-                                res.put(userChoice, res.get(userChoice) + 1);
+                                res[(int)userChoice]++;
 
                             }
                             intent.putExtra("proposition_title", curr_proposition.getTitle());
