@@ -20,7 +20,7 @@ public class UserDetails extends AppCompatActivity {
     ArrayAdapter<String> adapter_items;
     FirebaseFirestore db;
     // We need to get this list from the DB
-    String[] politicalGroups = {"ימינה", "כחול לבן", "העבודה", "ישראל ביתנו", "תקווה חדשה", "מרצ", "הציונות הדתית", "הרשימה המשותפת", "רעמ", "יהדות התורה", "שס", "יש עתיד", "הליכוד"};
+    String[] politicalGroups = {"ימינה", "כחול לבן", "העבודה", "ישראל ביתנו", "תקווה חדשה", "מרצ", "הציונות הדתית", "הרשימה המשותפת", "רע\"ם", "יהדות התורה", "ש\"ס", "יש עתיד", "הליכוד"};
     TextView name;
     TextView id;
     TextView date;
