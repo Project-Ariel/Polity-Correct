@@ -83,7 +83,8 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
                                 res.put(userChoice, res.get(userChoice) + 1);
 
                             }
-
+                            intent.putExtra("proposition_title", curr_proposition.getTitle());
+                            intent.putExtra("pg", "כל המשתמשים");
                             intent.putExtra("result", res);
 
                             startActivity(intent);
@@ -96,6 +97,8 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     public void onClickSpecificPoliticalGroup(View view) {
         Intent intent = new Intent(this, Statistics.class);
+        intent.putExtra("pg", "specific");
+
         startActivity(intent);
     }
 }
