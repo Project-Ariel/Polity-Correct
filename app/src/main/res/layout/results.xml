@@ -69,7 +69,7 @@
         app:layout_constraintVertical_bias="0.65">
 
         <TextView
-            android:id="@+id/proposion_title"
+            android:id="@+id/proposition_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
