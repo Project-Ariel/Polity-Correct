@@ -57,13 +57,13 @@ public class Signup extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")){
-                                    new_user= new ParliamentMember("",pass,mail,0000,-1,UserType.parliament,"default");
+                                    new_user= new ParliamentMember("",pass,mail, 0000L,-1,UserType.parliament,"default");
                                     next = new Intent(Signup.this, HomeParliament.class);
                                     db.collection("Users").document().set(new_user);
-                                    Login.user=new_user;
+                                    Login.setCurr_user(new_user);
                                 }
                                 else{
-                                    new_user= new Citizen("00000000","",pass,mail,0000,-1,UserType.citizen,"default");
+                                    new_user= new Citizen("00000000","",pass,mail,0000L,-1,UserType.citizen,"default");
                                     next = new Intent(Signup.this, UserDetails.class);
                                 }
                                 next.putExtra("user_obj",new_user);

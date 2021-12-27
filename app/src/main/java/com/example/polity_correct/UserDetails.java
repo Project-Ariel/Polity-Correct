@@ -75,12 +75,12 @@ public class UserDetails extends AppCompatActivity {
     public void onClickOK(View view) {
 
         curr_user.setUserName(name.getText().toString());
-        curr_user.setYearOfBirth(Integer.valueOf(date.getText().toString()));
+        curr_user.setYearOfBirth(Long.valueOf(date.getText().toString()));
         curr_user.setUserType(UserType.citizen);
 
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         db.collection("Users").document(userId).set(curr_user);
-        Login.user= curr_user;
+        Login.setCurr_user(curr_user);
 
         next = new Intent(UserDetails.this, HomeCitizen.class);
         next.putExtra("curr_user", curr_user);
