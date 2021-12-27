@@ -8,18 +8,16 @@ public class User implements Parcelable {
     private String password;
     private String mail;
     private Long yearOfBirth;
-    private int gander;
+    private int gender;
     private UserType userType;
     private String key_pg;
 
-    public User(){}
-
-    public User(String userName, String password, String mail, Long yearOfBirth, int gander, UserType userType, String pg){
+    public User(String userName, String password, String mail, Long yearOfBirth, int gender, UserType userType, String pg){
         this.userName=userName;
         this.password=password;
         this.mail=mail;
         this.yearOfBirth=yearOfBirth;
-        this.gander=gander;
+        this.gender=gender;
         this.userType=userType;
         this.key_pg=pg;
     }
@@ -29,7 +27,7 @@ public class User implements Parcelable {
         password = in.readString();
         mail = in.readString();
         yearOfBirth = in.readLong();
-        gander= in.readInt();
+        gender= in.readInt();
         key_pg = in.readString();
     }
 
@@ -93,12 +91,12 @@ public class User implements Parcelable {
         this.key_pg = key_pg;
     }
 
-    public int getGander() {
-        return gander;
+    public int getGender() {
+        return gender;
     }
 
-    public void setGander(int gander) {
-        this.gander = gander;
+    public void setGander(int gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -114,22 +112,7 @@ public class User implements Parcelable {
         dest.writeLong(yearOfBirth);
         dest.writeString(key_pg);
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", mail='" + mail + '\'' +
-                ", yearOfBirth=" + yearOfBirth +
-                ", gander=" + gander +
-                ", userType=" + userType +
-                ", key_pg=" + key_pg +
-                '}';
-    }
 }
-
-
 
 enum UserType{
     citizen,
