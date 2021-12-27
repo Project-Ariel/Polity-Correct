@@ -1,6 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,6 +18,7 @@ import java.util.ArrayList;
 public class HomeCitizen extends AppCompatActivity {
 
     private TextView userName;
+    private ArrayList<Proposition> propositions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +26,7 @@ public class HomeCitizen extends AppCompatActivity {
         setContentView(R.layout.home_citizen);
 
         userName = (TextView) findViewById(R.id.userName);
-        //***************we need to do :: userName.setText(name);
-
+        userName.setText(Login.getCurrUser().getUserName());
     }
 
     public void openLoginPage(View view) {
@@ -44,46 +42,18 @@ public class HomeCitizen extends AppCompatActivity {
 
     public void openPropositionsPage(View view) {
         Intent intent = new Intent(this, Propositions.class);
-        ArrayList<Proposition> propositions = new ArrayList<>();
-        FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                                if (!p.wasVoted()) {
-                                    propositions.add(p);
-                                }
-                            }
-                            intent.putExtra("propositions", propositions);
-                            startActivity(intent);
-                        }
-                    }
-                });
+        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
+            intent.putExtra("propositions", propositions);
+            startActivity(intent);
+        });
     }
 
     public void openResultsPage(View view) {
         Intent intent = new Intent(this, Results.class);
-        ArrayList<Proposition> propositions = new ArrayList<>();
-        FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                                if (p.wasVoted()) {
-                                    propositions.add(p);
-                                }
-                            }
-                            intent.putExtra("propositions", propositions);
-                            startActivity(intent);
-                        }
-                    }
-                });
+        getVotedPropositionsFromDB().addOnCompleteListener(task -> {
+            intent.putExtra("propositions", propositions);
+            startActivity(intent);
+        });
     }
 
     public void sendMail(View view) {
@@ -101,5 +71,38 @@ public class HomeCitizen extends AppCompatActivity {
 
         startActivity(Intent.createChooser(
                 emailIntent, "Send mail..."));
+    }
+
+
+    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
+        propositions = new ArrayList<>();
+        return FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            if (!p.wasVoted()) {
+                                propositions.add(p);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private Task<QuerySnapshot> getVotedPropositionsFromDB() {
+        propositions = new ArrayList<>();
+        return FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            if (p.wasVoted()) {
+                                propositions.add(p);
+                            }
+                        }
+                    }
+                });
     }
 }
