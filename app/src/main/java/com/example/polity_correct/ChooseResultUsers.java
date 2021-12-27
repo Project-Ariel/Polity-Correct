@@ -27,6 +27,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<Proposition> propositions;
     private Proposition curr_proposition;
+    private int[] res = {0, 0, 0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +54,31 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        System.out.println(parent.getItemAtPosition(position).toString());
         curr_proposition = propositions.get(position);
-
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        System.out.println("here");
     }
 
     public void onClickAllUsers(View view) {
-        int [] res = {0,0,0}; // [Against, Impossible, Pro]
+        getVotesFromDB().addOnCompleteListener(task -> {
+            Intent intent = new Intent(this, Statistics.class);
+            intent.putExtra("proposition_title", curr_proposition.getTitle());
+            intent.putExtra("pg", "כל המשתמשים");
+            intent.putExtra("result", res);
+            startActivity(intent);
+        });
+    }
 
+    public void onClickSpecificPoliticalGroup(View view) {
         Intent intent = new Intent(this, Statistics.class);
-        FirebaseFirestore.getInstance().collection("Votes")
+        intent.putExtra("pg", "specific");
+
+        startActivity(intent);
+    }
+
+    private Task<QuerySnapshot> getVotesFromDB() {
+        return FirebaseFirestore.getInstance().collection("Votes")
                 .whereEqualTo("proposition_key", curr_proposition.getKey())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -76,25 +88,11 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 long userChoice = (long) document.get("user_choice");
-                                res[(int)userChoice]++;
+                                res[(int) userChoice]++;
 
                             }
-                            intent.putExtra("proposition_title", curr_proposition.getTitle());
-                            intent.putExtra("pg", "כל המשתמשים");
-                            intent.putExtra("result", res);
-
-                            startActivity(intent);
                         }
                     }
                 });
-
-
-    }
-
-    public void onClickSpecificPoliticalGroup(View view) {
-        Intent intent = new Intent(this, Statistics.class);
-        intent.putExtra("pg", "specific");
-
-        startActivity(intent);
     }
 }
