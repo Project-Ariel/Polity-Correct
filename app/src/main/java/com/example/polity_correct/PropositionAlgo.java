@@ -227,7 +227,7 @@ public class PropositionAlgo {
             String userName = arr[i][1].replace("*", " ");
             String password = arr[i][5];
             String mail = arr[i][3];
-            int yearOfBirth = -1;
+            Long yearOfBirth = -1L;
             int gander = Integer.parseInt(arr[i][6]);
             UserType userType = UserType.parliament;
             String pg = arr[i][2].replace("*", " ");
