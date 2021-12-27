@@ -1,5 +1,6 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,23 +10,35 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class UserDetails extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class UserDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     AutoCompleteTextView autoCompleteText;
     ArrayAdapter<String> adapter_items;
     FirebaseFirestore db;
-    // We need to get this list from the DB
-    String[] politicalGroups = {"ימינה", "כחול לבן", "העבודה", "ישראל ביתנו", "תקווה חדשה", "מרצ", "הציונות הדתית", "הרשימה המשותפת", "רע\"ם", "יהדות התורה", "ש\"ס", "יש עתיד", "הליכוד"};
-    TextView name;
-    TextView id;
-    TextView date;
-    User curr_user;
-    Intent next;
+    ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
+
+
+    private Spinner dropdown;
+    private ArrayList<String> titles = new ArrayList<>();
+    private TextView name;
+    private TextView id;
+    private TextView date;
+    private User curr_user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +47,49 @@ public class UserDetails extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        curr_user = getIntent().getExtras().getParcelable("user_obj");
+        curr_user = Login.getCurrUser();
 
         name = ((TextView) findViewById(R.id.User_full_name));
         id = ((TextView) findViewById(R.id.User_ID));
         date = ((TextView) findViewById(R.id.User_year_of_birth));
 
-        autoCompleteText = findViewById(R.id.autoCompleteTextView);
-        adapter_items = new ArrayAdapter<String>(this, R.layout.drop_down_item_political_group, politicalGroups);
-        autoCompleteText.setAdapter(adapter_items);
-        autoCompleteText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item: " + items, Toast.LENGTH_SHORT).show();
-                curr_user.setKey_pg(items);
+        dropdown = (Spinner) findViewById(R.id.choosePG);
+
+        getDB().addOnCompleteListener(task -> {
+            Intent i = getIntent();
+            if (i != null) {
+                for (PoliticalGroup p : political_groups) {
+                    titles.add(p.getGroup_name());
+                }
             }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles);
+            dropdown.setAdapter(adapter);
+            dropdown.setOnItemSelectedListener(this);
         });
+    }
+
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        System.out.println("here");
+    }
+
+
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        curr_user.setKey_pg(political_groups.get(position).getGroup_key());
+    }
+
+    //get Political Groups from DB
+    private Task<QuerySnapshot> getDB() {
+        return FirebaseFirestore.getInstance().collection("PoliticalGroups")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            PoliticalGroup p = new PoliticalGroup(document.getId(), (String) document.get("group_name"), (String) document.get("abbreviation"), (String) document.get("group_website"));
+                            political_groups.add(p);
+                        }
+                    }
+                });
     }
 
     public void onRadioButtonClicked(View view) {
@@ -78,13 +117,10 @@ public class UserDetails extends AppCompatActivity {
         curr_user.setYearOfBirth(Long.valueOf(date.getText().toString()));
         curr_user.setUserType(UserType.citizen);
 
-        String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db.collection("Users").document(userId).set(curr_user);
-        Login.setCurr_user(curr_user);
+//        Login.setCurr_user(curr_user);
 
-        next = new Intent(UserDetails.this, HomeCitizen.class);
-        next.putExtra("curr_user", curr_user);
-        startActivity(next);
-
+        startActivity(new Intent(this, HomeCitizen.class));
     }
 }
