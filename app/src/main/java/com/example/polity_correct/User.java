@@ -22,7 +22,7 @@ public class User implements Parcelable {
         this.key_pg=pg;
     }
 
-    protected User(Parcel in) {
+    public User(Parcel in) {
         userName = in.readString();
         password = in.readString();
         mail = in.readString();
@@ -30,6 +30,8 @@ public class User implements Parcelable {
         gender= in.readInt();
         key_pg = in.readString();
     }
+
+    public User(){}
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
