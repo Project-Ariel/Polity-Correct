@@ -7,14 +7,14 @@ public class User implements Parcelable {
     private String userName;
     private String password;
     private String mail;
-    private int yearOfBirth;
+    private Long yearOfBirth;
     private int gander;
     private UserType userType;
     private String key_pg;
 
     public User(){}
 
-    public User(String userName, String password, String mail, int yearOfBirth, int gander, UserType userType, String pg){
+    public User(String userName, String password, String mail, Long yearOfBirth, int gander, UserType userType, String pg){
         this.userName=userName;
         this.password=password;
         this.mail=mail;
@@ -28,7 +28,7 @@ public class User implements Parcelable {
         userName = in.readString();
         password = in.readString();
         mail = in.readString();
-        yearOfBirth = in.readInt();
+        yearOfBirth = in.readLong();
         gander= in.readInt();
         key_pg = in.readString();
     }
@@ -57,7 +57,7 @@ public class User implements Parcelable {
         return mail;
     }
 
-    public int getYearOfBirth() {
+    public Long getYearOfBirth() {
         return yearOfBirth;
     }
 
@@ -77,7 +77,7 @@ public class User implements Parcelable {
         this.mail = mail;
     }
 
-    public void setYearOfBirth(int yearOfBirth) {
+    public void setYearOfBirth(Long yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
@@ -111,7 +111,7 @@ public class User implements Parcelable {
         dest.writeString(userName);
         dest.writeString(password);
         dest.writeString(mail);
-        dest.writeInt(yearOfBirth);
+        dest.writeLong(yearOfBirth);
         dest.writeString(key_pg);
     }
 
