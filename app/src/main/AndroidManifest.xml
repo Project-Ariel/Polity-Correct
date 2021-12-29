@@ -20,10 +20,13 @@
             android:name=".HomeParliament"
             android:exported="false" />
         <activity
-            android:name=".UserDetails"
+            android:name=".CitizenDetails"
             android:exported="false" />
         <activity
-            android:name=".Signup"
+            android:name=".SignupCitizen"
+            android:exported="false" />
+        <activity
+            android:name=".SignupPM"
             android:exported="false" />
         <activity
             android:name=".Vote"
