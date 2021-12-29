@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Citizen extends User {
 
-    public Citizen(String userName, String password, String mail, Long yearOfBirth, int gender, UserType userType, String pg) {
+    public Citizen(String userName, String password, String mail, Long yearOfBirth, long gender, UserType userType, String pg) {
         super(userName, password, mail, yearOfBirth, gender, userType, pg);
     }
 

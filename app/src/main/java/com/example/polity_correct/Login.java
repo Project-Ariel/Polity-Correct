@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     static private FirebaseAuth mAuth;
     private CollectionReference databaseReference;
     private DocumentSnapshot document;
-    private int gen;
+    private long gen;
     private UserType userTypeTemp;
 
     @Override
@@ -72,6 +72,7 @@ public class Login extends AppCompatActivity {
                                 gen = -1;
                                 if (document.get("gender") != null) {
                                     gen = (int) document.get("gender");
+                                    gen = (long) document.get("gender");
                                 }
 
                                 //update user type
@@ -96,7 +97,7 @@ public class Login extends AppCompatActivity {
                                     next = new Intent(Login.this, HomeParliament.class);
                                 } else {
                                     //else- user is citizen
-                                    next = new Intent(Login.this, HomeCitizen.class);
+                                    next = new Intent(Login.this, HomeParliament.class);
                                 }
                                 startActivity(next);
                             }

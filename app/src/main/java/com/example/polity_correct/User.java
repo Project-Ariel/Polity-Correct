@@ -8,11 +8,11 @@ public class User implements Parcelable {
     private String password;
     private String mail;
     private Long yearOfBirth;
-    private int gender;
+    private long gender;
     private UserType userType;
     private String key_pg;
 
-    public User(String userName, String password, String mail, Long yearOfBirth, int gender, UserType userType, String pg){
+    public User(String userName, String password, String mail, Long yearOfBirth, long gender, UserType userType, String pg){
         this.userName=userName;
         this.password=password;
         this.mail=mail;
@@ -93,7 +93,7 @@ public class User implements Parcelable {
         this.key_pg = key_pg;
     }
 
-    public int getGender() {
+    public long getGender() {
         return gender;
     }
 
