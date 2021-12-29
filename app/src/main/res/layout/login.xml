@@ -7,9 +7,13 @@
     android:layoutDirection="rtl"
     tools:context=".Login">
 
-    <include layout="@layout/layout_welcome_page"/>
+   <include
+       android:id="@+id/include"
+       layout="@layout/layout_welcome_page"
+       tools:layout_editor_absoluteX="-28dp"
+       tools:layout_editor_absoluteY="148dp" />
 
-    <TextView
+   <TextView
         android:layoutDirection="rtl"
         android:textAlignment="textStart"
         android:layout_gravity="start"
@@ -73,38 +77,64 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.36" />
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5E00BCD4"
-        android:fontFamily="@font/alef"
-        android:onClick="onClickLogin"
-        android:text="@string/btnLogin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        android:layoutDirection="rtl"
-        />
+   <Button
+       android:id="@+id/login"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:backgroundTint="#5E00BCD4"
+       android:fontFamily="@font/alef"
+       android:layoutDirection="rtl"
+       android:onClick="onClickLogin"
+       android:text="@string/btnLogin"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.95"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.499" />
 
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alef"
-        android:onClick="onClickRegister"
-        android:backgroundTint="#5E00BCD4"
-        android:text="הרשם"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        android:layoutDirection="rtl"
-        />
+   <Button
+       android:id="@+id/signup_citizrn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:backgroundTint="#5E00BCD4"
+       android:fontFamily="@font/alef"
+       android:layoutDirection="rtl"
+       android:onClick="onClickCitizenRegister"
+       android:text="הרשם כאזרח"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.749"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.947" />
+
+   <TextView
+       android:id="@+id/signup_title"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="משתמש חדש?"
+       android:textSize="20sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.498"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.863" />
+
+   <Button
+       android:id="@+id/signup_pm"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginEnd="172dp"
+       android:backgroundTint="#5E00BCD4"
+       android:onClick="onClickSignupPM"
+       android:text="הירשם כחבר כנסת"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="@+id/include"
+       app:layout_constraintHorizontal_bias="0.579"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.947" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,30 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends AppCompatActivity {
 
@@ -36,7 +25,7 @@ public class Login extends AppCompatActivity {
     String mail, pass;
     String userID;
     FirebaseFirestore db;
-    static User curr_user=new User();
+    static User curr_user;
     static private FirebaseAuth mAuth;
     CollectionReference databaseReference;
     Intent next;
@@ -80,15 +69,20 @@ public class Login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         document = task.getResult();
+                                        //if the gender is null
                                         if(
                                                 document.get("gender")!=null){gen=(int) document.get("gender");}
                                         else {
-                                            gen=-999;}
+                                            gen=-1;}
+
+                                        //update user type
                                         if(document.get("userType").equals("citizen")){
                                             userTypeTemp=UserType.citizen;
                                         }
                                         else{
                                             userTypeTemp=UserType.parliament;}
+
+                                        //create new user
                                         curr_user = new User((String) document.get("userName"),
                                                 (String) document.get("password"),
                                                 (String) document.get("mail"),
@@ -117,20 +111,27 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-    public void onClickRegister(View view) {
-        Intent intent = new Intent(this, Signup.class);
-        startActivity(intent);
+    public static User getCurrUser(){
+        return curr_user;
+    }
+
+    public static void setCurr_user(User temp){
+        curr_user=temp;
     }
 
     @Override
     public void onBackPressed() {
 
     }
-    public static User getCurrUser(){
-        return curr_user;
+
+    public void onClickCitizenRegister(View view) {
+        Intent intent1 = new Intent(this, SignupCitizen.class);
+        startActivity(intent1);
     }
-    public static void setCurr_user(User temp){
-        curr_user=temp;
+
+    public void onClickSignupPM(View view) {
+        Intent intent2 = new Intent(this, SignupPM.class);
+        startActivity(intent2);
     }
 }
 
