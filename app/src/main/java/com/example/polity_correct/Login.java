@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity {
                                     next = new Intent(Login.this, HomeParliament.class);
                                 } else {
                                     //else- user is citizen
-                                    next = new Intent(Login.this, HomeParliament.class);
+                                    next = new Intent(Login.this, HomeCitizen.class);
                                 }
                                 startActivity(next);
                             }
