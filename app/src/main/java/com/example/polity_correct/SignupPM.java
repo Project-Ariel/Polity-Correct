@@ -30,15 +30,13 @@ public class SignupPM extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
-        mail = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
     }
 
     public void onClickOK(View view) {
+        mail = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
         if (!mail.contains("@KNESSET.GOV.IL") && !mail.contains("@knesset.gov.il")){
-            Toast.makeText(SignupPM.this, "This email is not belong to parliament member.", Toast.LENGTH_SHORT).show();
-        }
-        else {
+            Toast.makeText(SignupPM.this, "מייל זה לא שייך לחבר כנסת", Toast.LENGTH_SHORT).show();
+        } else {
             mAuth.fetchSignInMethodsForEmail(mail).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                 @Override
                 public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
@@ -46,11 +44,11 @@ public class SignupPM extends AppCompatActivity {
                         SignInMethodQueryResult result = task.getResult();
                         List<String> signInMethods = result.getSignInMethods();
                         if (signInMethods.isEmpty()) {
-                            Toast.makeText(SignupPM.this, "This email is not belong to parliament member.", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            // TODO: 12/29/2021
-                            //אחרת- שולח למייל של הח"כ את הסיסמה שלו
+                            Toast.makeText(SignupPM.this, "מייל זה לא שייך לחבר כנסת", Toast.LENGTH_SHORT).show();
+                        } else {
+                            FirebaseAuth auth = FirebaseAuth.getInstance();
+                            auth.sendPasswordResetEmail(mail);
+                            Toast.makeText(SignupPM.this, "נשלח אליך מייל לבחירת סיסמא", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
