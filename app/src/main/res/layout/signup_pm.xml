@@ -10,36 +10,36 @@
         layout="@layout/layout_welcome_page"/>
 
     <TextView
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
         android:id="@+id/mail"
         android:layout_width="81dp"
         android:layout_height="36dp"
+        android:layout_gravity="start"
         android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
         android:text="@string/account_mail"
+        android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.349" />
 
     <EditText
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
         android:id="@+id/textUsermail"
         android:layout_width="200dp"
         android:layout_height="55dp"
+        android:layout_gravity="start"
         android:inputType="textEmailAddress"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.758"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28" />
+        app:layout_constraintVertical_bias="0.331" />
 
     <Button
         android:id="@+id/OK"
@@ -50,10 +50,10 @@
         android:text="אישור"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.562" />
+        app:layout_constraintVertical_bias="0.446" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
