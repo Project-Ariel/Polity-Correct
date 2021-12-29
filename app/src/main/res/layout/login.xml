@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
- <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:app="http://schemas.android.com/apk/res-auto"
-     xmlns:tools="http://schemas.android.com/tools"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layoutDirection="rtl"
     tools:context=".Login">
 
-   <include
-       android:id="@+id/include"
-       layout="@layout/layout_welcome_page"
-       tools:layout_editor_absoluteX="-28dp"
-       tools:layout_editor_absoluteY="148dp" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_welcome_page"
+        tools:layout_editor_absoluteX="-28dp"
+        tools:layout_editor_absoluteY="148dp" />
 
-   <TextView
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
+    <TextView
         android:id="@+id/mail_login"
         android:layout_width="81dp"
         android:layout_height="36dp"
+        android:layout_gravity="start"
         android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
         android:text="@string/account_mail"
+        android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,13 +31,13 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <EditText
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
         android:id="@+id/textUsermail_login"
         android:layout_width="200dp"
         android:layout_height="55dp"
+        android:layout_gravity="start"
         android:inputType="textEmailAddress"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -46,14 +46,14 @@
         app:layout_constraintVertical_bias="0.28" />
 
     <TextView
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
         android:id="@+id/password_login"
         android:layout_width="126dp"
         android:layout_height="38dp"
+        android:layout_gravity="start"
         android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
         android:text="@string/password"
+        android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,13 +63,13 @@
         app:layout_constraintVertical_bias="0.38" />
 
     <EditText
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        android:layout_gravity="start"
         android:id="@+id/textPassword_login"
         android:layout_width="200dp"
         android:layout_height="55dp"
+        android:layout_gravity="start"
         android:inputType="textPassword"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -77,64 +77,65 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.36" />
 
-   <Button
-       android:id="@+id/login"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:backgroundTint="#5E00BCD4"
-       android:fontFamily="@font/alef"
-       android:layoutDirection="rtl"
-       android:onClick="onClickLogin"
-       android:text="@string/btnLogin"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.95"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.499" />
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5E00BCD4"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:onClick="onClickLogin"
+        android:text="@string/btnLogin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48" />
 
-   <Button
-       android:id="@+id/signup_citizrn"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:backgroundTint="#5E00BCD4"
-       android:fontFamily="@font/alef"
-       android:layoutDirection="rtl"
-       android:onClick="onClickCitizenRegister"
-       android:text="הרשם כאזרח"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.749"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.947" />
+    <TextView
+        android:id="@+id/signup_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alef"
+        android:text="משתמש חדש?"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
-   <TextView
-       android:id="@+id/signup_title"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="משתמש חדש?"
-       android:textSize="20sp"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.498"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.863" />
+    <Button
+        android:id="@+id/signup_citizen"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5E00BCD4"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:onClick="onClickCitizenRegister"
+        android:text="הרשם&#10;כאזרח"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93" />
 
-   <Button
-       android:id="@+id/signup_pm"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginEnd="172dp"
-       android:backgroundTint="#5E00BCD4"
-       android:onClick="onClickSignupPM"
-       android:text="הירשם כחבר כנסת"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="@+id/include"
-       app:layout_constraintHorizontal_bias="0.579"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.947" />
+    <Button
+        android:id="@+id/signup_pm"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5E00BCD4"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:onClick="onClickSignupPM"
+        android:text="הירשם&#10;כחבר כנסת"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintHorizontal_bias="0.28"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
