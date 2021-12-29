@@ -22,7 +22,6 @@ public class CitizenDetails extends AppCompatActivity {
     // We need to get this list from the DB
     String[] politicalGroups = {"ימינה", "כחול לבן", "העבודה", "ישראל ביתנו", "תקווה חדשה", "מרצ", "הציונות הדתית", "הרשימה המשותפת", "רע\"ם", "יהדות התורה", "ש\"ס", "יש עתיד", "הליכוד"};
     TextView name;
-    TextView id;
     TextView date;
     User curr_user;
     Intent next;
@@ -37,7 +36,6 @@ public class CitizenDetails extends AppCompatActivity {
         curr_user = getIntent().getExtras().getParcelable("user_obj");
 
         name = ((TextView) findViewById(R.id.User_full_name));
-        id = ((TextView) findViewById(R.id.User_ID));
         date = ((TextView) findViewById(R.id.User_year_of_birth));
 
         autoCompleteText = findViewById(R.id.autoCompleteTextView);

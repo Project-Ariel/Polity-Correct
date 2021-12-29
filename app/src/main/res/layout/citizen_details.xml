@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".CitizenDetails">
 
-    <include layout="@layout/layout_welcome_page" />
+    <include
+        layout="@layout/layout_welcome_page"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/full_name"
@@ -20,10 +23,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.326" />
 
     <EditText
         android:id="@+id/User_full_name"
@@ -36,42 +39,10 @@
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.791"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28" />
-
-    <TextView
-        android:id="@+id/ID"
-        android:layout_width="126dp"
-        android:layout_height="38dp"
-        android:layout_gravity="start"
-        android:fontFamily="@font/alef"
-        android:layoutDirection="rtl"
-        android:text="תעודת זהות"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
-
-    <EditText
-        android:id="@+id/User_ID"
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_gravity="start"
-        android:inputType="number|textPersonName"
-        android:layoutDirection="rtl"
-        android:textAlignment="textStart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.307" />
 
     <TextView
         android:id="@+id/YearOfBirth"
@@ -85,10 +56,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.427" />
 
     <EditText
         android:id="@+id/User_year_of_birth"
@@ -100,41 +71,38 @@
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.786"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.408" />
 
-    <TextView
-        android:id="@+id/userChoosePg"
-        android:layout_width="120dp"
-        android:layout_height="32dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        android:layout_width="155dp"
+        android:layout_height="55dp"
         android:layout_gravity="start"
-        android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="בחר מפלגה"
         android:textAlignment="textStart"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintVertical_bias="0.56">
 
-    <Spinner
-        android:id="@+id/choosePG"
-        android:layout_width="220dp"
-        android:layout_height="45dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:layoutDirection="rtl"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="166dp"
+            android:layout_height="47dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/alef"
+            android:inputType="none"
+            android:text="בחר מפלגה"
+            android:textSize="18sp" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:layout_width="80dp"
@@ -174,15 +142,14 @@
         android:layout_width="98dp"
         android:layout_height="49dp"
         android:fontFamily="@font/alef"
-        android:layoutDirection="rtl"
         android:onClick="onClickOK"
         android:text="סיום"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.939" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
