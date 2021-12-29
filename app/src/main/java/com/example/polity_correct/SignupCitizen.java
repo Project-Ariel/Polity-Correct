@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Signup extends AppCompatActivity {
+public class SignupCitizen extends AppCompatActivity {
 
     String mail, pass, pass_valid;
     Intent next;
@@ -28,7 +28,7 @@ public class Signup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.signup_citizen);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -51,21 +51,14 @@ public class Signup extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                if (mail.contains("@KNESSET.GOV.IL") || mail.contains("@knesset.gov.il")) {
-                                    new_user = new ParliamentMember("", pass, mail, 0000L, -1, UserType.parliament, "default");
-                                    next = new Intent(Signup.this, HomeParliament.class);
-                                    db.collection("Users").document().set(new_user);
-                                    Login.setCurr_user(new_user);
-                                } else {
-                                    new_user = new Citizen("", pass, mail, 0000L, -1, UserType.citizen, "default");
-                                    next = new Intent(Signup.this, UserDetails.class);
-                                }
+                                new_user = new Citizen("", pass, mail, 0000L, -1, UserType.citizen, "default");
+                                next = new Intent(SignupCitizen.this, CitizenDetails.class);
                                 next.putExtra("user_obj", new_user);
                                 startActivity(next);
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(Signup.this, "Signup failed.",
+                                Toast.makeText(SignupCitizen.this, "Signup failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -79,11 +72,11 @@ public class Signup extends AppCompatActivity {
         String emailInput = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
 
         if (emailInput.isEmpty()) {
-            Toast.makeText(Signup.this, "email can't be empty.",
+            Toast.makeText(SignupCitizen.this, "email can't be empty.",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            Toast.makeText(Signup.this, "Please enter a valid email address.",
+            Toast.makeText(SignupCitizen.this, "Please enter a valid email address.",
                     Toast.LENGTH_SHORT).show();
             return false;
             // TODO: 12/27/2021 validate mail exist in DB- cannot register with this mail
@@ -100,19 +93,19 @@ public class Signup extends AppCompatActivity {
         String passwordInput = ((TextView) findViewById(R.id.new_password)).getText().toString();
         String ConfitmpasswordInput = ((TextView) findViewById(R.id.new_password_valid)).getText().toString();
         if (passwordInput.isEmpty()) {
-            Toast.makeText(Signup.this, "Password can't be empty.",
+            Toast.makeText(SignupCitizen.this, "Password can't be empty.",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (passwordInput.length() < 6) {
-            Toast.makeText(Signup.this, "Password must be at least 5 characters",
+            Toast.makeText(SignupCitizen.this, "Password must be at least 5 characters",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (!passwordInput.equals(ConfitmpasswordInput)) {
-            Toast.makeText(Signup.this, "Password Would Not be matched",
+            Toast.makeText(SignupCitizen.this, "Password Would Not be matched",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            Toast.makeText(Signup.this, "Password Matched",
+            Toast.makeText(SignupCitizen.this, "Password Matched",
                     Toast.LENGTH_SHORT).show();
             return true;
         }
