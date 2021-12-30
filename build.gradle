@@ -13,6 +13,8 @@ buildscript {
     }
 }
 
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
