@@ -113,7 +113,7 @@ public class Vote extends AppCompatActivity {
 
     private void afterVoteNotification() {
         String title = "הצבעת השפעת!";
-        String body = "הצבעתך "+ radioBtn.getText() + " לחוק " + txt_proposition_title.getText() + "נקלטה בהצלחה. תודה!";
+        String body = "הצבעתך " + radioBtn.getText() + " לחוק " + txt_proposition_title.getText() + "נקלטה בהצלחה. תודה!";
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(user_token, title, body, getApplicationContext(), Vote.this);
         notificationsSender.SendNotifications();
     }
