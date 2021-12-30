@@ -26,7 +26,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     private ArrayList<String> titles = new ArrayList<>();
 
     private Spinner dropdown;
-    private TextView name, date, mail;
+    private EditText name, date, mail;
     private EditText pass;
     private RadioButton gender;
     private String key_pg = Login.getCurrUser().getKey_pg();
@@ -41,13 +41,13 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הגדרות");
 
-        mail = (TextView) findViewById(R.id.textUsermailCitizen);
+        mail = (EditText) findViewById(R.id.textUsermailCitizen);
         mail.setText(Login.getCurrUser().getMail());
 
-        name = (TextView) findViewById(R.id.User_full_name);
+        name = (EditText) findViewById(R.id.User_full_name);
         name.setText(Login.getCurrUser().getUserName());
 
-        date = (TextView) findViewById(R.id.User_year_of_birth);
+        date = (EditText) findViewById(R.id.User_year_of_birth);
         date.setText(Login.getCurrUser().getYearOfBirth().toString());
 
         pass= (EditText) findViewById(R.id.new_password_settings);
