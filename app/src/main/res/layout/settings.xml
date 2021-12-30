@@ -9,12 +9,266 @@
     <include layout="@layout/layout_standard_page" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="36dp"
-        android:layout_height="13dp"
-        android:text="settings"
+        android:id="@+id/mail"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="@string/account_mail"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textUsermailCitizen"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
+        android:textDirection="rtl"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="@string/password"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <EditText
+        android:id="@+id/new_password_settings"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:inputType="textPassword"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
+        android:textDirection="rtl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <TextView
+        android:id="@+id/password_confirm"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="@string/confirmPass"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.26" />
+
+    <EditText
+        android:id="@+id/new_password_valid_settings"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:inputType="textPassword"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
+        android:textDirection="rtl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.26" />
+
+    <TextView
+        android:id="@+id/full_name"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="שם מלא"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.34" />
+
+    <TextView
+        android:id="@+id/User_full_name"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
+        android:textDirection="rtl"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.34" />
+
+    <TextView
+        android:id="@+id/YearOfBirth"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="שנת לידה"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <TextView
+        android:id="@+id/User_year_of_birth"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:textAlignment="textStart"
+        android:textDirection="rtl"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <TextView
+        android:id="@+id/userChoosePg"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="בחר מפלגה"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51" />
+
+
+    <Spinner
+        android:id="@+id/choosePG"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:layoutDirection="rtl"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:text="מגדר"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6">
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alef"
+            android:text="זכר"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alef"
+            android:text="נקבה"
+            android:textSize="20sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/finish"
+        android:layout_width="130dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/alef"
+        android:layoutDirection="rtl"
+        android:onClick="onClickOK"
+        android:text="עדכן"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
 </androidx.constraintlayout.widget.ConstraintLayout>
