@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layoutDirection="rtl"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/polity_correct_logo" />
 
     <TextView
         android:id="@+id/title_page"
