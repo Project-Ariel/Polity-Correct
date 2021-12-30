@@ -67,7 +67,6 @@ public class Login extends AppCompatActivity {
                                 //update user gender
                                 gen = -1;
                                 if (document.get("gender") != null) {
-                                    gen = (int) document.get("gender");
                                     gen = (long) document.get("gender");
                                 }
 
