@@ -7,86 +7,136 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SignupCitizen extends AppCompatActivity {
+public class SignupCitizen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String mail, pass, pass_valid;
-    Intent next;
-    static User new_user;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    FirebaseFirestore db;
-    static private FirebaseAuth mAuth;
-    boolean flag;
+    private ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
+    private ArrayList<String> titles = new ArrayList<>();
+
+    private Spinner dropdown;
+    private EditText name, date;
+
+    private User curr_user;
+    private String mail, pass, key_pg;
+    private int gen = -1;
+    private boolean flag;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_citizen);
 
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        dropdown = (Spinner) findViewById(R.id.choosePG);
 
-        mail = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
+        getDB().addOnCompleteListener(task -> {
+            Intent i = getIntent();
+            if (i != null) {
+                for (PoliticalGroup p : political_groups) {
+                    titles.add(p.getGroup_name());
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles);
+            dropdown.setAdapter(adapter);
+            dropdown.setOnItemSelectedListener(this);
+        });
+    }
 
-        pass = ((TextView) findViewById(R.id.new_password)).getText().toString();
-        pass_valid = ((TextView) findViewById(R.id.new_password_valid)).getText().toString();
+    //pg
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        key_pg = political_groups.get(position).getGroup_key();
+    }
 
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    //get Political Groups from DB
+    private Task<QuerySnapshot> getDB() {
+        return FirebaseFirestore.getInstance().collection("PoliticalGroups")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            PoliticalGroup p = new PoliticalGroup(document.getId(), (String) document.get("group_name"), (String) document.get("abbreviation"), (String) document.get("group_website"));
+                            political_groups.add(p);
+                        }
+                    }
+                });
+    }
+
+    //gender
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.male:
+                if (checked) {
+                    gen = 1;
+                    break;
+                }
+            case R.id.female:
+                if (checked) {
+                    gen = 0;
+                    break;
+                }
+        }
     }
 
     public void onClickOK(View view) {
-
-        mail = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
-        pass = ((TextView) findViewById(R.id.new_password)).getText().toString();
-
         if (validateEmail() && validatePassword()) {
             mAuth.createUserWithEmailAndPassword(mail, pass)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                new_user = new Citizen("", pass, mail, 0000L, -1, UserType.citizen, "default");
-                                next = new Intent(SignupCitizen.this, CitizenDetails.class);
-                                next.putExtra("user_obj", new_user);
-                                startActivity(next);
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(SignupCitizen.this, "Signup failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            name = ((EditText) findViewById(R.id.User_full_name));
+                            date = ((EditText) findViewById(R.id.User_year_of_birth));
+                            curr_user = new Citizen(name.getText().toString(), pass, mail,
+                                    Long.valueOf(date.getText().toString()), gen, UserType.citizen, key_pg);
+                            String userId = mAuth.getCurrentUser().getUid();
+                            db.collection("Users").document(userId).set(curr_user);
+                            Login.setCurr_user(curr_user);
+                            startActivity(new Intent(SignupCitizen.this, HomeCitizen.class));
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(SignupCitizen.this, "Signup failed.", Toast.LENGTH_SHORT).show();
                         }
                     });
-
         }
     }
 
-
     private boolean validateEmail() {
-
+        mail = ((TextView) findViewById(R.id.textUsermailCitizen)).getText().toString();
         if (mail.isEmpty()) {
-            Toast.makeText(SignupCitizen.this, "email can't be empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "email can't be empty.", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else {
+        } else {
             if (!Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
-                Toast.makeText(SignupCitizen.this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
                 return false;
-            }
-            else {
-                flag=true;
+            } else {
+                flag = true;
                 mAuth.fetchSignInMethodsForEmail(mail).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
                     public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
@@ -95,36 +145,36 @@ public class SignupCitizen extends AppCompatActivity {
                             List<String> signInMethods = result.getSignInMethods();
                             if (!signInMethods.isEmpty()) {
                                 Toast.makeText(SignupCitizen.this, "This email is already exist.", Toast.LENGTH_SHORT).show();
-                                flag= false;
+                                flag = false;
                             }
                         }
-                    }});
+                    }
+                });
                 return flag;
             }
         }
     }
 
     private boolean validatePassword() {
+        pass = ((TextView) findViewById(R.id.new_password)).getText().toString();
         String passwordInput = ((TextView) findViewById(R.id.new_password)).getText().toString();
-        String ConfitmpasswordInput = ((TextView) findViewById(R.id.new_password_valid)).getText().toString();
+        String ConfirmPasswordInput = ((TextView) findViewById(R.id.new_password_valid)).getText().toString();
         if (passwordInput.isEmpty()) {
-            Toast.makeText(SignupCitizen.this, "Password can't be empty.",
+            Toast.makeText(this, "Password can't be empty.",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (passwordInput.length() < 6) {
-            Toast.makeText(SignupCitizen.this, "Password must be at least 5 characters",
+            Toast.makeText(this, "Password must be at least 5 characters",
                     Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!passwordInput.equals(ConfitmpasswordInput)) {
-            Toast.makeText(SignupCitizen.this, "Password Would Not be matched",
+        } else if (!passwordInput.equals(ConfirmPasswordInput)) {
+            Toast.makeText(this, "Password Would Not be matched",
                     Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            Toast.makeText(SignupCitizen.this, "Password Matched",
+            Toast.makeText(this, "Password Matched",
                     Toast.LENGTH_SHORT).show();
             return true;
         }
     }
-
-
 }

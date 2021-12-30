@@ -113,7 +113,7 @@
         android:backgroundTint="#5E00BCD4"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:onClick="onClickCitizenRegister"
+        android:onClick="onClickSignupCitizen"
         android:text="הרשם&#10;כאזרח"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

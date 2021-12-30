@@ -23,9 +23,6 @@
             android:name=".HomeParliament"
             android:exported="false" />
         <activity
-            android:name=".CitizenDetails"
-            android:exported="false" />
-        <activity
             android:name=".SignupCitizen"
             android:exported="false" />
         <activity
