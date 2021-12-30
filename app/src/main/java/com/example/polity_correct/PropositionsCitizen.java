@@ -14,6 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
 public class PropositionsCitizen extends AppCompatActivity {
@@ -30,17 +35,15 @@ public class PropositionsCitizen extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
 
-        Intent in = getIntent();
-        propositions = (ArrayList<Proposition>) in.getSerializableExtra("propositions");
-        for (Proposition i : propositions) {
-            if (!i.wasVoted())
-                titles.add(i.getTitle());
-        }
+        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
+            for (Proposition p : propositions) {
+                titles.add(p.getTitle());
+            }
 
-        listView = (ListView) findViewById(R.id.listViewC);
-
-        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_vote, R.id.itemTextView, titles);
-        listView.setAdapter(arrayAdapter);
+            listView = (ListView) findViewById(R.id.listViewC);
+            ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_vote, R.id.itemTextView, titles);
+            listView.setAdapter(arrayAdapter);
+        });
     }
 
 
@@ -68,5 +71,21 @@ public class PropositionsCitizen extends AppCompatActivity {
         Intent next = new Intent(this, Vote.class);
         next.putExtra("current proposition", propositions.get(pos));
         startActivity(next);
+    }
+
+    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
+        propositions = new ArrayList<>();
+        return FirebaseFirestore.getInstance().collection("Propositions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            if (!p.wasVoted()) {
+                                propositions.add(p);
+                            }
+                        }
+                    }
+                });
     }
 }

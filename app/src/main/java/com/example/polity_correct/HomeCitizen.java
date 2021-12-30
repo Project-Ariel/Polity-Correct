@@ -1,13 +1,20 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -20,6 +27,9 @@ public class HomeCitizen extends AppCompatActivity {
     private TextView userName;
     private ArrayList<Proposition> propositions;
 
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +37,43 @@ public class HomeCitizen extends AppCompatActivity {
 
         userName = (TextView) findViewById(R.id.userName);
         userName.setText(Login.getCurrUser().getUserName());
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.UpdateDetails:
+                    System.out.println("לחץ על עדכון פרטים");
+                    startActivity(new Intent(HomeCitizen.this, Settings.class));
+                    break;
+                case R.id.Vote:
+                    startActivity(new Intent(HomeCitizen.this, PropositionsCitizen.class));
+                    break;
+                case R.id.Results:
+                    startActivity(new Intent(HomeCitizen.this, Results.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(HomeCitizen.this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void openLoginPage(View view) {
@@ -41,19 +88,11 @@ public class HomeCitizen extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
-        Intent intent = new Intent(this, PropositionsCitizen.class);
-        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
-            intent.putExtra("propositions", propositions);
-            startActivity(intent);
-        });
+        startActivity(new Intent(this, PropositionsCitizen.class));
     }
 
     public void openResultsPage(View view) {
-        Intent intent = new Intent(this, Results.class);
-        getVotedPropositionsFromDB().addOnCompleteListener(task -> {
-            intent.putExtra("propositions", propositions);
-            startActivity(intent);
-        });
+        startActivity(new Intent(this, Results.class));
     }
 
     public void sendMail(View view) {
@@ -71,38 +110,5 @@ public class HomeCitizen extends AppCompatActivity {
 
         startActivity(Intent.createChooser(
                 emailIntent, "Send mail..."));
-    }
-
-
-    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
-        propositions = new ArrayList<>();
-        return FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            if (!p.wasVoted()) {
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
-    }
-
-    private Task<QuerySnapshot> getVotedPropositionsFromDB() {
-        propositions = new ArrayList<>();
-        return FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            if (p.wasVoted()) {
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
     }
 }
