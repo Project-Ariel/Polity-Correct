@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Propositions">
+    tools:context=".PropositionsCitizen">
 
     <include layout="@layout/layout_standard_page"/>
 
@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <ListView
-                android:id="@+id/listView"
+                android:id="@+id/listViewC"
                 android:layout_width="340dp"
                 android:layout_height="600dp" />
         </LinearLayout>

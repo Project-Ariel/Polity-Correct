@@ -41,15 +41,18 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
         Intent i = getIntent();
+        int index_curr_prop = 0;
         if (i != null) {
             propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
             for (Proposition p : propositions) {
                 titles.add(p.getTitle());
             }
+            index_curr_prop = (int) i.getExtras().get("index_current_proposition");
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(index_curr_prop);
         dropdown.setOnItemSelectedListener(this);
     }
 

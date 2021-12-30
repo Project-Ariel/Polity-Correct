@@ -1,6 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,35 +14,45 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeParliament extends AppCompatActivity {
 
-    private TextView accountMail;
     public static ArrayList<Proposition> propositions = new ArrayList<>();
+    TextView user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_parliament);
 
-        accountMail = (TextView) findViewById(R.id.userName);
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            accountMail.setText(b.getString("AccountMail"));
-        }
+        user_name = (TextView) findViewById(R.id.userName);
+        user_name.setText(Login.getCurrUser().getUserName());
 
+//
+//        //get propositions from DB
+//        FirebaseFirestore.getInstance().collection("Propositions")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), false);
+//                                propositions.add(p);
+//                            }
+//                        }
+//                    }
+//                });
+    }
 
-
-        //get propositions from DB
-        FirebaseFirestore.getInstance().collection("Propositions")
+    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
+        return FirebaseFirestore.getInstance().collection("Propositions")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), false);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            if (!p.wasVoted()) {
                                 propositions.add(p);
                             }
                         }
@@ -58,14 +66,20 @@ public class HomeParliament extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
-        Intent intent = new Intent(this, Propositions.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, PropositionsParliament.class);
+        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
+            intent.putExtra("propositions", propositions);
+            startActivity(intent);
+        });
     }
 
     public void openStatisticsPage(View view) {
         Intent intent = new Intent(this, ChooseResultUsers.class);
-        intent.putExtra("propositions", propositions);
-        startActivity(intent);
+        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
+            intent.putExtra("propositions", propositions);
+            intent.putExtra("index_current_proposition", 0);
+            startActivity(intent);
+        });
     }
 
     public void sendMail(View view) {
@@ -77,7 +91,7 @@ public class HomeParliament extends AppCompatActivity {
 
 
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                "Note from mail :" + accountMail.getText().toString());
+                "Note from mail :" + user_name.getText().toString());
 
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                 "Email Body..");

@@ -11,6 +11,9 @@
         android:theme="@style/Theme.PolityCorrect"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PropositionsParliament"
+            android:exported="false" />
+        <activity
             android:name=".ChooseResultUsers"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
             android:name=".Results"
             android:exported="false" />
         <activity
-            android:name=".Propositions"
+            android:name=".PropositionsCitizen"
             android:exported="false" />
         <activity
             android:name=".Settings"

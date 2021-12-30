@@ -41,7 +41,7 @@ public class HomeCitizen extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
-        Intent intent = new Intent(this, Propositions.class);
+        Intent intent = new Intent(this, PropositionsCitizen.class);
         getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
             intent.putExtra("propositions", propositions);
             startActivity(intent);

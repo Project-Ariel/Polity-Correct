@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class Propositions extends AppCompatActivity {
+public class PropositionsParliament extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList<String> titles = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Propositions extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.propositions);
+        setContentView(R.layout.propositions_parliament);
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
@@ -37,9 +37,9 @@ public class Propositions extends AppCompatActivity {
                 titles.add(i.getTitle());
         }
 
-        listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listViewP);
 
-        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view, R.id.itemTextView, titles);
+        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_statistic, R.id.itemTextView, titles);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -57,16 +57,17 @@ public class Propositions extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openVotePage(v, position);
+                    openStatisticsPage(v, position);
                 }
             });
             return view;
         }
     }
 
-    public void openVotePage(View view, int pos) {
-        Intent next = new Intent(this, Vote.class);
-        next.putExtra("current proposition", propositions.get(pos));
+    public void openStatisticsPage(View view, int pos) {
+        Intent next = new Intent(this, ChooseResultUsers.class);
+        next.putExtra("index_current_proposition", pos);
+        next.putExtra("propositions", propositions);
         startActivity(next);
     }
 }

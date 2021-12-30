@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/itemTextView"
+        android:layout_width="260dp"
+        android:layout_height="70dp"
+        android:layoutDirection="rtl"
+        android:singleLine="true"
+        android:textDirection="rtl"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button_vote"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layoutDirection="rtl"
+        android:text="הצבע"
+        android:textDirection="rtl" />
+
+</LinearLayout>
