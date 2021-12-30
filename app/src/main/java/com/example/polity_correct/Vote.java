@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +34,7 @@ public class Vote extends AppCompatActivity {
     private RatingBar ratingbar;
     private User curr_user;
     private Citizen curr_citizen;
+    private String user_token;
 
 
     @Override
@@ -54,6 +58,15 @@ public class Vote extends AppCompatActivity {
             txt_proposition_title.setText(p.getTitle());
             getTxt_proposition_description.setText(p.getDescription());
         }
+
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+            if (!TextUtils.isEmpty(token)) {
+                user_token = token;
+                Log.d("Token", "retrieve token successful : " + token);
+            } else {
+                Log.w("Token", "token should not be null...");
+            }
+        });
     }
 
     public void onClickSend(View view) {
@@ -90,9 +103,18 @@ public class Vote extends AppCompatActivity {
         curr_citizen = new Citizen(curr_user.getUserName(), curr_user.getPassword(), curr_user.getMail(), curr_user.getYearOfBirth(), curr_user.getGender(), UserType.citizen, curr_user.getKey_pg());
         curr_citizen.Vote(curr_citizen, proposition_key, vote_grade, user_choice, vote_date);
 
+        afterVoteNotification();
+
         Intent intent = new Intent(this, HomeCitizen.class);
 
         Toast.makeText(Vote.this, "ההצבעה " + radioBtn.getText() + " נשלחה", Toast.LENGTH_SHORT).show();
         startActivity(intent);
+    }
+
+    private void afterVoteNotification() {
+        String title = "הצבעת השפעת!";
+        String body = "הצבעתך "+ radioBtn.getText() + " לחוק " + txt_proposition_title.getText() + "נקלטה בהצלחה. תודה!";
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(user_token, title, body, getApplicationContext(), Vote.this);
+        notificationsSender.SendNotifications();
     }
 }
