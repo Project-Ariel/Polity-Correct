@@ -77,9 +77,22 @@ public class Login extends AppCompatActivity {
                                     userTypeTemp = UserType.parliament;
                                 }
 
+                                //Update user document in reset password case
+                                if (!document.get("password").equals(pass)) {
+                                    curr_user = new Citizen((String) document.get("userName"),
+                                            pass,
+                                            (String) document.get("mail"),
+                                            (long) document.get("yearOfBirth"),
+                                            gen,
+                                            userTypeTemp,
+                                            (String) document.get("key_pg"));
+
+                                    db.collection("Users").document(userID).set(curr_user);
+                                }
+
                                 //create new user
                                 curr_user = new User((String) document.get("userName"),
-                                        (String) document.get("password"),
+                                        pass,
                                         (String) document.get("mail"),
                                         (long) document.get("yearOfBirth"),
                                         gen,
