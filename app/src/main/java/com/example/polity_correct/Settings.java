@@ -60,8 +60,10 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
 
         if (Login.getCurrUser().getGender() == 1) {
             gender = (RadioButton) findViewById(R.id.male);
+            findViewById(R.id.female).setEnabled(false);
         } else {
             gender = (RadioButton) findViewById(R.id.female);
+            findViewById(R.id.male).setEnabled(false);
         }
         gender.setChecked(true);
         gender.setEnabled(false);
