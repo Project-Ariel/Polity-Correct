@@ -14,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -50,9 +53,9 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         date = (EditText) findViewById(R.id.User_year_of_birth);
         date.setText(Login.getCurrUser().getYearOfBirth().toString());
 
-        pass= (EditText) findViewById(R.id.new_password_settings);
+        pass = (EditText) findViewById(R.id.new_password_settings);
         pass.setText(Login.getCurrUser().getPassword());
-        pass= (EditText) findViewById(R.id.new_password_valid_settings);
+        pass = (EditText) findViewById(R.id.new_password_valid_settings);
         pass.setText(Login.getCurrUser().getPassword());
 
         if (Login.getCurrUser().getGender() == 1) {
@@ -107,12 +110,27 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     public void onClickOK(View view) {
-        // TODO: 12/30/2021 roi- update DB
-        Login.getCurrUser().setKey_pg(key_pg);
-        if(validatePassword()) {
-            Login.getCurrUser().setPassword(passwordInput);
+        if (validatePassword()) {
+            updateDB();
             startActivity(new Intent(this, HomeCitizen.class));
         }
+    }
+
+    private void updateDB() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (!Login.getCurrUser().getPassword().equals(passwordInput)) {
+            user.updatePassword(passwordInput);
+            Login.getCurrUser().setPassword(passwordInput);
+        }
+
+        if (!Login.getCurrUser().getKey_pg().equals(key_pg)) {
+            Login.getCurrUser().setKey_pg(key_pg);
+        }
+
+        String userID = Objects.requireNonNull(user.getUid());
+        db.collection("Users").document(userID).set(Login.getCurrUser());
     }
 
     private boolean validatePassword() {
