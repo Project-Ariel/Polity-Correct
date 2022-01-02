@@ -130,15 +130,18 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //Update password
         if (!Login.getCurrUser().getPassword().equals(passwordInput)) {
-            user.updatePassword(passwordInput);
-            Login.getCurrUser().setPassword(passwordInput);
+            user.updatePassword(passwordInput); //Auth
+            Login.getCurrUser().setPassword(passwordInput); //currUser
         }
 
+        //Update key_pg
         if (!Login.getCurrUser().getKey_pg().equals(key_pg)) {
-            Login.getCurrUser().setKey_pg(key_pg);
+            Login.getCurrUser().setKey_pg(key_pg);//currUser
         }
 
+        ////Update user in firestore
         String userID = Objects.requireNonNull(user.getUid());
         db.collection("Users").document(userID).set(Login.getCurrUser());
     }
