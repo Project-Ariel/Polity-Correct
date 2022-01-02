@@ -118,7 +118,11 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     public void onClickOK(View view) {
         if (validatePassword()) {
             updateDB();
-            startActivity(new Intent(this, HomeCitizen.class));
+            if (Login.getCurrUser().getUserType() == UserType.parliament) {
+                startActivity(new Intent(this, HomeParliament.class));
+            }else {
+                startActivity(new Intent(this, HomeCitizen.class));
+            }
         }
     }
 
