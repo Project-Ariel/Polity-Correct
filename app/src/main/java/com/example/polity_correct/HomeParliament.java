@@ -18,47 +18,30 @@ import java.util.ArrayList;
 public class HomeParliament extends AppCompatActivity {
 
     public static ArrayList<Proposition> propositions = new ArrayList<>();
-    TextView user_name;
+    private TextView user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_parliament);
-
         user_name = (TextView) findViewById(R.id.userName);
         user_name.setText(Login.getCurrUser().getUserName());
+    }
 
-//
-//        //get propositions from DB
-//        FirebaseFirestore.getInstance().collection("Propositions")
+//    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
+//        return FirebaseFirestore.getInstance().collection("Propositions")
 //                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), false);
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        for (QueryDocumentSnapshot document : task.getResult()) {
+//                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+//                            if (!p.wasVoted()) {
 //                                propositions.add(p);
 //                            }
 //                        }
 //                    }
 //                });
-    }
-
-    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
-        return FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            if (!p.wasVoted()) {
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
-    }
+//    }
 
     public void openSettingsPage(View view) {
         Intent intent = new Intent(this, Settings.class);
@@ -66,20 +49,13 @@ public class HomeParliament extends AppCompatActivity {
     }
 
     public void openPropositionsPage(View view) {
-        Intent intent = new Intent(this, PropositionsParliament.class);
-        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
-            intent.putExtra("propositions", propositions);
-            startActivity(intent);
-        });
+        startActivity(new Intent(this, PropositionsParliament.class));
     }
 
     public void openStatisticsPage(View view) {
         Intent intent = new Intent(this, ChooseResultUsers.class);
-        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
-            intent.putExtra("propositions", propositions);
-            intent.putExtra("index_current_proposition", 0);
-            startActivity(intent);
-        });
+        intent.putExtra("index_current_proposition", 0);
+        startActivity(intent);
     }
 
     public void sendMail(View view) {

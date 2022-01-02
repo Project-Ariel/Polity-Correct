@@ -8,11 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -22,13 +19,9 @@ public class Login extends AppCompatActivity {
     private EditText txtAccountMail, txtPass;
     private String mail, pass;
     private String userID;
-    private FirebaseFirestore db;
-    static private User curr_user;
-    static private FirebaseAuth mAuth;
-    private CollectionReference databaseReference;
-    private DocumentSnapshot document;
-    private long gen;
-    private UserType userTypeTemp;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static User curr_user = new User();
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +34,8 @@ public class Login extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
         }
 
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
         txtAccountMail = (EditText) findViewById(R.id.textUsermail_login);
         txtPass = (EditText) findViewById(R.id.textPassword_login);
-        databaseReference = db.collection("Users");
     }
 
     //open Home page
@@ -60,56 +49,22 @@ public class Login extends AppCompatActivity {
                         // Sign in success, create user object and update UI with the signed-in user's information
                         userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-                        databaseReference.document(userID).get().addOnCompleteListener(task0 -> {
-                            if (task0.isSuccessful()) {
-                                document = task0.getResult();
+                        DB.getUser(userID, curr_user).addOnCompleteListener(task1 -> {
 
-                                //update user gender
-                                gen = -1;
-                                if (document.get("gender") != null) {
-                                    gen = (long) document.get("gender");
-                                }
+                            //Update user document in reset password case
+                            if (!curr_user.getPassword().equals(pass)) {
+                                db.collection("Users").document(userID).set(curr_user);
+                            }
 
-                                //update user type
-                                if (document.get("userType").equals("citizen")) {
-                                    userTypeTemp = UserType.citizen;
-                                } else {
-                                    userTypeTemp = UserType.parliament;
-                                }
-
-                                //Update user document in reset password case
-                                if (!document.get("password").equals(pass)) {
-                                    curr_user = new Citizen((String) document.get("userName"),
-                                            pass,
-                                            (String) document.get("mail"),
-                                            (long) document.get("yearOfBirth"),
-                                            gen,
-                                            userTypeTemp,
-                                            (String) document.get("key_pg"));
-
-                                    db.collection("Users").document(userID).set(curr_user);
-                                }
-
-                                //create new user
-                                curr_user = new User((String) document.get("userName"),
-                                        pass,
-                                        (String) document.get("mail"),
-                                        (long) document.get("yearOfBirth"),
-                                        gen,
-                                        userTypeTemp,
-                                        (String) document.get("key_pg"));
-
-                                Intent next;
-                                if (curr_user.getUserType().name().equals(UserType.parliament.name())) {
-                                    //if user is parliament member
-                                    next = new Intent(Login.this, HomeParliament.class);
-                                } else {
-                                    //else- user is citizen
-                                    next = new Intent(Login.this, HomeCitizen.class);
-                                }
-                                startActivity(next);
+                            if (curr_user.getUserType().name().equals(UserType.parliament.name())) {
+                                //if- user is parliament member
+                                startActivity(new Intent(Login.this, HomeParliament.class));
+                            } else {
+                                //else- user is citizen
+                                startActivity(new Intent(Login.this, HomeCitizen.class));
                             }
                         });
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(Login.this, "ההתחברות נכשלה",

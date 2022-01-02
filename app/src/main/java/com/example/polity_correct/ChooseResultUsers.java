@@ -1,6 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,14 +20,15 @@ import java.util.ArrayList;
 
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-
+    // TODO: 1/2/2022 DB
     private Spinner dropdown;
     private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<Proposition> propositions;
+    private static ArrayList<Proposition> propositions = new ArrayList<>();
     private Proposition curr_proposition;
-    private int[] res;
+    private static int[] res;
     private User currUser = Login.getCurrUser();
-    private String name_curr_pg, voteKeyPG;
+    private String voteKeyPG;
+    private static String[] name_curr_pg= new String[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +40,20 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
-        Intent i = getIntent();
-        int index_curr_prop = 0;
-        if (i != null) {
-            propositions = (ArrayList<Proposition>) i.getSerializableExtra("propositions");
+        DB.getPropositions(propositions).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                titles.add(p.getTitle());
+                if (!p.wasVoted())
+                    titles.add(p.getTitle());
             }
-            index_curr_prop = (int) i.getExtras().get("index_current_proposition");
-        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
-        dropdown.setAdapter(adapter);
-        dropdown.setSelection(index_curr_prop);
-        dropdown.setOnItemSelectedListener(this);
+            Intent i = getIntent();
+            int index_curr_prop = (int) i.getExtras().get("index_current_proposition");
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
+            dropdown.setAdapter(adapter);
+            dropdown.setSelection(index_curr_prop);
+            dropdown.setOnItemSelectedListener(this);
+        });
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -64,7 +64,8 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
-        getVotesFromDB().addOnCompleteListener(task -> {
+        res = new int[]{0, 0, 0};
+        DB.getPropVotes(res, curr_proposition.getKey()).addOnCompleteListener(task -> {
             Intent intent = new Intent(this, Statistics.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
@@ -73,53 +74,18 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         });
     }
 
+    // TODO: 1/2/2022 array to String
     public void onClickSpecificPoliticalGroup(View view) {
+        res = new int[]{0, 0, 0};
         getVotesFromDBSpecificPG().addOnCompleteListener(task -> {
-            getNamePoliticalGroup().addOnCompleteListener(task0 -> {
+            DB.getNamePG(currUser.getKey_pg(), name_curr_pg).addOnCompleteListener(task0 -> {
                 Intent intent = new Intent(this, Statistics.class);
-                intent.putExtra("pg", name_curr_pg);
+                intent.putExtra("pg", name_curr_pg[0]);
                 intent.putExtra("proposition_title", curr_proposition.getTitle());
                 intent.putExtra("result", res);
                 startActivity(intent);
             });
         });
-    }
-
-    private Task<DocumentSnapshot> getNamePoliticalGroup() {
-        return FirebaseFirestore.getInstance().collection("PoliticalGroups")
-                .document(currUser.getKey_pg())
-                .get().addOnCompleteListener(task -> {
-                    name_curr_pg = task.getResult().get("group_name").toString();
-                });
-    }
-
-    private Task<QuerySnapshot> getVotesFromDB() {
-        res = new int[]{0, 0, 0};
-        return FirebaseFirestore.getInstance().collection("Votes")
-                .whereEqualTo("proposition_key", curr_proposition.getKey())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String userChoice = (String) document.get("user_choice");
-                            int choice;
-                            switch (userChoice) {
-                                case "against":
-                                    choice = 0;
-                                    break;
-                                case "impossible":
-                                    choice = 1;
-                                    break;
-                                case "agreement":
-                                    choice = 2;
-                                    break;
-                                default:
-                                    throw new IllegalStateException("Unexpected value: " + userChoice);
-                            }
-                            res[choice]++;
-                        }
-                    }
-                });
     }
 
     private Task<DocumentSnapshot> getKeyPoliticalGroup(String id_user) {

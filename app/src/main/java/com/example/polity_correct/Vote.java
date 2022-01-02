@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Calendar;
@@ -22,18 +21,13 @@ import java.util.Date;
 
 public class Vote extends AppCompatActivity {
 
-    private FirebaseFirestore db;
-
     private TextView txt_proposition_title, getTxt_proposition_description;
     private String proposition_key;
     private StatusVote user_choice;
-    private double vote_grade;
-    private Timestamp vote_date;
     private RadioGroup radioGroup;
     private RadioButton radioBtn;
     private RatingBar ratingbar;
     private User curr_user;
-    private Citizen curr_citizen;
     private String user_token;
 
 
@@ -43,8 +37,6 @@ public class Vote extends AppCompatActivity {
         setContentView(R.layout.vote);
 
         curr_user = Login.getCurrUser();
-
-        db = FirebaseFirestore.getInstance();
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הצבעה");
@@ -73,7 +65,7 @@ public class Vote extends AppCompatActivity {
         ratingbar = (RatingBar) findViewById(R.id.ratingBar);
         radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
         String rating = String.valueOf(ratingbar.getRating());
-        vote_grade = Double.parseDouble(rating);
+        double vote_grade = Double.parseDouble(rating);
 
         // get selected radio button from radioGroup
         int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -99,16 +91,14 @@ public class Vote extends AppCompatActivity {
 
         //Extract vote date
         Date currentTime = Calendar.getInstance().getTime();
-        vote_date = new Timestamp(currentTime);
-        curr_citizen = new Citizen(curr_user.getUserName(), curr_user.getPassword(), curr_user.getMail(), curr_user.getYearOfBirth(), curr_user.getGender(), UserType.citizen, curr_user.getKey_pg());
+        Timestamp vote_date = new Timestamp(currentTime);
+        Citizen curr_citizen = new Citizen(curr_user.getUserName(), curr_user.getPassword(), curr_user.getMail(), curr_user.getYearOfBirth(), curr_user.getGender(), UserType.citizen, curr_user.getKey_pg());
         curr_citizen.Vote(curr_citizen, proposition_key, vote_grade, user_choice, vote_date);
 
         afterVoteNotification();
 
-        Intent intent = new Intent(this, HomeCitizen.class);
-
         Toast.makeText(Vote.this, "ההצבעה " + radioBtn.getText() + " נשלחה", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
+        startActivity(new Intent(this, HomeCitizen.class));
     }
 
     private void afterVoteNotification() {

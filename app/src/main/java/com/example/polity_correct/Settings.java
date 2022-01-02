@@ -13,26 +13,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
+    private static ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
     private ArrayList<String> titles = new ArrayList<>();
 
     private Spinner dropdown;
     private EditText name, date, mail;
     private EditText pass;
     private RadioButton gender;
-    private String key_pg = Login.getCurrUser().getKey_pg();
+    private User currUser= Login.getCurrUser();
+    private String key_pg = currUser.getKey_pg();
     private String passwordInput;
     private int pg_select = 0;
 
@@ -45,20 +41,20 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         title.setText("הגדרות");
 
         mail = (EditText) findViewById(R.id.textUsermailCitizen);
-        mail.setText(Login.getCurrUser().getMail());
+        mail.setText(currUser.getMail());
 
         name = (EditText) findViewById(R.id.User_full_name);
-        name.setText(Login.getCurrUser().getUserName());
+        name.setText(currUser.getUserName());
 
         date = (EditText) findViewById(R.id.User_year_of_birth);
-        date.setText(Login.getCurrUser().getYearOfBirth().toString());
+        date.setText((int) currUser.getYearOfBirth());
 
         pass = (EditText) findViewById(R.id.new_password_settings);
-        pass.setText(Login.getCurrUser().getPassword());
+        pass.setText(currUser.getPassword());
         pass = (EditText) findViewById(R.id.new_password_valid_settings);
-        pass.setText(Login.getCurrUser().getPassword());
+        pass.setText(currUser.getPassword());
 
-        if (Login.getCurrUser().getGender() == 1) {
+        if (currUser.getGender() == 1) {
             gender = (RadioButton) findViewById(R.id.male);
             findViewById(R.id.female).setEnabled(false);
         } else {
@@ -70,24 +66,21 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
 
         dropdown = (Spinner) findViewById(R.id.choosePG);
 
-        getDB().addOnCompleteListener(task -> {
-            Intent i = getIntent();
-            if (i != null) {
-                int index = 0;
-                for (PoliticalGroup p : political_groups) {
-                    if (Login.getCurrUser().getKey_pg().equals(p.getGroup_key())) {
-                        pg_select = index;
-                    }
-                    titles.add(p.getGroup_name());
-                    index++;
+        DB.getPg(political_groups).addOnCompleteListener(task -> {
+            int index = 0;
+            for (PoliticalGroup p : political_groups) {
+                if (currUser.getKey_pg().equals(p.getGroup_key())) {
+                    pg_select = index;
                 }
+                titles.add(p.getGroup_name());
+                index++;
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles);
             dropdown.setAdapter(adapter);
             dropdown.setSelection(pg_select);
             dropdown.setOnItemSelectedListener(this);
 
-            if (Login.getCurrUser().getUserType() == UserType.parliament) {
+            if (currUser.getUserType() == UserType.parliament) {
                 dropdown.setEnabled(false);
             }
         });
@@ -101,49 +94,34 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    //get Political Groups from DB
-    private Task<QuerySnapshot> getDB() {
-        return FirebaseFirestore.getInstance().collection("PoliticalGroups")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            PoliticalGroup p = new PoliticalGroup(document.getId(), (String) document.get("group_name"), (String) document.get("abbreviation"), (String) document.get("group_website"));
-                            political_groups.add(p);
-                        }
-                    }
-                });
-    }
-
     public void onClickOK(View view) {
         if (validatePassword()) {
             updateDB();
-            if (Login.getCurrUser().getUserType() == UserType.parliament) {
+            if (currUser.getUserType() == UserType.parliament) {
                 startActivity(new Intent(this, HomeParliament.class));
-            }else {
+            } else {
                 startActivity(new Intent(this, HomeCitizen.class));
             }
         }
     }
 
+    // TODO: 1/2/2022 Auth
     private void updateDB() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //Update password
-        if (!Login.getCurrUser().getPassword().equals(passwordInput)) {
+        if (!currUser.getPassword().equals(passwordInput)) {
             user.updatePassword(passwordInput); //Auth
-            Login.getCurrUser().setPassword(passwordInput); //currUser
+            currUser.setPassword(passwordInput); //currUser
         }
 
         //Update key_pg
-        if (!Login.getCurrUser().getKey_pg().equals(key_pg)) {
-            Login.getCurrUser().setKey_pg(key_pg);//currUser
+        if (!currUser.getKey_pg().equals(key_pg)) {
+            currUser.setKey_pg(key_pg);//currUser
         }
 
         ////Update user in firestore
-        String userID = Objects.requireNonNull(user.getUid());
-        db.collection("Users").document(userID).set(Login.getCurrUser());
+        DB.setCurrUser(currUser);
     }
 
     private boolean validatePassword() {

@@ -9,24 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 public class HomeCitizen extends AppCompatActivity {
 
     private TextView userName;
-    private ArrayList<Proposition> propositions;
-
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 

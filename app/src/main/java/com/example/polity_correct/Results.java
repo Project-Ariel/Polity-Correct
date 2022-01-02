@@ -22,7 +22,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     private Spinner dropdown;
     private CardView result;
     private TextView proposition_title;
-    private ArrayList<Proposition> propositions;
+    private static ArrayList<Proposition> propositions= new ArrayList<>();
     private Proposition curr_proposition;
 
     ArrayList<String> titles = new ArrayList<>();
@@ -37,16 +37,15 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
 
         dropdown = (Spinner) findViewById(R.id.spinnerProp);
 
-        getVotedPropositionsFromDB().addOnCompleteListener(task -> {
+        DB.getPropositions(propositions).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                titles.add(p.getTitle());
+                if (p.wasVoted())
+                    titles.add(p.getTitle());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
             dropdown.setAdapter(adapter);
             dropdown.setOnItemSelectedListener(this);
         });
-
-
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -62,21 +61,5 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
         result.setVisibility(View.VISIBLE);
         proposition_title = (TextView) findViewById(R.id.proposition_title);
         proposition_title.setText(curr_proposition.getTitle());
-    }
-
-    private Task<QuerySnapshot> getVotedPropositionsFromDB() {
-        propositions = new ArrayList<>();
-        return FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            if (p.wasVoted()) {
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
     }
 }

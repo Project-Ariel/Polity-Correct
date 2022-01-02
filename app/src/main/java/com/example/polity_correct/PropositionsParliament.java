@@ -20,7 +20,7 @@ public class PropositionsParliament extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<Proposition> propositions;
+    private static ArrayList<Proposition> propositions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +30,18 @@ public class PropositionsParliament extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
 
-        Intent in = getIntent();
-        propositions = (ArrayList<Proposition>) in.getSerializableExtra("propositions");
-        for (Proposition i : propositions) {
-            if (!i.wasVoted())
-                titles.add(i.getTitle());
-        }
+        DB.getPropositions(propositions).addOnCompleteListener(task -> {
+            for (Proposition p : propositions) {
+                if (!p.wasVoted())
+                    titles.add(p.getTitle());
+            }
 
-        listView = (ListView) findViewById(R.id.listViewP);
+            listView = (ListView) findViewById(R.id.listViewP);
+            ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_statistic, R.id.itemTextView, titles);
+            listView.setAdapter(arrayAdapter);
+        });
 
-        ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_statistic, R.id.itemTextView, titles);
-        listView.setAdapter(arrayAdapter);
     }
-
 
     class listAdapter extends ArrayAdapter<String> {
         public listAdapter(@NonNull Context context, int item_view, int itemTextView, ArrayList<String> list) {

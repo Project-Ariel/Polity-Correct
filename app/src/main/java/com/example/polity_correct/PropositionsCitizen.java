@@ -14,18 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 
 public class PropositionsCitizen extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<Proposition> propositions;
+    private static ArrayList<Proposition> propositions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +30,10 @@ public class PropositionsCitizen extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
 
-        getNotVotedPropositionsFromDB().addOnCompleteListener(task -> {
+        DB.getPropositions(propositions).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                titles.add(p.getTitle());
+                if (!p.wasVoted())
+                    titles.add(p.getTitle());
             }
 
             listView = (ListView) findViewById(R.id.listViewC);
@@ -71,21 +67,5 @@ public class PropositionsCitizen extends AppCompatActivity {
         Intent next = new Intent(this, Vote.class);
         next.putExtra("current proposition", propositions.get(pos));
         startActivity(next);
-    }
-
-    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
-        propositions = new ArrayList<>();
-        return FirebaseFirestore.getInstance().collection("Propositions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            if (!p.wasVoted()) {
-                                propositions.add(p);
-                            }
-                        }
-                    }
-                });
     }
 }

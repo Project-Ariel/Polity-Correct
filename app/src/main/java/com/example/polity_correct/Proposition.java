@@ -1,14 +1,12 @@
 package com.example.polity_correct;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class Proposition implements Serializable {
     private String key;
     private String title;
     private String status;
     private String description;
-    //    private Category category;
     private String category;
     private boolean voted;
 

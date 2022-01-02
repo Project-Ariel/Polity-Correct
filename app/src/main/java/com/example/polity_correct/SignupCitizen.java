@@ -19,20 +19,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SignupCitizen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-    private ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
-    private ArrayList<String> titles = new ArrayList<>();
 
     private Spinner dropdown;
     private EditText name, date;
@@ -42,6 +35,10 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
     private int gen = -1;
     private boolean flag;
 
+    private static ArrayList<PoliticalGroup> political_groups = new ArrayList<>();
+    private ArrayList<String> titles = new ArrayList<>();
+
+    // TODO: 1/2/2022 auth
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -50,12 +47,9 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
 
         dropdown = (Spinner) findViewById(R.id.choosePG);
 
-        getDB().addOnCompleteListener(task -> {
-            Intent i = getIntent();
-            if (i != null) {
-                for (PoliticalGroup p : political_groups) {
-                    titles.add(p.getGroup_name());
-                }
+        DB.getPg(political_groups).addOnCompleteListener(task -> {
+            for (PoliticalGroup p : political_groups) {
+                titles.add(p.getGroup_name());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles);
             dropdown.setAdapter(adapter);
@@ -69,20 +63,6 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-    }
-
-    //get Political Groups from DB
-    private Task<QuerySnapshot> getDB() {
-        return FirebaseFirestore.getInstance().collection("PoliticalGroups")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            PoliticalGroup p = new PoliticalGroup(document.getId(), (String) document.get("group_name"), (String) document.get("abbreviation"), (String) document.get("group_website"));
-                            political_groups.add(p);
-                        }
-                    }
-                });
     }
 
     //gender
@@ -114,8 +94,7 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
                             date = ((EditText) findViewById(R.id.User_year_of_birth));
                             curr_user = new Citizen(name.getText().toString(), pass, mail,
                                     Long.valueOf(date.getText().toString()), gen, UserType.citizen, key_pg);
-                            String userId = mAuth.getCurrentUser().getUid();
-                            db.collection("Users").document(userId).set(curr_user);
+                            DB.setCurrUser(curr_user);
                             Login.setCurr_user(curr_user);
                             startActivity(new Intent(SignupCitizen.this, HomeCitizen.class));
                         } else {
