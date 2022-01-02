@@ -86,6 +86,10 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
             dropdown.setAdapter(adapter);
             dropdown.setSelection(pg_select);
             dropdown.setOnItemSelectedListener(this);
+
+            if (Login.getCurrUser().getUserType() == UserType.parliament) {
+                dropdown.setEnabled(false);
+            }
         });
     }
 
