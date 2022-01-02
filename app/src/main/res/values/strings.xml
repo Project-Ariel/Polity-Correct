@@ -7,7 +7,7 @@
     <string name="send">שלח</string>
     <string name="rateTheVote">עד כמה חוק זה חשוב לך?</string>
     <string name="Against">נגד</string>
-    <string name="impossible">נמנע</string>
+    <string name="abstain">נמנע</string>
     <string name="pro">בעד</string>
     <string name="details">תיאור ופירוט</string>
     <string name="title_activity_signup_pm">SignupPM</string>

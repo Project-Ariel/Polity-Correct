@@ -123,6 +123,6 @@ enum UserType{
 
 enum StatusVote{
     against,
-    impossible,
+    abstain,
     agreement
 }

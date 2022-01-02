@@ -79,7 +79,7 @@ public class Vote extends AppCompatActivity {
                 user_choice = StatusVote.against;
                 break;
             case "נמנע":
-                user_choice = StatusVote.impossible;
+                user_choice = StatusVote.abstain;
                 break;
             case "בעד":
                 user_choice = StatusVote.agreement;
