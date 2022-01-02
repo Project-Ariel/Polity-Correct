@@ -7,12 +7,12 @@ public class User implements Parcelable {
     private String userName;
     private String password;
     private String mail;
-    private Long yearOfBirth;
+    private long yearOfBirth;
     private long gender;
     private UserType userType;
     private String key_pg;
 
-    public User(String userName, String password, String mail, Long yearOfBirth, long gender, UserType userType, String pg){
+    public User(String userName, String password, String mail, long yearOfBirth, long gender, UserType userType, String pg){
         this.userName=userName;
         this.password=password;
         this.mail=mail;
@@ -57,7 +57,7 @@ public class User implements Parcelable {
         return mail;
     }
 
-    public Long getYearOfBirth() {
+    public long getYearOfBirth() {
         return yearOfBirth;
     }
 
@@ -97,7 +97,7 @@ public class User implements Parcelable {
         return gender;
     }
 
-    public void setGander(int gender) {
+    public void setGander(long gender) {
         this.gender = gender;
     }
 
