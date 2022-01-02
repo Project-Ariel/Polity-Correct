@@ -7,11 +7,7 @@
     android:layoutDirection="rtl"
     tools:context=".Login">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/layout_welcome_page"
-        tools:layout_editor_absoluteX="-28dp"
-        tools:layout_editor_absoluteY="148dp" />
+    <include layout="@layout/layout_welcome_page" />
 
     <TextView
         android:id="@+id/mail_login"
@@ -31,7 +27,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <EditText
-        android:id="@+id/textUsermail_login"
+        android:id="@+id/text_usermail_login"
         android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_gravity="start"
@@ -43,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28" />
+        app:layout_constraintVertical_bias="0.275" />
 
     <TextView
         android:id="@+id/password_login"
@@ -75,7 +71,7 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.364" />
 
     <Button
         android:id="@+id/login"
@@ -132,7 +128,7 @@
         android:onClick="onClickSignupPM"
         android:text="הירשם&#10;כחבר כנסת"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

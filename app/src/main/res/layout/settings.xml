@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/mail"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -26,15 +26,15 @@
         app:layout_constraintVertical_bias="0.1" />
 
     <EditText
-        android:id="@+id/textUsermailCitizen"
+        android:id="@+id/text_usermail_citizen"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
+        android:enabled="false"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
+        android:singleLine="true"
         android:textAlignment="textStart"
-        android:textDirection="rtl"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -45,7 +45,7 @@
     <TextView
         android:id="@+id/password"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -62,7 +62,7 @@
     <EditText
         android:id="@+id/new_password_settings"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:inputType="textPassword"
         android:layoutDirection="rtl"
@@ -78,7 +78,7 @@
     <TextView
         android:id="@+id/password_confirm"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -95,7 +95,7 @@
     <EditText
         android:id="@+id/new_password_valid_settings"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:inputType="textPassword"
         android:layoutDirection="rtl"
@@ -111,7 +111,7 @@
     <TextView
         android:id="@+id/full_name"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -128,13 +128,13 @@
     <EditText
         android:id="@+id/User_full_name"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
+        android:enabled="false"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
         android:textAlignment="textStart"
         android:textDirection="rtl"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -145,7 +145,7 @@
     <TextView
         android:id="@+id/YearOfBirth"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -162,13 +162,13 @@
     <EditText
         android:id="@+id/User_year_of_birth"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
+        android:enabled="false"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
         android:textAlignment="textStart"
         android:textDirection="rtl"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -179,7 +179,7 @@
     <TextView
         android:id="@+id/userChoosePg"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -197,7 +197,7 @@
     <Spinner
         android:id="@+id/choosePG"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@android:drawable/btn_dropdown"
         android:layoutDirection="rtl"
         android:spinnerMode="dropdown"
@@ -206,12 +206,12 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.51" />
 
     <TextView
         android:id="@+id/gender"
         android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
@@ -227,7 +227,7 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="start"
         android:layoutDirection="rtl"
         android:orientation="horizontal"

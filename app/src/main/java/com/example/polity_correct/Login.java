@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
         }
 
-        txtAccountMail = (EditText) findViewById(R.id.textUsermail_login);
+        txtAccountMail = (EditText) findViewById(R.id.text_usermail_login);
         txtPass = (EditText) findViewById(R.id.textPassword_login);
     }
 

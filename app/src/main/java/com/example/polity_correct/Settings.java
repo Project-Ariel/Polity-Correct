@@ -47,7 +47,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         name.setText(currUser.getUserName());
 
         date = (EditText) findViewById(R.id.User_year_of_birth);
-        date.setText((int) currUser.getYearOfBirth());
+        date.setText(""+(int) currUser.getYearOfBirth());
 
         pass = (EditText) findViewById(R.id.new_password_settings);
         pass.setText(currUser.getPassword());

@@ -28,7 +28,7 @@ public class SignupPM extends AppCompatActivity {
     }
 
     public void onClickOK(View view) {
-        mail = ((TextView) findViewById(R.id.textUsermail)).getText().toString();
+        mail = ((TextView) findViewById(R.id.text_usermail)).getText().toString();
         if (!mail.contains("@KNESSET.GOV.IL") && !mail.contains("@knesset.gov.il")) {
             Toast.makeText(SignupPM.this, "מייל זה לא שייך לחבר כנסת", Toast.LENGTH_SHORT).show();
         } else {
