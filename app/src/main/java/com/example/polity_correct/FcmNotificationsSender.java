@@ -49,18 +49,13 @@ public class FcmNotificationsSender {
 
             mainObj.put("notification", notiObject);
 
-
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObj, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    // code run is got response
-
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    // code run is got error
-
                 }
             }) {
                 @Override
@@ -70,7 +65,6 @@ public class FcmNotificationsSender {
                     header.put("content-type", "application/json");
                     header.put("authorization", "key=" + fcmServerKey);
                     return header;
-
                 }
             };
             requestQueue.add(request);
@@ -78,6 +72,5 @@ public class FcmNotificationsSender {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }
