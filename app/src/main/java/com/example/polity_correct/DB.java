@@ -43,7 +43,7 @@ public class DB {
                 });
     }
 
-    public static Task<QuerySnapshot> getPropVotes(int[] votes, String prop_key) {
+    public static Task<QuerySnapshot> getPropVotes(double[] votes, String prop_key) {
         return db.collection("Votes")
                 .whereEqualTo("proposition_key", prop_key)
                 .get()
@@ -65,8 +65,12 @@ public class DB {
                                 default:
                                     throw new IllegalStateException("Unexpected value: " + userChoice);
                             }
+                            votes[3] += Double.parseDouble("" + document.get("vote_grade").toString());
                             votes[choice]++;
                         }
+
+                        if (votes[3] != 0)
+                            votes[3] /= (votes[0] + votes[1] + votes[2]);
                     }
                 });
     }

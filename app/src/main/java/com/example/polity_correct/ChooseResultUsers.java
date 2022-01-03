@@ -31,10 +31,10 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     private ArrayList<String> titles = new ArrayList<>();
     private static ArrayList<Proposition> propositions = new ArrayList<>();
     private Proposition curr_proposition;
-    private static int[] res;
+    private static double[] res;
     private User currUser = Login.getCurrUser();
     private String voteKeyPG;
-    private static String[] name_curr_pg= new String[1];
+    private static String[] name_curr_pg = new String[1];
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
@@ -115,8 +115,9 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
-        res = new int[]{0, 0, 0};
+        res = new double[]{0, 0, 0, 0};
         DB.getPropVotes(res, curr_proposition.getKey()).addOnCompleteListener(task -> {
+            System.out.println("res[3]" + res[3]);
             Intent intent = new Intent(this, Statistics.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
@@ -127,7 +128,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     // TODO: 1/2/2022 array to String
     public void onClickSpecificPoliticalGroup(View view) {
-        res = new int[]{0, 0, 0};
+        res = new double[]{0, 0, 0, 0};
         getVotesFromDBSpecificPG().addOnCompleteListener(task -> {
             DB.getNamePG(currUser.getKey_pg(), name_curr_pg).addOnCompleteListener(task0 -> {
                 Intent intent = new Intent(this, Statistics.class);
@@ -148,7 +149,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     private Task<QuerySnapshot> getVotesFromDBSpecificPG() {
-        res = new int[]{0, 0, 0};
+        res = new double[]{0, 0, 0, 0};
         return FirebaseFirestore.getInstance().collection("Votes")
                 .whereEqualTo("proposition_key", curr_proposition.getKey())
                 .get()
@@ -174,8 +175,11 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
                                         default:
                                             throw new IllegalStateException("Unexpected value: " + userChoice);
                                     }
+                                    res[3] += Double.parseDouble("" + document.get("vote_grade").toString());
                                     res[choice]++;
                                 }
+                                if (res[3] != 0)
+                                    res[3] /= (res[0] + res[1] + res[2]);
                             });
                         }
                     }

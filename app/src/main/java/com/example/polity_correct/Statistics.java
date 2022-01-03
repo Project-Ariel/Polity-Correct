@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class Statistics extends AppCompatActivity {
 
-    private TextView pg;
+    private TextView pg, avg;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
@@ -40,15 +40,17 @@ public class Statistics extends AppCompatActivity {
         String proposition_title = getIntent().getExtras().get("proposition_title").toString();
         pg = (TextView) findViewById(R.id.pg);
         pg.setText(choice);
-        int[] res = (int[]) getIntent().getSerializableExtra("result");
-        float sum = res[0] + res[1] + res[2];
+        double[] res = (double[]) getIntent().getSerializableExtra("result");
+        avg = (TextView) findViewById(R.id.avg_num);
+        avg.setText(""+res[3]);
+        float sum = (float) (res[0] + res[1] + res[2]);
 
         PieChart pieChart = findViewById(R.id.pieChart);
 
         ArrayList<PieEntry> votes = new ArrayList<>();
-        votes.add(new PieEntry((res[0] / sum) * 100, "נגד"));
-        votes.add(new PieEntry((res[1] / sum) * 100, "נמנע"));
-        votes.add(new PieEntry((res[2] / sum) * 100, "בעד"));
+        votes.add(new PieEntry((float) ((res[0] / sum) * 100), "נגד"));
+        votes.add(new PieEntry((float) ((res[1] / sum) * 100), "נמנע"));
+        votes.add(new PieEntry((float) ((res[2] / sum) * 100), "בעד"));
 
         PieDataSet pieDataSet = new PieDataSet(votes, proposition_title);
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
