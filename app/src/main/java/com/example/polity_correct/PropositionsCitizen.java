@@ -1,8 +1,14 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
 public class PropositionsCitizen extends AppCompatActivity {
@@ -21,6 +29,8 @@ public class PropositionsCitizen extends AppCompatActivity {
     private ListView listView;
     private ArrayList<String> titles = new ArrayList<>();
     private static ArrayList<Proposition> propositions = new ArrayList<>();
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,45 @@ public class PropositionsCitizen extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_vote, R.id.itemTextView, titles);
             listView.setAdapter(arrayAdapter);
         });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.Home:
+                    startActivity(new Intent(this, HomeCitizen.class));
+                    break;
+                case R.id.UpdateDetails:
+                    startActivity(new Intent(this, Settings.class));
+                    break;
+                case R.id.Vote:
+                    startActivity(new Intent(this, PropositionsCitizen.class));
+                    break;
+                case R.id.Results:
+                    startActivity(new Intent(this, Results.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
