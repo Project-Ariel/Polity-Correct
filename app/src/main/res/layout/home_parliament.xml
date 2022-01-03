@@ -1,72 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeParliament">
 
     <include layout="@layout/layout_home_page" />
 
-    <Button
-        android:id="@+id/changePass"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/alef"
-        android:gravity="center_vertical|center_horizontal"
-        android:layoutDirection="rtl"
-        android:onClick="openPropositionsPage"
-        android:text="@string/show_propositions"
-        android:textColor="#fff"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.528" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/propositions"
-        android:layout_width="125dp"
-        android:layout_height="124dp"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/alef"
-        android:gravity="center_vertical|center_horizontal"
-        android:layoutDirection="rtl"
-        android:onClick="openSettingsPage"
-        android:shadowColor="#000000"
-        android:text="@string/change_pass"
-        android:textColor="#fff"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.406"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701" />
+        <Button
+            android:id="@+id/changePass"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/round_button"
+            android:fontFamily="@font/alef"
+            android:gravity="center_vertical|center_horizontal"
+            android:layoutDirection="rtl"
+            android:onClick="openPropositionsPage"
+            android:text="צפה בחוקים"
+            android:textColor="#fff"
+            android:textSize="80px"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.528" />
 
-    <Button
-        android:id="@+id/statistics"
-        android:layout_width="181dp"
-        android:layout_height="185dp"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/alef"
-        android:gravity="center_vertical|center_horizontal"
-        android:layoutDirection="rtl"
-        android:onClick="openStatisticsPage"
-        android:text="@string/show_statistics"
-        android:textColor="#fff"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.148"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401" />
+        <Button
+            android:id="@+id/propositions"
+            android:layout_width="125dp"
+            android:layout_height="124dp"
+            android:background="@drawable/round_button"
+            android:fontFamily="@font/alef"
+            android:gravity="center_vertical|center_horizontal"
+            android:layoutDirection="rtl"
+            android:onClick="openSettingsPage"
+            android:shadowColor="#000000"
+            android:text="החלף סיסמא"
+            android:textColor="#fff"
+            android:textSize="50px"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.406"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.701" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/statistics"
+            android:layout_width="181dp"
+            android:layout_height="185dp"
+            android:background="@drawable/round_button"
+            android:fontFamily="@font/alef"
+            android:gravity="center_vertical|center_horizontal"
+            android:layoutDirection="rtl"
+            android:onClick="openStatisticsPage"
+            android:text="צפה בסטטיסטיקות"
+            android:textColor="#fff"
+            android:textSize="55px"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.401" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/home_pm_menu"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
