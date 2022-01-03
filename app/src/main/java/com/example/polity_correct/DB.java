@@ -55,7 +55,7 @@ public class DB {
                                 case "against":
                                     choice = 0;
                                     break;
-                                case "impossible":
+                                case "abstain":
                                     choice = 1;
                                     break;
                                 case "agreement":
