@@ -2,8 +2,14 @@ package com.example.polity_correct;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -31,6 +38,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     private String key_pg = currUser.getKey_pg();
     private String passwordInput;
     private int pg_select = 0;
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +93,40 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
                 dropdown.setEnabled(false);
             }
         });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.Home:
+                    if(Login.getCurrUser().getUserType().name().equals(UserType.parliament.name())) {
+                        startActivity(new Intent(this, HomeParliament.class));
+                    }
+                    else
+                        startActivity(new Intent(this, HomeCitizen.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //pg
