@@ -20,7 +20,7 @@
         android:layout_height="50dp"
         android:layoutDirection="rtl"
         android:textSize="9sp"
-        android:text="צפה בסטטיסטיקות"
+        android:text="@string/show_statistics"
         android:textDirection="rtl" />
 
 </LinearLayout>

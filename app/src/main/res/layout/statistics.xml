@@ -14,7 +14,7 @@
         android:layout_height="36dp"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="התפלגות ההצבעות לפי:"
+        android:text="@string/votes_of"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -115,7 +115,7 @@
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="שם מלא"
+        android:text="@string/full_name"
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -149,7 +149,7 @@
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="שנת לידה"
+        android:text="@string/year_of_birth"
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -183,7 +183,7 @@
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="בחר מפלגה"
+        android:text="@string/choose_pg"
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -215,7 +215,7 @@
         android:layout_gravity="start"
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
-        android:text="מגדר"
+        android:text="@string/gender"
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -244,7 +244,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
-            android:text="זכר"
+            android:text="@string/male"
             android:textSize="20sp" />
 
         <RadioButton
@@ -252,7 +252,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
-            android:text="נקבה"
+            android:text="@string/female"
             android:textSize="20sp" />
     </RadioGroup>
 
@@ -263,7 +263,7 @@
         android:fontFamily="@font/alef"
         android:layoutDirection="rtl"
         android:onClick="onClickOK"
-        android:text="עדכן"
+        android:text="@string/update"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

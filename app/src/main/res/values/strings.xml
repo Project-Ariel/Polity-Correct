@@ -22,4 +22,30 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="choose_proposition">בחר חוק</string>
+    <string name="all_citizen">כלל האזרחים</string>
+    <string name="my_pg">המפלגה שלי</string>
+    <string name="vote_here">הצבע כאן!</string>
+    <string name="final_results">תוצאות האמת</string>
+    <string name="update_settings">עדכון פרטים</string>
+    <string name="show_propositions">צפה בחוקים</string>
+    <string name="change_pass">החלף סיסמא</string>
+    <string name="show_statistics">צפה בסטטיסטיקות</string>
+    <string name="vote">הצבע</string>
+    <string name="hello">שלום</string>
+    <string name="logout">התנתק</string>
+    <string name="new_user">משתמש חדש?</string>
+    <string name="signup_citizen">הרשם\nכאזרח</string>
+    <string name="signup_parliament">הירשם\nכחבר כנסת</string>
+    <string name="show">צפה</string>
+    <string name="full_name">שם מלא</string>
+    <string name="year_of_birth">שנת לידה</string>
+    <string name="choose_pg">בחר מפלגה</string>
+    <string name="gender">מגדר</string>
+    <string name="male">זכר</string>
+    <string name="female">נקבה</string>
+    <string name="update">עדכן</string>
+    <string name="end">סיום</string>
+    <string name="ok">אישור</string>
+    <string name="votes_of">התפלגות ההצבעות לפי:</string>
 </resources>

@@ -19,7 +19,7 @@
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layoutDirection="rtl"
-        android:text="הצבע"
+        android:text="@string/vote"
         android:textDirection="rtl" />
 
 </LinearLayout>
