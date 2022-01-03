@@ -39,7 +39,6 @@ public class HomeCitizen extends AppCompatActivity {
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.UpdateDetails:
-                    System.out.println("לחץ על עדכון פרטים");
                     startActivity(new Intent(HomeCitizen.this, Settings.class));
                     break;
                 case R.id.Vote:
