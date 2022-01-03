@@ -40,7 +40,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הגדרות");
 
-        mail = (EditText) findViewById(R.id.textUsermailCitizen);
+        mail = (EditText) findViewById(R.id.text_usermail_citizen);
         mail.setText(currUser.getMail());
 
         name = (EditText) findViewById(R.id.User_full_name);
