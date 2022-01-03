@@ -1,9 +1,14 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -29,6 +35,9 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     private User currUser = Login.getCurrUser();
     private String voteKeyPG;
     private static String[] name_curr_pg= new String[1];
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,48 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
             dropdown.setSelection(index_curr_prop);
             dropdown.setOnItemSelectedListener(this);
         });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.Home:
+                    startActivity(new Intent(this, HomeParliament.class));
+                case R.id.Statistics:
+                    Intent intent = new Intent(this, ChooseResultUsers.class);
+                    intent.putExtra("index_current_proposition", 0);
+                    startActivity(intent);
+                    break;
+                case R.id.Propositions:
+                    startActivity(new Intent(this, PropositionsParliament.class));
+                    break;
+                case R.id.UpdatePassword:
+                    startActivity(new Intent(this, Settings.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         curr_proposition = propositions.get(position);
