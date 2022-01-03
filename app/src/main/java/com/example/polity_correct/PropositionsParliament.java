@@ -61,6 +61,7 @@ public class PropositionsParliament extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.Home:
                     startActivity(new Intent(this, HomeParliament.class));
+                    break;
                 case R.id.Statistics:
                     Intent intent = new Intent(this, ChooseResultUsers.class);
                     intent.putExtra("index_current_proposition", 0);
