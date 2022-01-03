@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Home"
+        android:title="דף הבית"/>
+    <item
+        android:id="@+id/UpdateDetails"
+        android:title="עדכון פרטים"/>
+    <item
+        android:id="@+id/Vote"
+        android:title="הצבע לחוק"/>
+    <item
+        android:id="@+id/Results"
+        android:title="תוצאות האמת"/>
+    <item
+        android:id="@+id/LogOut"
+        android:title="התנתק"/>
+
+
+</menu>

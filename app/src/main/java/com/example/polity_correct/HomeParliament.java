@@ -1,17 +1,18 @@
 package com.example.polity_correct;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public class HomeParliament extends AppCompatActivity {
 
     public static ArrayList<Proposition> propositions = new ArrayList<>();
     private TextView user_name;
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,36 @@ public class HomeParliament extends AppCompatActivity {
         setContentView(R.layout.home_parliament);
         user_name = (TextView) findViewById(R.id.userName);
         user_name.setText(Login.getCurrUser().getUserName());
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.Statistics:
+                    Intent intent = new Intent(this, ChooseResultUsers.class);
+                    intent.putExtra("index_current_proposition", 0);
+                    startActivity(intent);
+                    break;
+                case R.id.Propositions:
+                    startActivity(new Intent(HomeParliament.this, PropositionsParliament.class));
+                    break;
+                case R.id.UpdatePassword:
+                    startActivity(new Intent(HomeParliament.this, Settings.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(HomeParliament.this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
     }
 
 //    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
@@ -42,6 +75,14 @@ public class HomeParliament extends AppCompatActivity {
 //                    }
 //                });
 //    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void openSettingsPage(View view) {
         Intent intent = new Intent(this, Settings.class);

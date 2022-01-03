@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Statistics"
+        android:title="סטטיסטיקות"/>
+    <item
+        android:id="@+id/Propositions"
+        android:title="הצעות חוק"/>
+    <item
+        android:id="@+id/UpdatePassword"
+        android:title="החלף סיסמה"/>
+    <item
+        android:id="@+id/LogOut"
+        android:title="התנתק"/>
+
+
+</menu>
