@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/Home"
-        android:title="דף הבית"/>
+        android:title="@string/menu_home"/>
     <item
         android:id="@+id/UpdateDetails"
-        android:title="עדכון פרטים"/>
+        android:title="@string/update_settings"/>
     <item
         android:id="@+id/Vote"
-        android:title="הצבע לחוק"/>
+        android:title="@string/vote_for_prop"/>
     <item
         android:id="@+id/Results"
-        android:title="תוצאות האמת"/>
+        android:title="@string/final_results"/>
     <item
         android:id="@+id/LogOut"
-        android:title="התנתק"/>
+        android:title="@string/logout"/>
 
 
 </menu>

@@ -48,4 +48,9 @@
     <string name="end">סיום</string>
     <string name="ok">אישור</string>
     <string name="votes_of">התפלגות ההצבעות לפי:</string>
+    <string name="connect_us">צור קשר</string>
+    <string name="average">ממוצע</string>
+    <string name="menu_home">דף הבית</string>
+    <string name="statistics">סטטיסטיקות</string>
+    <string name="vote_for_prop">הצבע לחוק</string>
 </resources>

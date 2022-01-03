@@ -57,7 +57,7 @@
             android:id="@+id/textView"
             android:layout_width="50dp"
             android:layout_height="22dp"
-            android:text="ממוצע"
+            android:text="@string/average"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

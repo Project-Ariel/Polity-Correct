@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/Home"
-        android:title="דף הבית"/>
+        android:title="@string/menu_home"/>
     <item
         android:id="@+id/Statistics"
-        android:title="סטטיסטיקות"/>
+        android:title="@string/statistics"/>
     <item
         android:id="@+id/Propositions"
-        android:title="הצעות חוק"/>
+        android:title="@string/show_propositions"/>
     <item
         android:id="@+id/UpdatePassword"
-        android:title="החלף סיסמה"/>
+        android:title="@string/change_pass"/>
     <item
         android:id="@+id/LogOut"
-        android:title="התנתק"/>
+        android:title="@string/logout"/>
 
 
 </menu>
