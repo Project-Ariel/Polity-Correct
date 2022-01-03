@@ -20,7 +20,6 @@ public class Citizen extends User {
         mAuth = FirebaseAuth.getInstance();
         Map<String, Object> vote = new HashMap<>();
         vote.put("user_id", mAuth.getCurrentUser().getUid());
-        vote.put("user_name", citizen_details.getUserName());
         vote.put("proposition_key", proposition_key);
         vote.put("user_choice", status);
         vote.put("vote_grade", grade);
