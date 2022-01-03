@@ -2,10 +2,16 @@ package com.example.polity_correct;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,6 +19,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -29,6 +36,8 @@ public class Vote extends AppCompatActivity {
     private RatingBar ratingbar;
     private User curr_user;
     private String user_token;
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
 
 
     @Override
@@ -59,6 +68,45 @@ public class Vote extends AppCompatActivity {
                 Log.w("Token", "token should not be null...");
             }
         });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.navView);
+        nav.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.Home:
+                    startActivity(new Intent(this, HomeCitizen.class));
+                    break;
+                case R.id.UpdateDetails:
+                    startActivity(new Intent(this, Settings.class));
+                    break;
+                case R.id.Vote:
+                    startActivity(new Intent(this, PropositionsCitizen.class));
+                    break;
+                case R.id.Results:
+                    startActivity(new Intent(this, Results.class));
+                    break;
+                case R.id.LogOut:
+                    startActivity(new Intent(this, Login.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClickSend(View view) {
