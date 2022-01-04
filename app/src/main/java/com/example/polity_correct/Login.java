@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -19,7 +18,6 @@ public class Login extends AppCompatActivity {
     private EditText txtAccountMail, txtPass;
     private String mail, pass;
     private String userID;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static User curr_user = new User();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -53,7 +51,8 @@ public class Login extends AppCompatActivity {
 
                             //Update user document in reset password case
                             if (!curr_user.getPassword().equals(pass)) {
-                                db.collection("Users").document(userID).set(curr_user);
+                                curr_user.setPassword(pass);
+                                DB.setCurrUser(curr_user);
                             }
 
                             if (curr_user.getUserType().name().equals(UserType.parliament.name())) {

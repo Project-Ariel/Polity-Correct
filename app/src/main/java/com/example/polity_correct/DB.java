@@ -1,6 +1,7 @@
 package com.example.polity_correct;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -8,6 +9,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DB {
 
@@ -72,6 +75,17 @@ public class DB {
                             votes[3] /= (votes[0] + votes[1] + votes[2]);
                     }
                 });
+    }
+
+    public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date) {
+        Map<String, Object> vote = new HashMap<>();
+        vote.put("user_id", mAuth.getCurrentUser().getUid());
+        vote.put("proposition_key", proposition_key);
+        vote.put("user_choice", status);
+        vote.put("vote_grade", grade);
+        vote.put("vote_date", date);
+
+        db.collection("Votes").add(vote);
     }
 
     private static String voteKeyPG;
@@ -151,13 +165,6 @@ public class DB {
                     pg_name[0] = task.getResult().get("group_name").toString();
                 });
     }
-
-//    public static Task<DocumentSnapshot> getUserKeyPG(String id_user, String[] vote_key_pg) {
-//        return db.collection("Users")
-//                .document(id_user).get().addOnCompleteListener(task -> {
-//                    vote_key_pg[0] = task.getResult().get("key_pg").toString();
-//                });
-//    }
 
     public static void setCurrUser(User user) {
         String id = mAuth.getCurrentUser().getUid();
