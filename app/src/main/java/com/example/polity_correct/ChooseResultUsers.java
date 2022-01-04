@@ -115,15 +115,18 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
+
+        ParliamentMember curr_pm = new ParliamentMember(currUser.getUserName(), currUser.getPassword(), currUser.getMail(), currUser.getYearOfBirth(), currUser.getGender(), UserType.parliament, currUser.getKey_pg());
+
         res = new double[]{0, 0, 0, 0};
-        DB.getPropVotes(res, curr_proposition.getKey()).addOnCompleteListener(task -> {
-            System.out.println("res[3]" + res[3]);
+        curr_pm.show_citizen_votes(curr_proposition, res).addOnCompleteListener(task -> {
             Intent intent = new Intent(this, Statistics.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
             intent.putExtra("result", res);
             startActivity(intent);
-        });
+        });;
+
     }
 
     // TODO: 1/2/2022 array to String
