@@ -1,5 +1,7 @@
 package com.example.polity_correct;
 
+import static java.lang.Math.round;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +44,7 @@ public class Statistics extends AppCompatActivity {
         pg.setText(choice);
         double[] res = (double[]) getIntent().getSerializableExtra("result");
         avg = (TextView) findViewById(R.id.avg_num);
-        avg.setText(""+res[3]);
+        avg.setText(String.format("%.2f",res[3]));
         float sum = (float) (res[0] + res[1] + res[2]);
 
         PieChart pieChart = findViewById(R.id.pieChart);
