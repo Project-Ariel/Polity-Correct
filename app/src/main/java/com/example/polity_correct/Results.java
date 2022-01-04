@@ -102,7 +102,6 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        System.out.println("here");
     }
 
     public void openResultsView(View view) {
