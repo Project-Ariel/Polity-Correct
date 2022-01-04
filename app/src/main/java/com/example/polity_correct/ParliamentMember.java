@@ -13,7 +13,7 @@ public class ParliamentMember extends User {
         return DB.getPropVotes(res, curr_proposition.getKey());
     }
 
-    public void show_citizen_votes(Proposition curr_proposition, PoliticalGroup pg) {
-
+    public Task<QuerySnapshot> show_citizen_votes_specific_PG(Proposition curr_proposition, double[] res) {
+        return DB.getVotesFromDBSpecificPG(res, curr_proposition);
     }
 }

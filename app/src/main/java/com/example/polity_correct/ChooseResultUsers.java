@@ -15,25 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    // TODO: 1/2/2022 DB
     private Spinner dropdown;
     private ArrayList<String> titles = new ArrayList<>();
     private static ArrayList<Proposition> propositions = new ArrayList<>();
     private Proposition curr_proposition;
+    private ParliamentMember curr_pm;
     private static double[] res;
     private User currUser = Login.getCurrUser();
-    private String voteKeyPG;
     private static String[] name_curr_pg = new String[1];
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
@@ -46,6 +40,8 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הצבעות המשתמשים");
+
+        curr_pm = new ParliamentMember(currUser.getUserName(), currUser.getPassword(), currUser.getMail(), currUser.getYearOfBirth(), currUser.getGender(), UserType.parliament, currUser.getKey_pg());
 
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
@@ -106,7 +102,6 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         return super.onOptionsItemSelected(item);
     }
 
-
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         curr_proposition = propositions.get(position);
     }
@@ -115,9 +110,6 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
-
-        ParliamentMember curr_pm = new ParliamentMember(currUser.getUserName(), currUser.getPassword(), currUser.getMail(), currUser.getYearOfBirth(), currUser.getGender(), UserType.parliament, currUser.getKey_pg());
-
         res = new double[]{0, 0, 0, 0};
         curr_pm.show_citizen_votes(curr_proposition, res).addOnCompleteListener(task -> {
             Intent intent = new Intent(this, Statistics.class);
@@ -125,14 +117,13 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
             intent.putExtra("pg", "כל המשתמשים");
             intent.putExtra("result", res);
             startActivity(intent);
-        });;
-
+        });
     }
 
     // TODO: 1/2/2022 array to String
     public void onClickSpecificPoliticalGroup(View view) {
         res = new double[]{0, 0, 0, 0};
-        getVotesFromDBSpecificPG().addOnCompleteListener(task -> {
+        curr_pm.show_citizen_votes_specific_PG(curr_proposition, res).addOnCompleteListener(task -> {
             DB.getNamePG(currUser.getKey_pg(), name_curr_pg).addOnCompleteListener(task0 -> {
                 Intent intent = new Intent(this, Statistics.class);
                 intent.putExtra("pg", name_curr_pg[0]);
@@ -143,49 +134,4 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         });
     }
 
-    private Task<DocumentSnapshot> getKeyPoliticalGroup(String id_user) {
-        return FirebaseFirestore.getInstance().collection("Users")
-                .document(id_user)
-                .get().addOnCompleteListener(task -> {
-                    voteKeyPG = task.getResult().get("key_pg").toString();
-                });
-    }
-
-    private Task<QuerySnapshot> getVotesFromDBSpecificPG() {
-        res = new double[]{0, 0, 0, 0};
-        return FirebaseFirestore.getInstance().collection("Votes")
-                .whereEqualTo("proposition_key", curr_proposition.getKey())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String voteUserId = (String) document.get("user_id");
-                            //get key_pg of user vote
-                            getKeyPoliticalGroup(voteUserId).addOnCompleteListener(task1 -> {
-                                if (voteKeyPG.equals(currUser.getKey_pg())) {
-                                    String userChoice = (String) document.get("user_choice");
-                                    int choice;
-                                    switch (userChoice) {
-                                        case "against":
-                                            choice = 0;
-                                            break;
-                                        case "abstain":
-                                            choice = 1;
-                                            break;
-                                        case "agreement":
-                                            choice = 2;
-                                            break;
-                                        default:
-                                            throw new IllegalStateException("Unexpected value: " + userChoice);
-                                    }
-                                    res[3] += Double.parseDouble("" + document.get("vote_grade").toString());
-                                    res[choice]++;
-                                }
-                                if (res[3] != 0)
-                                    res[3] /= (res[0] + res[1] + res[2]);
-                            });
-                        }
-                    }
-                });
-    }
 }

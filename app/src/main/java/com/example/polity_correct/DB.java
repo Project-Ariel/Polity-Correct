@@ -8,7 +8,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-//test
 
 public class DB {
 
@@ -72,6 +71,53 @@ public class DB {
                         if (votes[3] != 0)
                             votes[3] /= (votes[0] + votes[1] + votes[2]);
                     }
+                });
+    }
+
+    private static String voteKeyPG;
+
+    public static Task<QuerySnapshot> getVotesFromDBSpecificPG(double[] votes, Proposition curr_proposition) {
+        return FirebaseFirestore.getInstance().collection("Votes")
+                .whereEqualTo("proposition_key", curr_proposition.getKey())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String voteUserId = (String) document.get("user_id");
+                            //get key_pg of user vote
+                            getKeyPoliticalGroup(voteUserId).addOnCompleteListener(task1 -> {
+                                if (voteKeyPG.equals(Login.getCurrUser().getKey_pg())) {
+                                    String userChoice = (String) document.get("user_choice");
+                                    int choice;
+                                    switch (userChoice) {
+                                        case "against":
+                                            choice = 0;
+                                            break;
+                                        case "abstain":
+                                            choice = 1;
+                                            break;
+                                        case "agreement":
+                                            choice = 2;
+                                            break;
+                                        default:
+                                            throw new IllegalStateException("Unexpected value: " + userChoice);
+                                    }
+                                    votes[3] += Double.parseDouble("" + document.get("vote_grade").toString());
+                                    votes[choice]++;
+                                }
+                                if (votes[3] != 0)
+                                    votes[3] /= (votes[0] + votes[1] + votes[2]);
+                            });
+                        }
+                    }
+                });
+    }
+
+    private static Task<DocumentSnapshot> getKeyPoliticalGroup(String id_user) {
+        return FirebaseFirestore.getInstance().collection("Users")
+                .document(id_user)
+                .get().addOnCompleteListener(task -> {
+                    voteKeyPG = task.getResult().get("key_pg").toString();
                 });
     }
 
