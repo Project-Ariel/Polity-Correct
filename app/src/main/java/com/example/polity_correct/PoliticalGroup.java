@@ -9,8 +9,7 @@ public class PoliticalGroup {
     private String group_name;
     private String abbreviation;
     private String group_website;
-    private Set<String> citizens= new HashSet<>();
-    private Set<String> parliaments= new HashSet<>();;
+
 
     public PoliticalGroup(String group_key, String group_name, String abbreviation,
                                 String group_website) {
@@ -20,21 +19,6 @@ public class PoliticalGroup {
         this.group_website = group_website;
     }
 
-    public Set<String> getCitizens() {
-        return citizens;
-    }
-
-    public void addCitizens(String citizen) {
-        this.citizens.add(citizen);
-    }
-
-    public Set<String> getParliament() {
-        return parliaments;
-    }
-
-    public void addParliament(String parliament) {
-        this.parliaments.add(parliament);
-    }
 
     public String getGroup_key() {
         return group_key;
