@@ -25,7 +25,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     private Spinner dropdown;
     private CardView result;
     private TextView proposition_title;
-    private static ArrayList<Proposition> propositions= new ArrayList<>();
+    private static ArrayList<Proposition> propositions = new ArrayList<>();
     private Proposition curr_proposition;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
