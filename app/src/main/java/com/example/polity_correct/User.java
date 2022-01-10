@@ -1,9 +1,6 @@
 package com.example.polity_correct;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class User implements Parcelable {
+public class User {
     private String userName;
     private String password;
     private String mail;
@@ -12,38 +9,18 @@ public class User implements Parcelable {
     private UserType userType;
     private String key_pg;
 
-    public User(String userName, String password, String mail, long yearOfBirth, long gender, UserType userType, String pg){
-        this.userName=userName;
-        this.password=password;
-        this.mail=mail;
-        this.yearOfBirth=yearOfBirth;
-        this.gender=gender;
-        this.userType=userType;
-        this.key_pg=pg;
+    public User(String userName, String password, String mail, long yearOfBirth, long gender, UserType userType, String pg) {
+        this.userName = userName;
+        this.password = password;
+        this.mail = mail;
+        this.yearOfBirth = yearOfBirth;
+        this.gender = gender;
+        this.userType = userType;
+        this.key_pg = pg;
     }
 
-    public User(Parcel in) {
-        userName = in.readString();
-        password = in.readString();
-        mail = in.readString();
-        yearOfBirth = in.readLong();
-        gender= in.readInt();
-        key_pg = in.readString();
+    public User() {
     }
-
-    public User(){}
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 
     public String getUserName() {
         return userName;
@@ -101,27 +78,14 @@ public class User implements Parcelable {
         this.gender = gender;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(userName);
-        dest.writeString(password);
-        dest.writeString(mail);
-        dest.writeLong(yearOfBirth);
-        dest.writeString(key_pg);
-    }
 }
 
-enum UserType{
+enum UserType {
     citizen,
     parliament,
 }
 
-enum StatusVote{
+enum StatusVote {
     against,
     abstain,
     agreement

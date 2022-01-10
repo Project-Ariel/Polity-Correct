@@ -14,11 +14,8 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-
 public class HomeParliament extends AppCompatActivity {
 
-    public static ArrayList<Proposition> propositions = new ArrayList<>();
     private TextView user_name;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
@@ -60,21 +57,6 @@ public class HomeParliament extends AppCompatActivity {
             return false;
         });
     }
-
-//    private Task<QuerySnapshot> getNotVotedPropositionsFromDB() {
-//        return FirebaseFirestore.getInstance().collection("Propositions")
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-//                            if (!p.wasVoted()) {
-//                                propositions.add(p);
-//                            }
-//                        }
-//                    }
-//                });
-//    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
