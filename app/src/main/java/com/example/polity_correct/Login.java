@@ -18,7 +18,7 @@ public class Login extends AppCompatActivity {
     private EditText txtAccountMail, txtPass;
     private String mail, pass;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private static User curr_user = new User(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+    private static User curr_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class Login extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(mail, pass)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        curr_user= new User(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
                         // Sign in success, create user object and update UI with the signed-in user's information
                         DB.getUser(curr_user).addOnCompleteListener(task1 -> {
 
