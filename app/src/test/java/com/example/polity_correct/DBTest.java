@@ -16,13 +16,13 @@ public class DBTest {
     public void tearDown() throws Exception {
     }
 
-    @Test
-    public void getPg() {
-    }
+//    @Test
+//    public void getPg() {
+//    }
 
-    @Test
-    public void getPropositions() {
-    }
+//    @Test
+//    public void getPropositions() {
+//    }
 
     @Test
     public void getPropVotes() {
@@ -33,16 +33,16 @@ public class DBTest {
     }
 
     @Test
-    public void getVotesFromDBSpecificPG() {
+    public void getVotesSpecificPG() {
     }
 
     @Test
     public void getUser() {
     }
 
-    @Test
-    public void getNamePG() {
-    }
+//    @Test
+//    public void getNamePG() {
+//    }
 
     @Test
     public void setCurrUser() {
