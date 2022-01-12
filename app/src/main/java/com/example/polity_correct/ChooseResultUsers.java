@@ -1,11 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -22,11 +21,10 @@ import java.util.ArrayList;
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner dropdown;
-    private ArrayList<String> titles = new ArrayList<>();
-    private static ArrayList<Proposition> propositions = new ArrayList<>();
+    private ArrayList<String> titles;
+    private static ArrayList<Proposition> propositions;
     private Proposition curr_proposition;
     private ParliamentMember curr_pm;
-    //    private static double[] res;
     private User currUser = Login.getCurrUser();
     private static String[] name_curr_pg = new String[1];
     ActionBarDrawerToggle toggle;
@@ -41,13 +39,15 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הצבעות המשתמשים");
 
+        propositions = new ArrayList<>();
+        titles = new ArrayList<>();
+
         curr_pm = new ParliamentMember(currUser.getUserName(), currUser.getPassword(), currUser.getMail(), currUser.getYearOfBirth(), currUser.getGender(), UserType.parliament, currUser.getKey_pg());
 
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
-        DB.getPropositions(propositions).addOnCompleteListener(task -> {
+        DB.getPropositionsNotVoted(propositions).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                if (!p.wasVoted())
                     titles.add(p.getTitle());
             }
 
@@ -104,6 +104,9 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         curr_proposition = propositions.get(position);
+        System.out.println("choose result user:");
+        System.out.println(curr_proposition.getTitle());
+        System.out.println(curr_proposition.getKey());
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
