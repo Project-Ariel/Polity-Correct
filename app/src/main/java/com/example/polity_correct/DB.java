@@ -136,8 +136,8 @@ public class DB {
     }
 
     //send to function new user init user=new User()
-    public static Task<DocumentSnapshot> getUser(String id, User user) {
-        return db.collection("Users").document(id).get()
+    public static Task<DocumentSnapshot> getUser(User user) {
+        return db.collection("Users").document(user.getKey()).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         user.setUserName((String) task.getResult().get("userName"));
@@ -167,7 +167,6 @@ public class DB {
     }
 
     public static void setCurrUser(User user) {
-        String id = mAuth.getCurrentUser().getUid();
-        db.collection("Users").document(id).set(user);
+        db.collection("Users").document(user.getKey()).set(user);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.polity_correct;
 
+import com.google.firebase.firestore.Exclude;
+
 public class User {
+    private String userKey;
     private String userName;
     private String password;
     private String mail;
@@ -8,6 +11,10 @@ public class User {
     private long gender;
     private UserType userType;
     private String key_pg;
+
+    public User(String key) {
+        this.userKey = key;
+    }
 
     public User(String userName, String password, String mail, long yearOfBirth, long gender, UserType userType, String pg) {
         this.userName = userName;
@@ -17,9 +24,6 @@ public class User {
         this.gender = gender;
         this.userType = userType;
         this.key_pg = pg;
-    }
-
-    public User() {
     }
 
     public String getUserName() {
@@ -77,6 +81,16 @@ public class User {
     public void setGander(long gender) {
         this.gender = gender;
     }
+
+    @Exclude
+    public String getKey() {
+        return userKey;
+    }
+
+    public void setKey(String userKey) {
+        this.userKey = userKey;
+    }
+
 
 }
 

@@ -17,9 +17,8 @@ public class Login extends AppCompatActivity {
 
     private EditText txtAccountMail, txtPass;
     private String mail, pass;
-    private String userID;
-    private static User curr_user = new User();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static User curr_user = new User(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +42,8 @@ public class Login extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(mail, pass)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-
                         // Sign in success, create user object and update UI with the signed-in user's information
-                        userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-
-                        DB.getUser(userID, curr_user).addOnCompleteListener(task1 -> {
+                        DB.getUser(curr_user).addOnCompleteListener(task1 -> {
 
                             //Update user document in reset password case
                             if (!curr_user.getPassword().equals(pass)) {

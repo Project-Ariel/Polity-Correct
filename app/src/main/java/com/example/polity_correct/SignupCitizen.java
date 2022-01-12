@@ -94,6 +94,7 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
                             date = ((EditText) findViewById(R.id.User_year_of_birth));
                             curr_user = new Citizen(name.getText().toString(), pass, mail,
                                     Long.valueOf(date.getText().toString()), gen, UserType.citizen, key_pg);
+                            curr_user.setKey(mAuth.getCurrentUser().getUid());
                             DB.setCurrUser(curr_user);
                             Login.setCurr_user(curr_user);
                             startActivity(new Intent(SignupCitizen.this, HomeCitizen.class));
