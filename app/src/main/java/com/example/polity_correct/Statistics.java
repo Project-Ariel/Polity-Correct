@@ -44,15 +44,14 @@ public class Statistics extends AppCompatActivity {
         pg.setText(choice);
         double[] res = (double[]) getIntent().getSerializableExtra("result");
         avg = (TextView) findViewById(R.id.avg_num);
-        avg.setText(String.format("%.2f",res[3]));
-        float sum = (float) (res[0] + res[1] + res[2]);
+        avg.setText(String.format("%.2f", res[3]));
 
         PieChart pieChart = findViewById(R.id.pieChart);
 
         ArrayList<PieEntry> votes = new ArrayList<>();
-        votes.add(new PieEntry((float) ((res[0] / sum) * 100), "נגד"));
-        votes.add(new PieEntry((float) ((res[1] / sum) * 100), "נמנע"));
-        votes.add(new PieEntry((float) ((res[2] / sum) * 100), "בעד"));
+        votes.add(new PieEntry((float) res[0], "נגד"));
+        votes.add(new PieEntry((float) res[1], "נמנע"));
+        votes.add(new PieEntry((float) res[2], "בעד"));
 
         PieDataSet pieDataSet = new PieDataSet(votes, proposition_title);
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);

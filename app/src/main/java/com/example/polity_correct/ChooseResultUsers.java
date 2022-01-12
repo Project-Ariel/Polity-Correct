@@ -26,7 +26,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     private static ArrayList<Proposition> propositions = new ArrayList<>();
     private Proposition curr_proposition;
     private ParliamentMember curr_pm;
-    private static double[] res;
+    //    private static double[] res;
     private User currUser = Login.getCurrUser();
     private static String[] name_curr_pg = new String[1];
     ActionBarDrawerToggle toggle;
@@ -110,8 +110,10 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     }
 
     public void onClickAllUsers(View view) {
-        res = new double[]{0, 0, 0, 0};
-        curr_pm.show_citizen_votes(curr_proposition, res).addOnCompleteListener(task -> {
+        ArrayList<String> votes = new ArrayList<>();
+        ArrayList<Double> grades = new ArrayList<>();
+        curr_pm.show_citizen_votes(curr_proposition, votes, grades).addOnCompleteListener(task -> {
+            double[] res = Algo.calculate_votes_grades(votes, grades);
             Intent intent = new Intent(this, Statistics.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
@@ -122,9 +124,11 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     // TODO: 1/2/2022 array to String
     public void onClickSpecificPoliticalGroup(View view) {
-        res = new double[]{0, 0, 0, 0};
-        curr_pm.show_citizen_votes_specific_PG(curr_proposition, res).addOnCompleteListener(task -> {
+        ArrayList<String> votes = new ArrayList<>();
+        ArrayList<Double> grades = new ArrayList<>();
+        curr_pm.show_citizen_votes_specific_PG(curr_proposition, votes, grades).addOnCompleteListener(task -> {
             DB.getNamePG(currUser.getKey_pg(), name_curr_pg).addOnCompleteListener(task0 -> {
+                double[] res = Algo.calculate_votes_grades(votes, grades);
                 Intent intent = new Intent(this, Statistics.class);
                 intent.putExtra("pg", name_curr_pg[0]);
                 intent.putExtra("proposition_title", curr_proposition.getTitle());
