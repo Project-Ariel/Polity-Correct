@@ -41,9 +41,9 @@ public class PropositionsParliament extends AppCompatActivity {
         propositions = new ArrayList<>();
         titles = new ArrayList<>();
 
-        DB.getPropositionsNotVoted(propositions).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions, false).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
 
             listView = (ListView) findViewById(R.id.listViewP);

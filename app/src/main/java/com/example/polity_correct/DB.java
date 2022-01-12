@@ -33,29 +33,14 @@ public class DB {
                 });
     }
 
-    public static Task<QuerySnapshot> getPropositionsNotVoted(ArrayList<Proposition> propositions) {
+    public static Task<QuerySnapshot> getPropositions(ArrayList<Proposition> propositions, boolean voted) {
         return db.collection("Propositions")
-                .whereEqualTo("voted", false)
+                .whereEqualTo("voted", voted)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
-                            propositions.add(p);
-                        }
-                        Collections.sort(propositions);
-                    }
-                });
-    }
-
-    public static Task<QuerySnapshot> getPropositionsVoted(ArrayList<Proposition> propositions) {
-        return db.collection("Propositions")
-                .whereEqualTo("voted", true)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), voted);
                             propositions.add(p);
                         }
                         Collections.sort(propositions);

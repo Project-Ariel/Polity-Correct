@@ -46,9 +46,9 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
-        DB.getPropositionsNotVoted(propositions).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions, false).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
 
             Intent i = getIntent();

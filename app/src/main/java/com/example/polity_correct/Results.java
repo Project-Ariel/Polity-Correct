@@ -43,9 +43,9 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
 
         dropdown = (Spinner) findViewById(R.id.spinnerProp);
 
-        DB.getPropositionsVoted(propositions).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions, true).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
             dropdown.setAdapter(adapter);
