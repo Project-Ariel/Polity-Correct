@@ -112,7 +112,7 @@ public class DB {
                         user.setPassword((String) task.getResult().get("password"));
                         user.setMail((String) task.getResult().get("mail"));
                         user.setYearOfBirth((long) task.getResult().get("yearOfBirth"));
-                        user.setGander((long) task.getResult().get("gender"));
+                        user.setGender((long) task.getResult().get("gender"));
                         user.setKey_pg((String) task.getResult().get("key_pg"));
 
                         //update user type

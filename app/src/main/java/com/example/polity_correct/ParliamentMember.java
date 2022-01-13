@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class ParliamentMember extends User {
 
-    public ParliamentMember(String userName, String password, String mail, Long yearOfBirth, long gander, UserType userType, String pg) {
-        super(userName, password, mail, yearOfBirth, gander, userType, pg);
+    public ParliamentMember(String userName, String password, String mail, Long yearOfBirth, long gender, UserType userType, String pg) {
+        super(userName, password, mail, yearOfBirth, gender, userType, pg);
     }
 
     public Task<QuerySnapshot> show_citizen_votes(Proposition curr_proposition, ArrayList<String> votes, ArrayList<Double> grades) {

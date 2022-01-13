@@ -78,7 +78,7 @@ public class User {
         return gender;
     }
 
-    public void setGander(long gender) {
+    public void setGender(long gender) {
         this.gender = gender;
     }
 
