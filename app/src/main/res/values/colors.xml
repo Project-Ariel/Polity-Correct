@@ -8,4 +8,8 @@
     <color name="orange">#F3A82E</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPolityCorrect">#444C7F</color>
+    <color name="colorHammer">#5C6F80</color>
+    <color name="colorHammer2">#9AD1C6</color>
+    <color name="colorBasic">#F9F0E6</color>
 </resources>
