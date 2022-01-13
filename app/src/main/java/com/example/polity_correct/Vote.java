@@ -141,7 +141,7 @@ public class Vote extends AppCompatActivity {
         Date currentTime = Calendar.getInstance().getTime();
         Timestamp vote_date = new Timestamp(currentTime);
         Citizen curr_citizen = new Citizen(curr_user.getUserName(), curr_user.getPassword(), curr_user.getMail(), curr_user.getYearOfBirth(), curr_user.getGender(), UserType.citizen, curr_user.getKey_pg());
-        curr_citizen.Vote(proposition_key, vote_grade, user_choice, vote_date);
+        curr_citizen.Vote(proposition_key, vote_grade, user_choice, vote_date, curr_citizen.getKey_pg());
 
         afterVoteNotification();
 

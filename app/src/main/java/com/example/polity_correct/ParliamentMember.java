@@ -16,6 +16,6 @@ public class ParliamentMember extends User {
     }
 
     public Task<QuerySnapshot> show_citizen_votes_specific_PG(Proposition curr_proposition, ArrayList<String> votes, ArrayList<Double> grades) {
-        return DB.getVotesSpecificPG(votes, grades, curr_proposition);
+        return DB.getVotesSpecificPG(votes, grades, curr_proposition.getKey());
     }
 }

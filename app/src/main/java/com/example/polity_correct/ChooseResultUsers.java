@@ -2,6 +2,7 @@ package com.example.polity_correct;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -104,9 +106,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         curr_proposition = propositions.get(position);
-        System.out.println("choose result user:");
-        System.out.println(curr_proposition.getTitle());
-        System.out.println(curr_proposition.getKey());
+        Log.d("choose result user:", "Title : " + curr_proposition.getTitle());
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

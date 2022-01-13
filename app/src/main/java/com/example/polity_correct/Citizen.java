@@ -8,7 +8,7 @@ public class Citizen extends User {
         super(userName, password, mail, yearOfBirth, gender, userType, pg);
     }
 
-    public void Vote(String proposition_key, double grade, StatusVote status, Timestamp date) {
-        DB.updateVote(proposition_key, grade, status, date);
+    public void Vote(String proposition_key, double grade, StatusVote status, Timestamp date, String user_pg) {
+        DB.updateVote(proposition_key, grade, status, date, user_pg);
     }
 }

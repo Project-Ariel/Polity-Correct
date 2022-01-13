@@ -48,6 +48,38 @@ public class DB {
                 });
     }
 
+
+    public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date, String user_pg) {
+        Map<String, Object> vote = new HashMap<>();
+        vote.put("user_id", mAuth.getCurrentUser().getUid());
+        vote.put("proposition_key", proposition_key);
+        vote.put("user_choice", status);
+        vote.put("vote_grade", grade);
+        vote.put("vote_date", date);
+        vote.put("user_key_pg", user_pg);
+
+        db.collection("Votes").add(vote);
+    }
+
+    public static Task<QuerySnapshot> getVotesSpecificPG(ArrayList<String> votes, ArrayList<Double> grades, String prop_key) {
+        return db.collection("Votes")
+                .whereEqualTo("proposition_key", prop_key)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            //get key_pg of user vote
+                            //TODO - add keyPG to Vote function and delete getKeyPoliticalGroup()
+                            String voteKeyPG = (String) document.get("user_key_pg");
+                            if (voteKeyPG.equals(Login.getCurrUser().getKey_pg())) {
+                                votes.add((String) document.get("user_choice"));
+                                grades.add(Double.parseDouble("" + document.get("vote_grade").toString()));
+                            }
+                        }
+                    }
+                });
+    }
+
     public static Task<QuerySnapshot> getPropVotes(ArrayList<String> votes, ArrayList<Double> grades, String prop_key) {
         return db.collection("Votes")
                 .whereEqualTo("proposition_key", prop_key)
@@ -59,47 +91,6 @@ public class DB {
                             grades.add(Double.parseDouble("" + document.get("vote_grade").toString()));
                         }
                     }
-                });
-    }
-
-    public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date) {
-        Map<String, Object> vote = new HashMap<>();
-        vote.put("user_id", mAuth.getCurrentUser().getUid());
-        vote.put("proposition_key", proposition_key);
-        vote.put("user_choice", status);
-        vote.put("vote_grade", grade);
-        vote.put("vote_date", date);
-
-        db.collection("Votes").add(vote);
-    }
-
-    private static String voteKeyPG;
-
-    public static Task<QuerySnapshot> getVotesSpecificPG(ArrayList<String> votes, ArrayList<Double> grades, Proposition curr_proposition) {
-        return FirebaseFirestore.getInstance().collection("Votes")
-                .whereEqualTo("proposition_key", curr_proposition.getKey())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String voteUserId = (String) document.get("user_id");
-                            //get key_pg of user vote
-                            getKeyPoliticalGroup(voteUserId).addOnCompleteListener(task1 -> {
-                                if (voteKeyPG.equals(Login.getCurrUser().getKey_pg())) {
-                                    votes.add((String) document.get("user_choice"));
-                                    grades.add(Double.parseDouble("" + document.get("vote_grade").toString()));
-                                }
-                            });
-                        }
-                    }
-                });
-    }
-
-    private static Task<DocumentSnapshot> getKeyPoliticalGroup(String id_user) {
-        return FirebaseFirestore.getInstance().collection("Users")
-                .document(id_user)
-                .get().addOnCompleteListener(task -> {
-                    voteKeyPG = task.getResult().get("key_pg").toString();
                 });
     }
 
