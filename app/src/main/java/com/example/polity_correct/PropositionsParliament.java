@@ -25,8 +25,8 @@ import java.util.ArrayList;
 public class PropositionsParliament extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<String> titles = new ArrayList<>();
-    private static ArrayList<Proposition> propositions = new ArrayList<>();
+    private ArrayList<String> titles;
+    private static ArrayList<Proposition> propositions;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
@@ -38,10 +38,12 @@ public class PropositionsParliament extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
 
-        DB.getPropositions(propositions).addOnCompleteListener(task -> {
+        propositions = new ArrayList<>();
+        titles = new ArrayList<>();
+
+        DB.getPropositions(propositions, false).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                if (!p.wasVoted())
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
 
             listView = (ListView) findViewById(R.id.listViewP);

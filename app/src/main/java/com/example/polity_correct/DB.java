@@ -9,6 +9,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,47 +33,31 @@ public class DB {
                 });
     }
 
-    public static Task<QuerySnapshot> getPropositions(ArrayList<Proposition> propositions) {
+    public static Task<QuerySnapshot> getPropositions(ArrayList<Proposition> propositions, boolean voted) {
         return db.collection("Propositions")
+                .whereEqualTo("voted", voted)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), voted);
                             propositions.add(p);
                         }
+                        Collections.sort(propositions);
                     }
                 });
     }
 
-    public static Task<QuerySnapshot> getPropVotes(double[] votes, String prop_key) {
+    public static Task<QuerySnapshot> getPropVotes(ArrayList<String> votes, ArrayList<Double> grades, String prop_key) {
         return db.collection("Votes")
                 .whereEqualTo("proposition_key", prop_key)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            String userChoice = (String) document.get("user_choice");
-                            int choice;
-                            switch (userChoice) {
-                                case "against":
-                                    choice = 0;
-                                    break;
-                                case "abstain":
-                                    choice = 1;
-                                    break;
-                                case "agreement":
-                                    choice = 2;
-                                    break;
-                                default:
-                                    throw new IllegalStateException("Unexpected value: " + userChoice);
-                            }
-                            votes[3] += Double.parseDouble("" + document.get("vote_grade").toString());
-                            votes[choice]++;
+                            votes.add((String) document.get("user_choice"));
+                            grades.add(Double.parseDouble("" + document.get("vote_grade").toString()));
                         }
-
-                        if (votes[3] != 0)
-                            votes[3] /= (votes[0] + votes[1] + votes[2]);
                     }
                 });
     }
@@ -90,7 +75,7 @@ public class DB {
 
     private static String voteKeyPG;
 
-    public static Task<QuerySnapshot> getVotesFromDBSpecificPG(double[] votes, Proposition curr_proposition) {
+    public static Task<QuerySnapshot> getVotesSpecificPG(ArrayList<String> votes, ArrayList<Double> grades, Proposition curr_proposition) {
         return FirebaseFirestore.getInstance().collection("Votes")
                 .whereEqualTo("proposition_key", curr_proposition.getKey())
                 .get()
@@ -101,26 +86,9 @@ public class DB {
                             //get key_pg of user vote
                             getKeyPoliticalGroup(voteUserId).addOnCompleteListener(task1 -> {
                                 if (voteKeyPG.equals(Login.getCurrUser().getKey_pg())) {
-                                    String userChoice = (String) document.get("user_choice");
-                                    int choice;
-                                    switch (userChoice) {
-                                        case "against":
-                                            choice = 0;
-                                            break;
-                                        case "abstain":
-                                            choice = 1;
-                                            break;
-                                        case "agreement":
-                                            choice = 2;
-                                            break;
-                                        default:
-                                            throw new IllegalStateException("Unexpected value: " + userChoice);
-                                    }
-                                    votes[3] += Double.parseDouble("" + document.get("vote_grade").toString());
-                                    votes[choice]++;
+                                    votes.add((String) document.get("user_choice"));
+                                    grades.add(Double.parseDouble("" + document.get("vote_grade").toString()));
                                 }
-                                if (votes[3] != 0)
-                                    votes[3] /= (votes[0] + votes[1] + votes[2]);
                             });
                         }
                     }

@@ -2,7 +2,7 @@ package com.example.polity_correct;
 
 import java.io.Serializable;
 
-public class Proposition implements Serializable {
+public class Proposition implements Serializable, Comparable<Proposition> {
     private String key;
     private String title;
     private String status;
@@ -41,5 +41,10 @@ public class Proposition implements Serializable {
 
     public boolean wasVoted() {
         return voted;
+    }
+
+    @Override
+    public int compareTo(Proposition o) {
+        return getTitle().compareTo(o.getTitle());
     }
 }

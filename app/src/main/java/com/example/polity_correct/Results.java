@@ -1,8 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,20 +9,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 public class Results extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner dropdown;
     private CardView result;
     private TextView proposition_title;
-    private static ArrayList<Proposition> propositions = new ArrayList<>();
+    private static ArrayList<Proposition> propositions;
     private Proposition curr_proposition;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
@@ -40,12 +39,13 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("תוצאות האמת");
 
+        propositions = new ArrayList<>();
+
         dropdown = (Spinner) findViewById(R.id.spinnerProp);
 
-        DB.getPropositions(propositions).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions, true).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                if (p.wasVoted())
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titles);
             dropdown.setAdapter(adapter);

@@ -1,11 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -22,11 +21,10 @@ import java.util.ArrayList;
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner dropdown;
-    private ArrayList<String> titles = new ArrayList<>();
-    private static ArrayList<Proposition> propositions = new ArrayList<>();
+    private ArrayList<String> titles;
+    private static ArrayList<Proposition> propositions;
     private Proposition curr_proposition;
     private ParliamentMember curr_pm;
-    private static double[] res;
     private User currUser = Login.getCurrUser();
     private static String[] name_curr_pg = new String[1];
     ActionBarDrawerToggle toggle;
@@ -41,14 +39,16 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הצבעות המשתמשים");
 
+        propositions = new ArrayList<>();
+        titles = new ArrayList<>();
+
         curr_pm = new ParliamentMember(currUser.getUserName(), currUser.getPassword(), currUser.getMail(), currUser.getYearOfBirth(), currUser.getGender(), UserType.parliament, currUser.getKey_pg());
 
         dropdown = (Spinner) findViewById(R.id.chooseProp);
 
-        DB.getPropositions(propositions).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions, false).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
-                if (!p.wasVoted())
-                    titles.add(p.getTitle());
+                titles.add(p.getTitle());
             }
 
             Intent i = getIntent();
@@ -104,14 +104,19 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         curr_proposition = propositions.get(position);
+        System.out.println("choose result user:");
+        System.out.println(curr_proposition.getTitle());
+        System.out.println(curr_proposition.getKey());
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
     public void onClickAllUsers(View view) {
-        res = new double[]{0, 0, 0, 0};
-        curr_pm.show_citizen_votes(curr_proposition, res).addOnCompleteListener(task -> {
+        ArrayList<String> votes = new ArrayList<>();
+        ArrayList<Double> grades = new ArrayList<>();
+        curr_pm.show_citizen_votes(curr_proposition, votes, grades).addOnCompleteListener(task -> {
+            double[] res = Algo.calculate_votes_grades(votes, grades);
             Intent intent = new Intent(this, Statistics.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
@@ -122,9 +127,11 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
 
     // TODO: 1/2/2022 array to String
     public void onClickSpecificPoliticalGroup(View view) {
-        res = new double[]{0, 0, 0, 0};
-        curr_pm.show_citizen_votes_specific_PG(curr_proposition, res).addOnCompleteListener(task -> {
+        ArrayList<String> votes = new ArrayList<>();
+        ArrayList<Double> grades = new ArrayList<>();
+        curr_pm.show_citizen_votes_specific_PG(curr_proposition, votes, grades).addOnCompleteListener(task -> {
             DB.getNamePG(currUser.getKey_pg(), name_curr_pg).addOnCompleteListener(task0 -> {
+                double[] res = Algo.calculate_votes_grades(votes, grades);
                 Intent intent = new Intent(this, Statistics.class);
                 intent.putExtra("pg", name_curr_pg[0]);
                 intent.putExtra("proposition_title", curr_proposition.getTitle());
