@@ -24,9 +24,11 @@ public class Algo {
         }
 
         float sum = (float) (res[0] + res[1] + res[2]);
-        res[0] = ((res[0] / sum) * 100);
-        res[1] = ((res[1] / sum) * 100);
-        res[2] = ((res[2] / sum) * 100);
+        if (sum != 0) {
+            res[0] = ((res[0] / sum) * 100);
+            res[1] = ((res[1] / sum) * 100);
+            res[2] = ((res[2] / sum) * 100);
+        }
 
         for (Double g : grades) {
             res[3] += g;
