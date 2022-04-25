@@ -4,6 +4,7 @@
     package="com.example.polity_correct">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PolityCorrect"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MatchParliament"
+            android:exported="false" />
         <activity
             android:name=".PropositionsParliament"
             android:exported="false" />
@@ -71,8 +75,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/polity_correct_logo" />
-
-
     </application>
 
 </manifest>

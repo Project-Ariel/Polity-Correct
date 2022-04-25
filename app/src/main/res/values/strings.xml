@@ -53,4 +53,8 @@
     <string name="menu_home">דף הבית</string>
     <string name="statistics">סטטיסטיקות</string>
     <string name="vote_for_prop">הצבע לחוק</string>
+    <string name="match_parliament">התאם לי חבר כנסת</string>
+    <string name="loading">רק רגע..\nאנחנו חושבים</string>
+    <string name="matching">הנה ההתאמה שמצאנו עבורך:</string>
+    <string name="chart_label">התפלגות ההתאמות</string>
 </resources>

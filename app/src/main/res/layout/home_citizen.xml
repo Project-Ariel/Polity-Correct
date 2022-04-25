@@ -34,7 +34,7 @@
             app:layout_constraintVertical_bias="0.401" />
 
         <Button
-            android:id="@+id/settings"
+            android:id="@+id/results"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:background="@drawable/round_button"
@@ -54,18 +54,18 @@
             app:layout_constraintVertical_bias="0.528" />
 
         <Button
-            android:id="@+id/results"
+            android:id="@+id/algo"
             android:layout_width="125dp"
             android:layout_height="124dp"
             android:background="@drawable/round_button"
             android:fontFamily="@font/alef"
             android:gravity="center_vertical|center_horizontal"
             android:layoutDirection="rtl"
-            android:onClick="openSettingsPage"
+            android:onClick="openMatchParliamentPage"
             android:shadowColor="#000000"
-            android:text="@string/update_settings"
+            android:text="@string/match_parliament"
             android:textColor="#fff"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +80,10 @@
         android:id="@+id/navView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/home_citizen_menu"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/home_citizen_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
