@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -22,8 +21,6 @@ import java.util.ArrayList;
 public class Results extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner dropdown;
-    private CardView result;
-    private TextView proposition_title;
     private static ArrayList<Proposition> propositions;
     private Proposition curr_proposition;
     ActionBarDrawerToggle toggle;
@@ -37,13 +34,13 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
         setContentView(R.layout.results);
 
         TextView title = (TextView) findViewById(R.id.title_page);
-        title.setText("תוצאות האמת");
+        title.setText("הצבעות האזרחים");
 
         propositions = new ArrayList<>();
 
         dropdown = (Spinner) findViewById(R.id.spinnerProp);
 
-        DB.getPropositions(propositions, true).addOnCompleteListener(task -> {
+        DB.getPropositions(propositions).addOnCompleteListener(task -> {
             for (Proposition p : propositions) {
                 titles.add(p.getTitle());
             }
@@ -74,6 +71,9 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
                 case R.id.Results:
                     startActivity(new Intent(this, Results.class));
                     break;
+                case R.id.Algo:
+                    startActivity(new Intent(this, MatchParliament.class));
+                    break;
                 case R.id.LogOut:
                     startActivity(new Intent(this, Login.class));
                     break;
@@ -100,9 +100,16 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public void openResultsView(View view) {
-        result = (CardView) findViewById(R.id.result_view);
-        result.setVisibility(View.VISIBLE);
-        proposition_title = (TextView) findViewById(R.id.proposition_title);
-        proposition_title.setText(curr_proposition.getTitle());
+        ArrayList<String> votes = new ArrayList<>();
+        ArrayList<Double> grades = new ArrayList<>();
+        DB.getPropVotes(votes, grades, curr_proposition.getKey()).addOnCompleteListener(task -> {
+            double[] res = Algo.calculate_votes_grades(votes, grades);
+            Intent intent = new Intent(this, Statistics.class);
+            intent.putExtra("proposition_title", curr_proposition.getTitle());
+            intent.putExtra("pg", "כל המשתמשים");
+            intent.putExtra("result", res);
+            intent.putExtra("user","Citizen");
+            startActivity(intent);
+        });
     }
 }

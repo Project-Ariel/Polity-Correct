@@ -1,17 +1,15 @@
 package com.example.polity_correct;
 
-import static java.lang.Math.round;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 
 public class Statistics extends AppCompatActivity {
 
-    private TextView pg, avg;
+    private TextView pg;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
@@ -43,8 +41,14 @@ public class Statistics extends AppCompatActivity {
         pg = (TextView) findViewById(R.id.pg);
         pg.setText(choice);
         double[] res = (double[]) getIntent().getSerializableExtra("result");
-        avg = (TextView) findViewById(R.id.avg_num);
-        avg.setText(String.format("%.2f", res[3]));
+
+        String user_type = getIntent().getExtras().get("user").toString();
+        if (user_type.equals("PM")) {
+            TextView avg_title = (TextView) findViewById(R.id.avg_title);
+            avg_title.setVisibility(View.VISIBLE);
+            TextView avg = (TextView) findViewById(R.id.avg_num);
+            avg.setText(String.format("%.2f", res[3]));
+        }
 
         PieChart pieChart = findViewById(R.id.pieChart);
 

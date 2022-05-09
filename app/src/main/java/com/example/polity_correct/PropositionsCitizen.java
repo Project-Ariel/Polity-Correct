@@ -72,6 +72,9 @@ public class PropositionsCitizen extends AppCompatActivity {
                 case R.id.Results:
                     startActivity(new Intent(this, Results.class));
                     break;
+                case R.id.Algo:
+                    startActivity(new Intent(this, MatchParliament.class));
+                    break;
                 case R.id.LogOut:
                     startActivity(new Intent(this, Login.class));
                     break;

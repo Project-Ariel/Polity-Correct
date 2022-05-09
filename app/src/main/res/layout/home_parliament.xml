@@ -65,7 +65,7 @@
             android:onClick="openStatisticsPage"
             android:text="@string/show_statistics"
             android:textColor="#fff"
-            android:textSize="55px"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -53,13 +53,14 @@
             app:layout_constraintVertical_bias="0.6" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/avg_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alef"
+            android:layoutDirection="rtl"
             android:text="@string/average"
             android:textSize="24sp"
-            android:layoutDirection="rtl"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
@@ -71,7 +72,6 @@
             android:id="@+id/avg_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="avg_num"
             android:layoutDirection="rtl"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"

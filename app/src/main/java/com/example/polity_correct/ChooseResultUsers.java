@@ -18,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ChooseResultUsers extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -121,6 +120,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
             intent.putExtra("proposition_title", curr_proposition.getTitle());
             intent.putExtra("pg", "כל המשתמשים");
             intent.putExtra("result", res);
+            intent.putExtra("user","PM");
             startActivity(intent);
         });
     }
@@ -136,6 +136,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
                 intent.putExtra("pg", name_curr_pg[0]);
                 intent.putExtra("proposition_title", curr_proposition.getTitle());
                 intent.putExtra("result", res);
+                intent.putExtra("user","PM");
                 startActivity(intent);
             });
         });

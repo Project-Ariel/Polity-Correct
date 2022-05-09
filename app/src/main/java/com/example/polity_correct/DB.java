@@ -48,6 +48,20 @@ public class DB {
                 });
     }
 
+    public static Task<QuerySnapshot> getPropositions(ArrayList<Proposition> propositions) {
+        return db.collection("Propositions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Proposition p = new Proposition(document.getId(), (String) document.get("title"), (String) document.get("status"), (String) document.get("description"), (String) document.get("category"), (boolean) document.get("voted"));
+                            propositions.add(p);
+                        }
+                        Collections.sort(propositions);
+                    }
+                });
+    }
+
 
     public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date, String user_pg) {
         Map<String, Object> vote = new HashMap<>();

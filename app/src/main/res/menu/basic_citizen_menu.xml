@@ -12,10 +12,12 @@
         android:title="@string/vote_for_prop"/>
     <item
         android:id="@+id/Results"
-        android:title="@string/final_results"/>
+        android:title="@string/result_citizens"/>
+    <item
+        android:id="@+id/Algo"
+        android:title="@string/match_parliament"/>
     <item
         android:id="@+id/LogOut"
         android:title="@string/logout"/>
-
 
 </menu>

@@ -39,16 +39,19 @@ public class HomeCitizen extends AppCompatActivity {
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.UpdateDetails:
-                    startActivity(new Intent(HomeCitizen.this, Settings.class));
+                    startActivity(new Intent(this, Settings.class));
                     break;
                 case R.id.Vote:
-                    startActivity(new Intent(HomeCitizen.this, PropositionsCitizen.class));
+                    startActivity(new Intent(this, PropositionsCitizen.class));
                     break;
                 case R.id.Results:
-                    startActivity(new Intent(HomeCitizen.this, Results.class));
+                    startActivity(new Intent(this, Results.class));
+                    break;
+                case R.id.Algo:
+                    startActivity(new Intent(this, MatchParliament.class));
                     break;
                 case R.id.LogOut:
-                    startActivity(new Intent(HomeCitizen.this, Login.class));
+                    startActivity(new Intent(this, Login.class));
                     break;
                 default:
                     break;
