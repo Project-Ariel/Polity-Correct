@@ -143,6 +143,12 @@ def update_Propositions():
                 else:
                     voted = False
 
+                try:
+                    if title['#text'] is not None:
+                        title = title['#text']
+                except:
+                    pass
+
                 prop = {
                     'odata_id': f'{billID}',
                     'category': f'{category}',
@@ -236,6 +242,12 @@ def update_118Propositions():
                     if is_in_ParliamentInfo_odata == is_in_vote_odata:
                         print()
                         print("voted", billID)
+
+                        try:
+                         if title['#text'] is not None:
+                             title = title['#text']
+                        except:
+                         pass
 
                         prop = {
                             'odata_id': f'{billID}',
