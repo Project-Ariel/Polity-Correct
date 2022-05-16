@@ -18,7 +18,6 @@ public class DB {
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    //static ArrayList<UserVote> all_user_votes = new ArrayList<UserVote>();
 
     //get Political Groups from DB
     public static Task<QuerySnapshot> getPg(ArrayList<PoliticalGroup> pg) {
@@ -198,9 +197,10 @@ public class DB {
     }
 
     //This function create a data structures that help to match a parialement mamber to the citizen.
-    public static void setVotesForAlgo(int[] votes_user, double[] rank, HashMap<String, int[]> votes_pm, ArrayList<UserVote> all_user_votes) {
+    public static Task<QuerySnapshot> setVotesForAlgo(int[] votes_user, double[] rank, HashMap<String, int[]> votes_pm, ArrayList<UserVote> all_user_votes) {
         int number_of_rules = votes_user.length;
-        setUserVote(all_user_votes).addOnCompleteListener(task -> {
+
+        return setUserVote(all_user_votes).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Collections.sort(all_user_votes, new SortByGrade());
 
@@ -212,8 +212,7 @@ public class DB {
                     rank[i] = all_user_votes.get(i).getRate();
 
                     for (String id : memberNames.keySet()) {
-                        String vote;
-                        vote = "abstain";
+                        String vote = "abstain";
                         HashMap<String, String> v = membersVotes.get(all_user_votes.get(i).rule_id);
 
                         if (v == null) {
@@ -248,8 +247,8 @@ public class DB {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             UserVote v = new UserVote((String) document.get("proposition_key"), (String) document.get("user_choice"), (Double) document.get("vote_grade"));
-                            String flag= propMap.get((String) document.get("proposition_key"));
-                            if(flag != null) {
+                            String flag = propMap.get((String) document.get("proposition_key"));
+                            if (flag != null) {
                                 if (flag.equals("true")) {
                                     v.setAccepted(true);
                                     arr.add(v);
@@ -259,6 +258,4 @@ public class DB {
                     }
                 });
     }
-
-
 }

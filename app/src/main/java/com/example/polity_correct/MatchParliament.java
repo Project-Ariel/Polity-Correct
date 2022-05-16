@@ -24,6 +24,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,11 +43,12 @@ public class MatchParliament extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
-    static int[] votes_user;
-    static double[] rating;
-    static HashMap<String, int[]> votes_pm;
+    static HashMap<String, int[]> votes_pm = new HashMap<String, int[]>();
+    static ArrayList<UserVote> all_user_votes = new ArrayList<UserVote>();
+    static int[] votes_user = new int[4];
+    static double[] rating = new double[4];
+
     private LinkedHashMap<String, Integer> percents_result;
-//    private String[] best_parliaments;
 
 
     @Override
@@ -65,13 +67,18 @@ public class MatchParliament extends AppCompatActivity {
         matching_img = (ImageView) findViewById(R.id.matching_img);
         matching = (TextView) findViewById(R.id.matching_text);
 
+        //Init all data-structures
+        DB.getPropVoted();
+        DB.getMembersVotes();
+        DB.getMemberNames();
+
         // Handler for circular progress bar timer
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (i <= 100) {
-                    circularProgressBar.setProgress(i);
+                if (DB.propMap.size() == 0 || DB.membersVotes.size() == 0 || DB.memberNames.size() == 0 || i < 100) {
+                    circularProgressBar.setProgress(i % 101);
                     i++;
                     handler.postDelayed(this, 30);
                 } else {
@@ -126,55 +133,32 @@ public class MatchParliament extends AppCompatActivity {
     }
 
     private void show_result() {
-//        DB.setVotesForAlgo(votes_user, rating, votes_pm).addOnCompleteListener(task -> {
+        // Set default
+        Arrays.fill(votes_user, -1);
 
-        // manual just for test
-        votes_user = new int[]{0, 1, 0, 1, 2};
-        rating = new double[]{3, 4, 2, 5, 1};
-        votes_pm = new HashMap<>();
-        votes_pm.put("0WyASJFHH7eou7dLZnAnsuWnyK12", new int[]{0, 2, 1, 1, 1});
-        votes_pm.put("1HvhnuVmswM5nU1TJZz85SOeOdo2", new int[]{1, 2, 1, 2, 1});
-        votes_pm.put("1MOrTMUPcscNxpoyw95ajl7HNqE3", new int[]{0, 0, 0, 0, 0});
-        votes_pm.put("2Wou736KshQC8Hh6UbaSS3zeSip1", new int[]{1, 1, 1, 1, 1});
-        votes_pm.put("2jRqVEJIkQcJIqFMb7MNwANauz92", new int[]{0, 2, 0, 1, 2});
-        votes_pm.put("2xC4ldbBpQPn2XAnqXav5hMv0zD3", new int[]{2, 2, 2, 2, 2});
-        //
-
-        boolean flag = true;
-        for (int i = 0; i < votes_user.length; i++) {
-            if (votes_user[i] == -1) {
-                flag = false;
+        DB.setVotesForAlgo(votes_user, rating, votes_pm, all_user_votes).addOnCompleteListener(task -> {
+            boolean flag = true;
+            for (int i = 0; i < votes_user.length; i++) {
+                if (votes_user[i] == -1) {
+                    flag = false;
+                }
             }
-        }
-        if (flag) {
-            percents_result = Algo.matchParliament(votes_user, rating, votes_pm);
-            String first_pm = percents_result.keySet().iterator().next();
-            Integer percent_best_pm = percents_result.get(first_pm);
-            User best_pm = new User(first_pm);
-            DB.getUser(best_pm).addOnCompleteListener(task0 -> {
-                parliament_text.setText(best_pm.getUserName());
-                percent_text.setText(percent_best_pm.toString()+"%");
+            if (flag) {
+                percents_result = Algo.matchParliament(votes_user, rating, votes_pm);
+                String first_pm = percents_result.keySet().iterator().next();
+                Integer percent_best_pm = percents_result.get(first_pm);
+                parliament_text.setText(DB.memberNames.get(first_pm));
+                percent_text.setText(percent_best_pm.toString() + "%");
                 matching.setVisibility(View.VISIBLE);
                 matching_img.setVisibility(View.VISIBLE);
                 citizen_text.setText(Login.getCurrUser().getUserName());
                 showBarChart();
-            });
-        } else {
-            loading_text.setText("לצערנו אין מספיק הצבעות שלך על חוקים שהצובעו על ידי חברי כנסת..\n\nגש להצביע");
-            loading_text.setVisibility(View.VISIBLE);
-        }
-//        });
+            } else {
+                loading_text.setText("לצערנו אין מספיק הצבעות שלך על חוקים שהצובעו על ידי חברי כנסת..\n\nגש להצביע");
+                loading_text.setVisibility(View.VISIBLE);
+            }
+        });
     }
-
-//    public void prepareDataBarChart() {
-//        parliaments = new ArrayList<>();
-//        for (Map.Entry<String, Double> it : percents_result.entrySet()) {
-//            User pm = new User(it.getKey());
-//            DB.getUser(pm).addOnCompleteListener(task -> {
-//                parliaments.add(pm.getUserName());
-//            });
-//        }
-//    }
 
     public void showBarChart() {
         barChart = (BarChart) findViewById(R.id.barchart);
@@ -183,19 +167,17 @@ public class MatchParliament extends AppCompatActivity {
         int count = 0;
         for (Map.Entry<String, Integer> it : percents_result.entrySet()) {
             if (count < 5) {
-                entries.add(new BarEntry((float) count, it.getValue(), it.getKey()));
+                entries.add(new BarEntry((float) count, it.getValue(), DB.memberNames.get(it.getKey())));
             }
             count++;
         }
         barChart.setVisibility(View.VISIBLE);
-
 
         String[] PARLIAMENT = new String[5];
         for (BarEntry e : entries) {
             PARLIAMENT[(int) e.getX()] = (String) e.getData();
         }
         BarDataSet bardataset = new BarDataSet(entries, "התפלגות ההתאמות");
-
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setDrawGridLines(false);
@@ -222,7 +204,3 @@ public class MatchParliament extends AppCompatActivity {
         barChart.animateY(3000);
     }
 }
-
-
-
-
