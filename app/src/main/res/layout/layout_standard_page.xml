@@ -10,13 +10,13 @@
         android:layout_width="80dp"
         android:layout_height="56dp"
         android:layoutDirection="rtl"
+        android:src="@drawable/polity_correct_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0"
-        app:srcCompat="@drawable/polity_correct_logo" />
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/title_page"

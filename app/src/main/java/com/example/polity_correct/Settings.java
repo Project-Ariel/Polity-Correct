@@ -99,8 +99,6 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         NavigationView nav = (NavigationView) findViewById(R.id.navView);
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

@@ -55,8 +55,6 @@ public class PropositionsCitizen extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         NavigationView nav = (NavigationView) findViewById(R.id.navView);
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

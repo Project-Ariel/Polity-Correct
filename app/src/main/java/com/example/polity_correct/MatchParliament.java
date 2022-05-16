@@ -97,8 +97,6 @@ public class MatchParliament extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         NavigationView nav = (NavigationView) findViewById(R.id.navView);
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -201,6 +199,6 @@ public class MatchParliament extends AppCompatActivity {
         xAxis.setDrawLabels(true);
         barChart.setFitBars(true);
         barChart.setDescription(null);
-        barChart.animateY(3000);
+        barChart.animateY(2000);
     }
 }
