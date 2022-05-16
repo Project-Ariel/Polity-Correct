@@ -12,12 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DB {
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+    //static ArrayList<UserVote> all_user_votes = new ArrayList<UserVote>();
 
     //get Political Groups from DB
     public static Task<QuerySnapshot> getPg(ArrayList<PoliticalGroup> pg) {
@@ -61,7 +62,6 @@ public class DB {
                     }
                 });
     }
-
 
     public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date, String user_pg) {
         Map<String, Object> vote = new HashMap<>();
@@ -142,4 +142,123 @@ public class DB {
     public static void setCurrUser(User user) {
         db.collection("Users").document(user.getKey()).set(user);
     }
+
+    static HashMap<String, HashMap<String, String>> membersVotes = new HashMap<String, HashMap<String, String>>();
+
+    public static void getMembersVotes() {
+        membersVotes = new HashMap<String, HashMap<String, String>>();
+        db.collection("MembersVotes")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            HashMap<String, String> temp = membersVotes.get(document.get("proposition_key").toString());
+                            if (temp == null) {
+                                temp = new HashMap<String, String>();
+                            }
+                            temp.put(document.get("user_id").toString(), document.get("choice").toString());
+                            membersVotes.put(document.get("proposition_key").toString(), temp);
+                        }
+                    }
+                });
+
+    }
+
+    static HashMap<String, String> memberNames = new HashMap<String, String>();
+
+    public static void getMemberNames() {
+        memberNames = new HashMap<String, String>();
+        db.collection("Users")
+                .whereEqualTo("userType", "parliament")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            memberNames.put((String) document.getId(), document.get("userName").toString());
+                        }
+                    }
+                });
+
+    }
+
+    static HashMap<String, String> propMap = new HashMap<String, String>();
+
+    public static void getPropVoted() {
+        propMap = new HashMap<String, String>();
+        db.collection("Propositions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            propMap.put((String) document.getId(), document.get("voted").toString());
+                        }
+                    }
+                });
+
+    }
+
+    //This function create a data structures that help to match a parialement mamber to the citizen.
+    public static void setVotesForAlgo(int[] votes_user, double[] rank, HashMap<String, int[]> votes_pm, ArrayList<UserVote> all_user_votes) {
+        int number_of_rules = votes_user.length;
+        setUserVote(all_user_votes).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Collections.sort(all_user_votes, new SortByGrade());
+
+                for (String name : memberNames.keySet()) {
+                    votes_pm.put(name, new int[number_of_rules]);
+                }
+                for (int i = 0; i < number_of_rules && i < all_user_votes.size(); i++) {
+                    votes_user[i] = all_user_votes.get(i).getVote();
+                    rank[i] = all_user_votes.get(i).getRate();
+
+                    for (String id : memberNames.keySet()) {
+                        String vote;
+                        vote = "abstain";
+                        HashMap<String, String> v = membersVotes.get(all_user_votes.get(i).rule_id);
+
+                        if (v == null) {
+                            vote = "abstain";
+                        } else {
+                            vote = v.get(id);
+                        }
+
+                        if (vote == null) {
+                            vote = "abstain";
+                        }
+
+                        if (vote.equals("abstain"))
+                            Objects.requireNonNull(votes_pm.get(id))[i] = 1;
+                        else if (vote.equals("against"))
+                            Objects.requireNonNull(votes_pm.get(id))[i] = 0;
+                        else
+                            Objects.requireNonNull(votes_pm.get(id))[i] = 2;
+
+                    }
+                }
+            }
+        });
+    }
+
+    //create array list of all the user votes to proposition that accepted already
+    public static Task<QuerySnapshot> setUserVote(ArrayList<UserVote> arr) {
+        return db.collection("Votes")
+                .whereEqualTo("user_id", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            UserVote v = new UserVote((String) document.get("proposition_key"), (String) document.get("user_choice"), (Double) document.get("vote_grade"));
+                            String flag= propMap.get((String) document.get("proposition_key"));
+                            if(flag != null) {
+                                if (flag.equals("true")) {
+                                    v.setAccepted(true);
+                                    arr.add(v);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+
 }
