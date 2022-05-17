@@ -5,9 +5,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-client_firebase_json_info = {
-    "Here"
-}
+client_firebase_json_info = "Here"
 
 client_json_dump = json.dumps(client_firebase_json_info)
 client_json_object = json.loads(client_json_dump)

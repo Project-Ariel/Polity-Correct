@@ -10,18 +10,7 @@ import traceback
 import urllib3
 import xmltodict
 
-polityCorrect_firebase_json_info = {
-    "type": "service_account",
-    "project_id": "polity-correct",
-    "private_key_id": "6c3c0fd85b452f925d13ccc7a69861d00f5ba501",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQCyXfUElsatWLOR\nSEYEbISdEp1N1U8jZT5W6/JLENVCV0FtB5ZaW3WdI53Wgdh7TIlYwgx4Oq33cZ5C\n1YZuLchKZnfk5KqoukdsedlDMieHGQp/OLDFwTPgqvACakAxCB88yycleW787TbM\n5NhprTBmXR27SZRKA3EXBrVcHENlBLLtbhAdWnjtDM9tXXU9b/wmzQh9AQiTKOyO\n1n+K8TkqMTxIOlhHrrivGh5up/Uu3h3bRwckMB3GVAwrTQ8SVuG+QxRh0Tfw1hjD\nApIvDJE43Lu//UnUX06bDtQ/FpZqbVmofvJMzV+2rAfY0FQn44JpZNeNPEtdzZMF\nxNSQJN77AgMBAAECggEAE2opuNGml4i/pvEsed/MAYLcr3On9QzYn8J38ZbH97wi\nqXj5cyVgZHXTgN1KUIVwr8ITdGTCudvao6C1TLncAskrhLUlJE9+Zb7PmMJVTh26\nKEXl6+iPOoWwsTqaeRvOtqHQRYJ1w78YR24jZkFNMt8w1Ml6BCJixWRcCkYjSdPt\nkLI3U5pv+jfO8Nsv+tyeXLtseVEnixKDiidue/p0zoyLxF2JP/2XAowsjIZNMIBM\n77M4SwTFJsJiVOmMsk/21PfedgMfhsyX6DdsdSOanrDh6+n7eAnhFlbGmDbCr0MI\n6TJrChqY5KFG0tA35NIdTREHTGfJrK24IEapyhVOgQKBgQD4Shc9UnjnTQ23cZcj\nXlt1ZPQWVVh6vYV9cjfJNWD6f6MTX1PEdAHLWGzVSxavnt6lndxrDTORxGnyFlD2\nEudjTTEcX6JpZ1U8axpqiYucPeDYOtsZ9UzJ8IAVRuUvDI4/0gs7x+t8lbUnI2If\nyCNhVHy2s8iTF5/IS+xLnlROewKBgQC35/sdA2lhXovWO4qS5ZurOUl/he3SLFbi\nDUeAeJdgRjPbU0JIVmrptYUI8qipkZhi8OG8phDVvH1hAIP2Q511wms46hmBpuiR\nGFtmVr9a7MExBn3h7I2o9Ud+pHSyEJAgF3erhNdxt7g4gMhhlxsdyqBy6E5gY1dE\nL4t7sYUJgQKBgHSr/DeopX+rSaLGEctg74E+qyRDfoxOuoe0QFqgZq3PhIX56ZcL\nHDy9lIa1/jcQZHdWstjrHyyEK3TC39CCGZEkGMvIdL0q/XairYsajywgN6PkJEkS\nZ78M8GMPKWrub3m17eltjE7C2plFmzpsBZQa62+/E6VrGH46jxMJl3w5AoGAY0JF\n+obY3cDV4K8KP/bFakjlLnruvT1JN4DLUr/DlCbP3lS1ta1Ozw013Hp8Jel7QguZ\nCuTmuTWexjgtAUHFPsXMcU+IrL2VUJrA2h9/8GdQblF+p+2xF7wq9mN0yJa/81I3\nOM/eKHZsa7K2dFXGQPIYX2yawNNdSmQO+Jf7ogECfyFXnq6wdEGeNCXI9QAnFgeL\nQPxja10ClgBkQD1gnWWo3GutzBCxo9mbqNaZClkaUPtNZ90HpYusN/wrpPaoubU0\nXFf9JUx9tFfswq59JQgCefPGcrsBkLq95aoMuMI0KNTiPd20mkc1qlZoZvMklpw7\ncAPt/AwRyIb3U/oqHkA=\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-frkz1@polity-correct.iam.gserviceaccount.com",
-    "client_id": "114466068948976677401",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-frkz1%40polity-correct.iam.gserviceaccount.com"
-}
+polityCorrect_firebase_json_info = "Here"
 
 json_dump = json.dumps(polityCorrect_firebase_json_info)
 json_object = json.loads(json_dump)
