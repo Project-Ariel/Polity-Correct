@@ -1,8 +1,5 @@
 package com.example.polity_correct;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -14,6 +11,9 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,9 +41,9 @@ public class SignupCitizen extends AppCompatActivity implements AdapterView.OnIt
     // TODO: 1/2/2022 auth
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_citizen);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         dropdown = (Spinner) findViewById(R.id.choosePG);
 

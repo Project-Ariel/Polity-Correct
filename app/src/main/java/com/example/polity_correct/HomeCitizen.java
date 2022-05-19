@@ -24,6 +24,7 @@ public class HomeCitizen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_citizen);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         userName = (TextView) findViewById(R.id.userName);
         userName.setText(Login.getCurrUser().getUserName());

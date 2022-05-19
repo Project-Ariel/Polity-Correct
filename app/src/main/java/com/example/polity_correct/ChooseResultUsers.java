@@ -36,6 +36,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_result_users);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("הצבעות המשתמשים");

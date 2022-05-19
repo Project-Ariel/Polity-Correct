@@ -32,6 +32,7 @@ public class Statistics extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("סטטיסטיקות");

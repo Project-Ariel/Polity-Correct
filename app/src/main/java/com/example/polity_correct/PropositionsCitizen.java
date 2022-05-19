@@ -33,6 +33,7 @@ public class PropositionsCitizen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.propositions_citizen);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         TextView title = (TextView) findViewById(R.id.title_page);
         title.setText("מה חדש?");
