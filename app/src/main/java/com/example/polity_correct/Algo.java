@@ -1,6 +1,7 @@
 package com.example.polity_correct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -61,7 +62,6 @@ public class Algo {
         HashMap<String, Integer> percents_result = new HashMap<>();
         double sum_of_ratings = 0;
 
-
         for (int r = 0; r < rating.length; r++) {
             rating[r]++;
             sum_of_ratings += rating[r];
@@ -70,9 +70,11 @@ public class Algo {
         for (Map.Entry<String, int[]> entry : votes_pm.entrySet()) {
             double sum = 0;
             for (int c = 0; c < votes_user.length; c++) {
-                sum += rating[c] * Math.abs(votes_user[c] - entry.getValue()[c]);
+                if(votes_user[c] == entry.getValue()[c]){
+                    sum += rating[c] ;
+                }
             }
-            percents_result.put(entry.getKey(), (int)((1 - (sum / sum_of_ratings)) * 100));
+            percents_result.put(entry.getKey(), (int)(sum * 100/ sum_of_ratings));
         }
 
         //sort the hash-map for taking the best results.
