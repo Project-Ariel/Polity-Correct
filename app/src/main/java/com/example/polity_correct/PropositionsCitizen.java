@@ -1,33 +1,22 @@
 package com.example.polity_correct;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-public class PropositionsCitizen extends AppCompatActivity {
+public class PropositionsCitizen extends AppCompatActivity implements TabLayoutMediator.TabConfigurationStrategy {
 
-    private ListView listView;
+    private ViewPager2 viewPager2;
+    private TabLayout tabLayout;
     private ArrayList<String> titles;
-    private static ArrayList<Proposition> propositions;
-    ActionBarDrawerToggle toggle;
-    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,87 +24,27 @@ public class PropositionsCitizen extends AppCompatActivity {
         setContentView(R.layout.propositions_citizen);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        TextView title = (TextView) findViewById(R.id.title_page);
-        title.setText("מה חדש?");
-
-        propositions = new ArrayList<>();
+        viewPager2 = findViewById(R.id.viewPager2);
+        tabLayout = findViewById(R.id.tabLayout);
         titles = new ArrayList<>();
+        titles.add("חוקים שעוד לא הוצבעו");
+        titles.add("חוקים שהוצבעו בכנסת");
 
-        DB.getPropositions(propositions, false).addOnCompleteListener(task -> {
-            for (Proposition p : propositions) {
-                titles.add(p.getTitle());
-            }
+        setViewPagerAdapter();
+        new TabLayoutMediator(tabLayout, viewPager2, this).attach();
+    }
 
-            listView = (ListView) findViewById(R.id.listViewC);
-            ArrayAdapter<String> arrayAdapter = new listAdapter(this, R.layout.item_view_vote, R.id.itemTextView, titles);
-            listView.setAdapter(arrayAdapter);
-        });
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView nav = (NavigationView) findViewById(R.id.navView);
-        nav.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.Home:
-                    startActivity(new Intent(this, HomeCitizen.class));
-                    break;
-                case R.id.UpdateDetails:
-                    startActivity(new Intent(this, Settings.class));
-                    break;
-                case R.id.Vote:
-                    startActivity(new Intent(this, PropositionsCitizen.class));
-                    break;
-                case R.id.Results:
-                    startActivity(new Intent(this, Results.class));
-                    break;
-                case R.id.Algo:
-                    startActivity(new Intent(this, MatchParliament.class));
-                    break;
-                case R.id.LogOut:
-                    startActivity(new Intent(this, Login.class));
-                    break;
-                default:
-                    break;
-            }
-            return false;
-        });
+    public void setViewPagerAdapter() {
+        ViewPagerAdapter viewPager2Adapter = new ViewPagerAdapter(this);
+        ArrayList<Fragment> fragmentList = new ArrayList<>(); //creates an ArrayList of Fragments
+        fragmentList.add(new PropositionsNotVoted());
+        fragmentList.add(new PropositionsVoted());
+        viewPager2Adapter.setData(fragmentList); //sets the data for the adapter
+        viewPager2.setAdapter(viewPager2Adapter);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    class listAdapter extends ArrayAdapter<String> {
-        public listAdapter(@NonNull Context context, int item_view, int itemTextView, ArrayList<String> list) {
-            super(context, item_view, itemTextView, list);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            final View view = super.getView(position, convertView, parent);
-            final Button btn = (Button) view.findViewById(R.id.button_vote);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openVotePage(v, position);
-                }
-            });
-            return view;
-        }
-    }
-
-    public void openVotePage(View view, int pos) {
-        Intent next = new Intent(this, Vote.class);
-        next.putExtra("current proposition", propositions.get(pos));
-        startActivity(next);
+    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+        tab.setText(titles.get(position));
     }
 }
