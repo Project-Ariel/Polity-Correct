@@ -17,7 +17,7 @@
   -   File -\> Project Structure -\> Modules
   ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/Project%20structure.png)
 
-1.  Open Polity-Correct with android Studio.
+3.  Open Polity-Correct with android Studio.
 
 -   File -\> Project Structure -\> Project
  ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/Project%20structure%20gradle.png)
@@ -25,13 +25,13 @@
 -   Wait until all Gradle files complete installation (It\'s can take
     some time, you can see it in the down-right corner).
 
-1.  Add configuration. (after all Gradle files are completely installed)
+4.  Add configuration. (after all Gradle files are completely installed)
 
 -   Run -\> Edit configuration
 
 ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/Edit%20configuration.png)
 
-1.  Add Device.
+5.  Add Device.
 
 -   Run -\> Select Device.. -\> Device Manager -\> Create device.
 
@@ -43,11 +43,11 @@ Select **R** (download if you need)
 
 Next -\> Finish.
 
-1.  Build
+6.  Build
 
-2.  Delete Polity-Correct -\> app -\> google-services.json file.
+7.  Delete Polity-Correct -\> app -\> google-services.json file.
 
-3.  Connect android studio to Firebase.
+8.  Connect android studio to Firebase.
 
     -   Create a new project on your firebase account.
     -   Click Tools -\> Firebase to open the Assistant window.
@@ -58,7 +58,7 @@ Next -\> Finish.
 
     ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/Connect%20to%20Firebase.png)
 
-4.  Build and run. (Wait for the device to turn on)
+9.  Build and run. (Wait for the device to turn on)
 
 ## Setting Firebase (or add your mail to Polity-Correct Firebase to get permissions)
 
@@ -76,16 +76,16 @@ Next -\> Finish.
 
 ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/Firebase%20Admin%20SDK.png)
 
-3.Open the JSON file with a notepad and copy all its contents.
+4.Open the JSON file with a notepad and copy all its contents.
 
-4.Open the file Polity-Correct -\> Setup -\> FB2NewFB.py and copy the
+5.Open the file Polity-Correct -\> Setup -\> FB2NewFB.py and copy the
 json contents into \"client_firebase_json_info\" (line 8).
 
 ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/client_firebase_json_info.png)
 
-1.  Run - **pip install firebase-admin** & **pip install xmltodict**
+6.  Run - **pip install firebase-admin** & **pip install xmltodict**
 
-2.  **Run FB2NewFB.py** in some python3.9 workspace.
+7.  **Run FB2NewFB.py** in some python3.9 workspace.
  
 ## Scheduling Odata Updater
 
@@ -100,7 +100,7 @@ json contents into \"client_firebase_json_info\" (line 8).
 
 ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/client_firebase_json_info_Odata.png)
 
-1.  Open **Task Scheduler** -\> Action -\> Create Task \* -\> General,
+3.  Open **Task Scheduler** -\> Action -\> Create Task \* -\> General,
     Choose action name. \* -\> Triggers -\> New. Choose youe scheduling
     details. \* -\> Actions -\> New. Upload **OdataUpdateData.py** file
     in Program/script. \* OK
