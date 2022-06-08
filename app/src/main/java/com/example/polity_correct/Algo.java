@@ -1,7 +1,6 @@
 package com.example.polity_correct;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -57,21 +56,21 @@ public class Algo {
 
     We will take the value (1-diff) cause every grater rating will increase the diff...
      */
-    public static LinkedHashMap<String, Integer> matchParliament(int[] votes_user, double[] rating, HashMap<String, int[]> votes_pm) {
+    public static LinkedHashMap<String, Integer> matchParliament(ArrayList<Integer> votes_user, ArrayList<Double> rating, HashMap<String, int[]> votes_pm) {
 
         HashMap<String, Integer> percents_result = new HashMap<>();
         double sum_of_ratings = 0;
 
-        for (int r = 0; r < rating.length; r++) {
-            rating[r]++;
-            sum_of_ratings += rating[r];
+        for (int r = 0; r < rating.size(); r++) {
+            rating.set(r,rating.get(r)+1);
+            sum_of_ratings += rating.get(r);
         }
 
         for (Map.Entry<String, int[]> entry : votes_pm.entrySet()) {
             double sum = 0;
-            for (int c = 0; c < votes_user.length; c++) {
-                if(votes_user[c] == entry.getValue()[c]){
-                    sum += rating[c] ;
+            for (int c = 0; c < votes_user.size(); c++) {
+                if(votes_user.get(c) == entry.getValue()[c]){
+                    sum += rating.get(c) ;
                 }
             }
             percents_result.put(entry.getKey(), (int)(sum * 100/ sum_of_ratings));

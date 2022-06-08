@@ -197,19 +197,18 @@ public class DB {
     }
 
     //This function create a data structures that help to match a parialement mamber to the citizen.
-    public static Task<QuerySnapshot> setVotesForAlgo(int[] votes_user, double[] rank, HashMap<String, int[]> votes_pm, ArrayList<UserVote> all_user_votes) {
-        int number_of_rules = votes_user.length;
+    public static Task<QuerySnapshot> setVotesForAlgo(ArrayList<Integer> votes_user, ArrayList<Double> rank, HashMap<String, int[]> votes_pm, ArrayList<UserVote> all_user_votes) {
 
         return setUserVote(all_user_votes).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Collections.sort(all_user_votes, new SortByGrade());
 
                 for (String name : memberNames.keySet()) {
-                    votes_pm.put(name, new int[number_of_rules]);
+                    votes_pm.put(name, new int[all_user_votes.size()]);
                 }
-                for (int i = 0; i < number_of_rules && i < all_user_votes.size(); i++) {
-                    votes_user[i] = all_user_votes.get(i).getVote();
-                    rank[i] = all_user_votes.get(i).getRate();
+                for (int i = 0; i < all_user_votes.size(); i++) {
+                    votes_user.add(i,all_user_votes.get(i).getVote());
+                    rank.add(i,all_user_votes.get(i).getRate());
 
                     for (String id : memberNames.keySet()) {
                         String vote = "abstain";

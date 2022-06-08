@@ -24,7 +24,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,10 +42,10 @@ public class MatchParliament extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
-    static HashMap<String, int[]> votes_pm = new HashMap<String, int[]>();
-    static ArrayList<UserVote> all_user_votes = new ArrayList<UserVote>();
-    static int[] votes_user = new int[4];
-    static double[] rating = new double[4];
+    static HashMap<String, int[]> votes_pm;
+    static ArrayList<UserVote> all_user_votes;
+    static ArrayList<Integer> votes_user;
+    static ArrayList<Double> rating;
 
     private LinkedHashMap<String, Integer> percents_result;
 
@@ -72,6 +71,12 @@ public class MatchParliament extends AppCompatActivity {
         DB.getPropVoted();
         DB.getMembersVotes();
         DB.getMemberNames();
+
+        //init arraylists and hashmap votes and rating
+        votes_pm = new HashMap();
+        all_user_votes = new ArrayList();
+        votes_user = new ArrayList();
+        rating = new ArrayList();
 
         // Handler for circular progress bar timer
         final Handler handler = new Handler();
@@ -133,14 +138,12 @@ public class MatchParliament extends AppCompatActivity {
 
     private void show_result() {
         // Set default
-        Arrays.fill(votes_user, -1);
+//        Arrays.fill(votes_user, -1);
 
         DB.setVotesForAlgo(votes_user, rating, votes_pm, all_user_votes).addOnCompleteListener(task -> {
             boolean flag = true;
-            for (int i = 0; i < votes_user.length; i++) {
-                if (votes_user[i] == -1) {
-                    flag = false;
-                }
+            if (votes_user.size() < 5) {
+                flag = false;
             }
             if (flag) {
                 percents_result = Algo.matchParliament(votes_user, rating, votes_pm);
