@@ -100,8 +100,8 @@ json contents into \"client_firebase_json_info\" (line 8).
 
 ![alt text](https://github.com/Project-Ariel/Polity-Correct/blob/main/reademe_png/client_firebase_json_info_Odata.png)
 
-3.  Open **Task Scheduler** -\> Action -\> Create Task \* -\> General,
-    Choose action name. \* -\> Triggers -\> New. Choose youe scheduling
-    details. \* -\> Actions -\> New. Upload **OdataUpdateData.py** file
-    in Program/script. \* OK
-:::
+3.  Open **Task Scheduler** -\> Action -\> Create Task 
+-   -\> General, Choose action name. 
+-   -\> Triggers -\> New. Choose youe scheduling details. 
+-   -\> Actions -\> New. Upload **OdataUpdateData.py** file in Program/script. 
+-   OK
