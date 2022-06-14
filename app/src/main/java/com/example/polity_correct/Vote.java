@@ -35,9 +35,10 @@ public class Vote extends AppCompatActivity {
     private RatingBar ratingbar;
     private User curr_user;
     private String user_token;
+    public static UserVote userVote;
+
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +65,27 @@ public class Vote extends AppCompatActivity {
                     gotoUrl(p.getDescription());
                 }
             });
-
         }
+
+        ratingbar = (RatingBar) findViewById(R.id.ratingBar);
+        radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
+
+        userVote=new UserVote(proposition_key);
+        DB.getUserVote(proposition_key,userVote).addOnSuccessListener(token -> {
+            int vote= userVote.getVote();
+            if (vote>=0) {
+                if (vote == 0) {
+                    ((RadioButton) findViewById(R.id.against)).setChecked(true);
+                } else if (vote == 1) {
+                    ((RadioButton) findViewById(R.id.abstain)).setChecked(true);
+                } else
+                    ((RadioButton) findViewById(R.id.agreement)).setChecked(true);
+            }
+            if (userVote.getRate()>=0){
+                ratingbar.setRating((float) userVote.getRate());
+            }
+        });
+
 
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
             if (!TextUtils.isEmpty(token)) {
@@ -123,8 +143,6 @@ public class Vote extends AppCompatActivity {
     }
 
     public void onClickSend(View view) {
-        ratingbar = (RatingBar) findViewById(R.id.ratingBar);
-        radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
         String rating = String.valueOf(ratingbar.getRating());
         double vote_grade = Double.parseDouble(rating);
 

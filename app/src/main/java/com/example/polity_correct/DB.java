@@ -257,4 +257,21 @@ public class DB {
                     }
                 });
     }
+
+//    Bedore send to this function we need initialized
+//    UserVote v = new UserVote(propID);
+    public static Task<QuerySnapshot> getUserVote(String propID, UserVote userVote) {
+        return db.collection("Votes")
+                .whereEqualTo("user_id", mAuth.getUid())
+                .whereEqualTo("proposition_key", propID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            userVote.setVote((String) document.get("user_choice"));
+                            userVote.setRate((Double) document.get("vote_grade"));
+                            }
+                        }
+                });
+    }
 }
