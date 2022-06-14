@@ -103,11 +103,9 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
         ArrayList<Double> grades = new ArrayList<>();
         DB.getPropVotes(votes, grades, curr_proposition.getKey()).addOnCompleteListener(task -> {
             double[] res = Algo.calculate_votes_grades(votes, grades);
-            Intent intent = new Intent(this, Statistics.class);
+            Intent intent = new Intent(this, StatisticsForCitizen.class);
             intent.putExtra("proposition_title", curr_proposition.getTitle());
-            intent.putExtra("pg", "כל המשתמשים");
             intent.putExtra("result", res);
-            intent.putExtra("user","Citizen");
             startActivity(intent);
         });
     }

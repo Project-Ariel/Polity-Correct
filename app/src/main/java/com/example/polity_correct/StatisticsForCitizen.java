@@ -1,9 +1,9 @@
 package com.example.polity_correct;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,23 +11,51 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeCitizen extends AppCompatActivity {
+import java.util.ArrayList;
 
-    private TextView userName;
+public class StatisticsForCitizen extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_citizen);
+        setContentView(R.layout.statistics_for_citizen);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        userName = (TextView) findViewById(R.id.userName);
-        userName.setText(Login.getCurrUser().getUserName());
+        TextView title = (TextView) findViewById(R.id.title_page);
+        title.setText("סטטיסטיקות");
+
+        String proposition_title = getIntent().getExtras().get("proposition_title").toString();
+        double[] res = (double[]) getIntent().getSerializableExtra("result");
+
+        PieChart pieChart = findViewById(R.id.pieChart);
+
+        ArrayList<PieEntry> votes = new ArrayList<>();
+        votes.add(new PieEntry((float) res[0], "נגד"));
+        votes.add(new PieEntry((float) res[1], "נמנע"));
+        votes.add(new PieEntry((float) res[2], "בעד"));
+
+        PieDataSet pieDataSet = new PieDataSet(votes, proposition_title);
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
+        pieDataSet.setValueFormatter(new PercentFormatter());
+
+        PieData pieData = new PieData(pieDataSet);
+
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText(proposition_title);
+        pieChart.animate();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -37,6 +65,9 @@ public class HomeCitizen extends AppCompatActivity {
         NavigationView nav = (NavigationView) findViewById(R.id.navView);
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
+                case R.id.Home:
+                    startActivity(new Intent(this, HomeCitizen.class));
+                    break;
                 case R.id.UpdateDetails:
                     startActivity(new Intent(this, Settings.class));
                     break;
@@ -65,44 +96,5 @@ public class HomeCitizen extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void openLoginPage(View view) {
-        FirebaseAuth.getInstance().signOut(); // sign out a user
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-    }
-
-    public void openSettingsPage(View view) {
-        startActivity(new Intent(this, Settings.class));
-    }
-
-    public void openPropositionsPage(View view) {
-        startActivity(new Intent(this, PropositionsCitizen.class));
-    }
-
-    public void openResultsPage(View view) {
-        startActivity(new Intent(this, Results.class));
-    }
-
-    public void openMatchParliamentPage(View view) {
-        startActivity(new Intent(this, MatchParliament.class));
-    }
-
-    public void sendMail(View view) {
-        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-        emailIntent.setType("plain/text");
-
-        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
-                new String[]{"Politycorrect@gmail.com"});
-
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                "Note from mail :" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                "Email Body..");
-
-        startActivity(Intent.createChooser(
-                emailIntent, "Send mail..."));
     }
 }

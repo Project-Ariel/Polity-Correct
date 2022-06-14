@@ -106,6 +106,9 @@ public class MatchParliament extends AppCompatActivity {
         NavigationView nav = (NavigationView) findViewById(R.id.navView);
         nav.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
+                case R.id.Home:
+                    startActivity(new Intent(this, HomeCitizen.class));
+                    break;
                 case R.id.UpdateDetails:
                     startActivity(new Intent(this, Settings.class));
                     break;

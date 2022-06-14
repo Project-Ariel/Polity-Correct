@@ -43,13 +43,10 @@ public class Statistics extends AppCompatActivity {
         pg.setText(choice);
         double[] res = (double[]) getIntent().getSerializableExtra("result");
 
-        String user_type = getIntent().getExtras().get("user").toString();
-        if (user_type.equals("PM")) {
-            TextView avg_title = (TextView) findViewById(R.id.avg_title);
-            avg_title.setVisibility(View.VISIBLE);
-            TextView avg = (TextView) findViewById(R.id.avg_num);
-            avg.setText(String.format("%.2f", res[3]));
-        }
+        TextView avg_title = (TextView) findViewById(R.id.avg_title);
+        avg_title.setVisibility(View.VISIBLE);
+        TextView avg = (TextView) findViewById(R.id.avg_num);
+        avg.setText(String.format("%.2f", res[3]));
 
         PieChart pieChart = findViewById(R.id.pieChart);
 
