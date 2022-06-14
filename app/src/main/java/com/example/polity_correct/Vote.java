@@ -1,6 +1,7 @@
 package com.example.polity_correct;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,7 +57,14 @@ public class Vote extends AppCompatActivity {
             Proposition p = (Proposition) i.getSerializableExtra("current proposition");
             proposition_key = p.getKey();
             txt_proposition_title.setText(p.getTitle());
-            getTxt_proposition_description.setText(p.getDescription());
+            getTxt_proposition_description.setText("להסבר על החוק לחץ כאן");
+            getTxt_proposition_description.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    gotoUrl(p.getDescription());
+                }
+            });
+
         }
 
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
@@ -96,6 +104,11 @@ public class Vote extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    private void gotoUrl(String s) {
+        Uri uri = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW,uri));
     }
 
     @Override
