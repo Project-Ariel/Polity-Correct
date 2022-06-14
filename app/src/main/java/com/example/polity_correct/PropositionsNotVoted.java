@@ -2,6 +2,7 @@ package com.example.polity_correct;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,8 +34,8 @@ public class PropositionsNotVoted extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View view =inflater.inflate(R.layout.propositions_voted, container, false);
-        TextView title = (TextView)view.findViewById(R.id.title_page);
+        View view = inflater.inflate(R.layout.propositions_voted, container, false);
+        TextView title = (TextView) view.findViewById(R.id.title_page);
 
         title.setText("מה חדש?");
 
@@ -77,6 +78,14 @@ public class PropositionsNotVoted extends Fragment {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             final View view = super.getView(position, convertView, parent);
             final Button btn = (Button) view.findViewById(R.id.button_vote);
+            UserVote userVote = new UserVote();
+            DB.getUserVote(propositions.get(position).getKey(), userVote).addOnSuccessListener(token -> {
+                int vote = userVote.getVote();
+                if (vote >= 0) {
+                    btn.setBackgroundColor(Color.parseColor("#B2BEB5"));
+                }
+            });
+
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -70,7 +70,7 @@ public class Vote extends AppCompatActivity {
         ratingbar = (RatingBar) findViewById(R.id.ratingBar);
         radioGroup = (RadioGroup) findViewById(R.id.radiobtns);
 
-        userVote=new UserVote(proposition_key);
+        userVote=new UserVote();
         DB.getUserVote(proposition_key,userVote).addOnSuccessListener(token -> {
             int vote= userVote.getVote();
             if (vote>=0) {

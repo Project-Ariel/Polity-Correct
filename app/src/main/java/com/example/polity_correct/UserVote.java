@@ -8,8 +8,7 @@ public class UserVote {
     Double rate = -1.;
     Boolean accepted; //proposition accepted already
 
-    public UserVote(String rule_id) {
-        this.rule_id = rule_id;
+    public UserVote() {
     }
 
     public UserVote(String rule_id, String vote, Double rate) {
