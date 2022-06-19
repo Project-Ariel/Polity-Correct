@@ -208,4 +208,8 @@ public class MatchParliament extends AppCompatActivity {
         barChart.setDescription(null);
         barChart.animateY(2000);
     }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeCitizen.class));
+    }
 }

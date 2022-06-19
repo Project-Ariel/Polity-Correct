@@ -109,4 +109,7 @@ public class Results extends AppCompatActivity implements AdapterView.OnItemSele
             startActivity(intent);
         });
     }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeCitizen.class));    }
 }

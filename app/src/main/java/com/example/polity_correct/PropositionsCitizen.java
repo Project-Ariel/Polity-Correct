@@ -1,6 +1,8 @@
 package com.example.polity_correct;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,4 +49,5 @@ public class PropositionsCitizen extends AppCompatActivity implements TabLayoutM
     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
         tab.setText(titles.get(position));
     }
+
 }

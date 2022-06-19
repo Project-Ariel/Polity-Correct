@@ -186,4 +186,8 @@ public class Vote extends AppCompatActivity {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(user_token, title, body, getApplicationContext(), Vote.this);
         notificationsSender.SendNotifications();
     }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeCitizen.class));
+    }
 }

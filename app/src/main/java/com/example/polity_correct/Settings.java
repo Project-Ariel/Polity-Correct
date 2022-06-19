@@ -183,4 +183,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
             return true;
         }
     }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeParliament.class));
+    }
 }

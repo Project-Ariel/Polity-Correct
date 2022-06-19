@@ -139,4 +139,7 @@ public class ChooseResultUsers extends AppCompatActivity implements AdapterView.
         });
     }
 
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeParliament.class));
+    }
 }

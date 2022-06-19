@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,5 +97,9 @@ public class StatisticsForCitizen extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeCitizen.class));
     }
 }

@@ -93,6 +93,10 @@ public class PropositionsParliament extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeParliament.class));
+    }
+
     class listAdapter extends ArrayAdapter<String> {
         public listAdapter(@NonNull Context context, int item_view, int itemTextView, ArrayList<String> list) {
             super(context, item_view, itemTextView, list);

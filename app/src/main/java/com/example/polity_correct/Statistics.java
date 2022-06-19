@@ -107,4 +107,8 @@ public class Statistics extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void OnClickLogo(View view) {
+        startActivity(new Intent(this, HomeParliament.class));
+    }
 }

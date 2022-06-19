@@ -74,6 +74,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
+        <ImageButton
+            android:id="@+id/LogoButton"
+            android:layout_width="112dp"
+            android:layout_height="75dp"
+            android:backgroundTint="@color/ic_launcher_background"
+            android:onClick="OnClickLogo"
+            android:scaleType="centerInside"
+            android:tint="#0FFFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/polity_correct_logo" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
