@@ -63,15 +63,29 @@ public class DB {
     }
 
     public static void updateVote(String proposition_key, double grade, StatusVote status, Timestamp date, String user_pg) {
-        Map<String, Object> vote = new HashMap<>();
-        vote.put("user_id", mAuth.getCurrentUser().getUid());
-        vote.put("proposition_key", proposition_key);
-        vote.put("user_choice", status);
-        vote.put("vote_grade", grade);
-        vote.put("vote_date", date);
-        vote.put("user_key_pg", user_pg);
 
-        db.collection("Votes").add(vote);
+        db.collection("Votes")
+                .whereEqualTo("user_id", mAuth.getUid())
+                .whereEqualTo("proposition_key", proposition_key)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getReference().delete();
+                        }
+
+                        Map<String, Object> vote = new HashMap<>();
+                        vote.put("user_id", mAuth.getCurrentUser().getUid());
+                        vote.put("proposition_key", proposition_key);
+                        vote.put("user_choice", status);
+                        vote.put("vote_grade", grade);
+                        vote.put("vote_date", date);
+                        vote.put("user_key_pg", user_pg);
+
+                        db.collection("Votes").add(vote);
+                    }
+                });
+
     }
 
     public static Task<QuerySnapshot> getVotesSpecificPG(ArrayList<String> votes, ArrayList<Double> grades, String prop_key) {
@@ -207,8 +221,8 @@ public class DB {
                     votes_pm.put(name, new int[all_user_votes.size()]);
                 }
                 for (int i = 0; i < all_user_votes.size(); i++) {
-                    votes_user.add(i,all_user_votes.get(i).getVote());
-                    rank.add(i,all_user_votes.get(i).getRate());
+                    votes_user.add(i, all_user_votes.get(i).getVote());
+                    rank.add(i, all_user_votes.get(i).getRate());
 
                     for (String id : memberNames.keySet()) {
                         String vote = "abstain";
@@ -258,8 +272,8 @@ public class DB {
                 });
     }
 
-//    Bedore send to this function we need initialized
-//    UserVote v = new UserVote(propID);
+    //    Bedore send to this function we need initialized
+    //    UserVote v = new UserVote(propID);
     public static Task<QuerySnapshot> getUserVote(String propID, UserVote userVote) {
         return db.collection("Votes")
                 .whereEqualTo("user_id", mAuth.getUid())
@@ -270,8 +284,8 @@ public class DB {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             userVote.setVote((String) document.get("user_choice"));
                             userVote.setRate((Double) document.get("vote_grade"));
-                            }
                         }
+                    }
                 });
     }
 }
